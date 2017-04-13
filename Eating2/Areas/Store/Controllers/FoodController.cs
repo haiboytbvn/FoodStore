@@ -52,7 +52,7 @@ namespace Eating2.Areas.Food.Controllers
                 }
                 return storePresenterObject;
             }
-        }
+        }    
 
         // GET: Food/Food
         public ActionResult Index(int storeId)
