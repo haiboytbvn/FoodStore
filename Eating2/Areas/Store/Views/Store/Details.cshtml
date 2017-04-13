@@ -68,13 +68,16 @@
 
             <p>
                 <b>Menu của cửa hàng @Model.Name</b>
-                @Html.ActionLink("Thêm món ăn mới", "AddFood", new {id = Model.ID }, new { @class = "btn btn-default" })
+
+                @Html.ActionLink("Thêm món ăn mới", "Create", "Food", new { STOREID = Model.ID }, new { @class = "btn btn-default" })
             </p>
         </div>
-        @*@Html.Action("Index", "Food", new { storeId = Model.ID })*@
+
+        @Html.Action("Index", "Food", new { storeId = Model.ID })
     </div>
     <br>
-
+    <p>
+    </p>
 
 </div>
 <br>

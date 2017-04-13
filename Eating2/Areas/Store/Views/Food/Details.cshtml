@@ -36,7 +36,7 @@
                 @Html.DisplayNameFor(model => model.Cost)
             </dt>
             <dd>
-                @Html.DisplayFor(model => model.Cost)
+                @String.Format("{0:0,0 vnđ}", Model.Cost)
             </dd>
         </dl>
     </div>
@@ -47,5 +47,5 @@
 <br>
 <p>
     @Html.ActionLink("Sửa thông tin", "Edit", new { id = Model.ID, beforePage = "details" }) |
-    @Html.ActionLink("Quay lại danh sách", "Index")
+    @Html.ActionLink("Quay lại danh sách", "Details", "Store", new {id = Model.StoreID }, null)
 </p>

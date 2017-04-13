@@ -44,6 +44,7 @@ namespace Eating2.Business.Presenter
                 Name = Food.Name,
                 Cost = Food.Cost,
                 Processing = Food.Processing,
+                StoreID = Food.StoreID,
                 inStore = Food.Store.Name
             };
             return FoodViewModel;

@@ -18,7 +18,7 @@
                 @Html.DisplayFor(model => model.Name)
             </dd>
         </dl>*@
-    <h4 class="text-danger">Bạn thực sự muốn xóa món ăn này!<br />Sau khi xóa sẽ không khôi phục lại được. Thực đơn của món ăn cũng sẽ mất</h4>
+    <h4 class="text-danger">Bạn thực sự muốn xóa món ăn này!<br />Sau khi xóa sẽ không khôi phục lại được</h4>
     <hr />
     @using (Html.BeginForm())
     {
@@ -26,9 +26,12 @@
 
         <div class="form-actions no-color">
             <input type="submit" value="Xóa" class="btn btn-default" /> <br />
-            @Html.ActionLink("Quay lại danh sách", "Index")
+            
         </div>
     }
 </div>
-
+<br />
+<div>
+    @Html.ActionLink("Quay lại danh sách", "Details", "Store", new { id = Model.StoreID }, null)
+</div>
 

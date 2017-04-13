@@ -1,6 +1,5 @@
 ﻿using Eating2.Business.Presenter;
 using Eating2.Business.ViewModels;
-using Eating2.Business.Presenter;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,20 +10,20 @@ using Eating2.Exception;
 using Microsoft.AspNet.Identity;
 using Eating2.DataAcess.Models;
 
-namespace Eating2.Areas.Store.Controllers
+namespace Eating2.Areas.Food.Controllers
 {
-    public class StoreController : Controller
+    public class FoodController : Controller
     {
-        private IStorePresenter storePresenterObject;
-        protected IStorePresenter StorePresenterObject
+        private IFoodPresenter foodPresenterObject;
+        protected IFoodPresenter FoodPresenterObject
         {
             get
             {
-                if (storePresenterObject == null)
+                if (foodPresenterObject == null)
                 {
-                    storePresenterObject = new StorePresenter(HttpContext);
+                    foodPresenterObject = new FoodPresenter(HttpContext);
                 }
-                return storePresenterObject;
+                return foodPresenterObject;
             }
         }
 
@@ -41,30 +40,41 @@ namespace Eating2.Areas.Store.Controllers
             }
         }
 
+        private IStorePresenter storePresenterObject;
+        protected IStorePresenter StorePresenterObject
+        {
+            get
+            {
+                if (storePresenterObject == null)
+                {
+                    storePresenterObject = new StorePresenter(HttpContext);
+                }
+                return storePresenterObject;
+            }
+        }    
 
-        // GET: Store/Store
-        public ActionResult Index()
+        // GET: Food/Food
+        public ActionResult Index(int storeId)
         {
 
-            var Stores = StorePresenterObject.ListAllStoreForOwner(User.Identity.GetUserId());
-            return View("Index", Stores);
+            var Foods = FoodPresenterObject.ListAllFoodForStore(storeId);
+            return PartialView("~Views/Food/_ListFoodOfStorePartial", Foods);
         }
-
-        // GET: Store/Store/Create
-        public ActionResult Create()
+        
+        // GET: Food/Food/Create
+        public ActionResult Create(int? StoreID)
         {
             return View();
         }
-        // POST: Store/Store/Create
+        // POST: Food/Food/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Name, Place, PhoneNumber")] StoreViewModel Store)
+        public ActionResult Create(int StoreID, [Bind(Include = "Name, Cost, StoreID")] FoodViewModel Food)
         {
 
             if (ModelState.IsValid)
             {
-                Store.Owner = UserPresenterObject.FindUserByUserName(User.Identity.Name).ID;
-                StorePresenterObject.InsertStore(Store);
+                FoodPresenterObject.InsertFood(Food);
                 return RedirectToAction("Index");
             }
             return View();
@@ -78,8 +88,8 @@ namespace Eating2.Areas.Store.Controllers
                 {
                     throw new NotFoundException("Id was not valid.");
                 }
-                var Store = StorePresenterObject.GetStoreById(Id.Value);
-                return View("Details", Store);
+                var Food = FoodPresenterObject.GetFoodById(Id.Value);
+                return View("Details", Food);
             }
             catch (NotFoundException e)
             {
@@ -98,8 +108,8 @@ namespace Eating2.Areas.Store.Controllers
                 {
                     throw new NotFoundException("Id was not valid.");
                 }
-                var updatedStore = StorePresenterObject.GetStoreById(id.Value);
-                return View("Edit", updatedStore);
+                var updatedFood = FoodPresenterObject.GetFoodById(id.Value);
+                return View("Edit", updatedFood);
             }
             catch (NotFoundException e)
             {
@@ -111,23 +121,19 @@ namespace Eating2.Areas.Store.Controllers
         // Post Method
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, [Bind(Include = "Name, Place, PhoneNumber, Description, OpenTime, CloseTime, ID")] StoreViewModel Store, string details)
+        public ActionResult Edit(int id, [Bind(Include = "ID, Name, Cost, StoreID ")] FoodViewModel Food, string details)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    var updatedStore = new StoreViewModel
+                    var updatedFood = new FoodViewModel
                     {
-                        Name = Store.Name,
-                        Place = Store.Place,
-                        PhoneNumber = Store.PhoneNumber,
-                        Description = Store.Description,
-                        OpenTime = Store.OpenTime,
-                        CloseTime = Store.CloseTime,
-                        Owner = UserPresenterObject.FindUserByUserName(User.Identity.Name).ID
+                        Name = Food.Name,
+                        Cost = Food.Cost,
+                        StoreID = Food.StoreID,
                     };
-                    StorePresenterObject.UpdateStore(id, updatedStore);
+                    FoodPresenterObject.UpdateFood(id, updatedFood);
                     if (details == null)
                         return RedirectToAction("Index");
                     else
@@ -153,9 +159,9 @@ namespace Eating2.Areas.Store.Controllers
                 {
                     throw new NotFoundException("Id was not valid.");
                 }
-                //var deletedStore = new StoreViewModel();
-                var deletedStore = StorePresenterObject.GetStoreById(id.Value);
-                return View("Delete", deletedStore);
+                //var deletedFood = new FoodViewModel();
+                var deletedFood = FoodPresenterObject.GetFoodById(id.Value);
+                return View("Delete", deletedFood);
             }
             catch (NotFoundException e)
             {
@@ -170,20 +176,8 @@ namespace Eating2.Areas.Store.Controllers
         {
             try
             {
-                StorePresenterObject.DeleteStore(id);
+                FoodPresenterObject.DeleteFood(id);
                 return RedirectToAction("Index");
-            }
-            catch (NotFoundException e)
-            {
-                return View("ResultNotFoundError");
-            }
-        }
-
-        public ActionResult AddFood(int id)
-        {
-            try
-            {
-                return RedirectToAction("Create", "Food", new { StoreID = id });
             }
             catch (NotFoundException e)
             {

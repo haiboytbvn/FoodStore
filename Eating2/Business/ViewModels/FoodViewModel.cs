@@ -19,5 +19,6 @@ namespace Eating2.Business.ViewModels
         public int StoreID { get; set; }
         [Display(Name = "Cửa hàng")]
         public string inStore { get; set; }
+
     }
 }

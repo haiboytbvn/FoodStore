@@ -2,13 +2,9 @@
 @model List<FoodViewModel>
 @{
     ViewBag.Title = "Trang chủ món ăn";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h3>Danh sách món ăn hiện có</h3>
-<p>
-    @Html.ActionLink("Thêm món ăn mới", "Create", null, new { @class = "btn btn-default" })
-</p>
 
 <table class="table table-bordered">
     <tr>
@@ -16,7 +12,7 @@
             <h4>Tên món ăn</h4>
         </th>
         <th>
-            <h4>Giá (VNĐ)</h4>
+            <h4>Giá </h4>
         </th>
         <th>
             <h4>Tác vụ</h4>
@@ -30,7 +26,8 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Cost)
+                @String.Format("{0:0,0 vnđ}",item.Cost)
+                @*@Html.DisplayFor(modelItem => item.Cost)*@
             </td>
             <td>
                 @Html.ActionLink("Sửa", "Edit", new { id = item.ID }) |
