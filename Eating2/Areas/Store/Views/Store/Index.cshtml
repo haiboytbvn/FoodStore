@@ -1,0 +1,51 @@
+﻿@using Eating2.Business.ViewModels;
+@model List<StoreViewModel>
+@{
+    ViewBag.Title = "Trang chủ cửa hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3>Danh sách cửa hàng hiện có</h3>
+<p>
+    @Html.ActionLink("Thêm cửa hàng mới", "Create", null, new { @class = "btn btn-default" })
+</p>
+
+<table class="table table-bordered">
+    <tr>
+        <th>
+            <h4>Tên cửa hàng</h4>
+        </th>
+        <th>
+            <h4>Địa chỉ</h4>
+        </th>
+        <th>
+            <h4>Số điện thoại</h4>
+        </th>
+        <th>
+            <h4>Tác vụ</h4>
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Place)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhoneNumber)
+            </td>
+            <td>
+                @Html.ActionLink("Sửa", "Edit", new { id = item.ID }) |
+                @Html.ActionLink("Chi tiết", "Details", new { id = item.ID }) |
+                @Html.ActionLink("Xóa", "Delete", new { id = item.ID })
+            </td>
+        </tr>
+    }
+
+</table>
+
+
