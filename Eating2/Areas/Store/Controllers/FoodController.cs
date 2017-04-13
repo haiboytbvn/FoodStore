@@ -53,6 +53,7 @@ namespace Eating2.Areas.Food.Controllers
                 return storePresenterObject;
             }
         }
+
         // GET: Food/Food
         public ActionResult Index(int storeId)
         {
@@ -60,7 +61,7 @@ namespace Eating2.Areas.Food.Controllers
             var Foods = FoodPresenterObject.ListAllFoodForStore(storeId);
             return View("Index", Foods);
         }
-
+        
         // GET: Food/Food/Create
         public ActionResult Create(int? StoreID)
         {
