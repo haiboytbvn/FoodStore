@@ -7,14 +7,14 @@ using Eating2.DataAcess.Models;
 
 namespace Eating2.DataAcess.Repositories
 {
-    public interface IFoodRepository
+    public interface IRateRepository
     {
-        IEnumerable<FoodDataModel> ListAll();
-        FoodDataModel GetFoodByID(int FoodID);
-        void InsertFood(FoodDataModel Food);
-        void DeleteFood(int FoodID);
-        void UpdateFood(FoodDataModel Food);
+        //IEnumerable<RateDataModel> ListAll();
+        RateDataModel GetRateByID(int RateID);
+        void InsertRate(RateDataModel Rate);
+        void DeleteRate(int RateID);
+        void UpdateRate(RateDataModel Rate);
         void Save();
-        IEnumerable<FoodDataModel> ListAllForStore(int id);
+        IEnumerable<RateDataModel> ListAllForFood(int id);
     }
 }

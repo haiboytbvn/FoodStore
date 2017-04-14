@@ -40,12 +40,18 @@
             </dd>
         </dl>
     </div>
-    
-
+    <div style="background-color:#dddddd; border-radius: 5px; margin-bottom: 20px; padding: 5px 0 5px 0;">
+        <p>
+            <b>Đánh giá của khách hàng về món : @Model.Name</b>
+        </p>
+    </div>
+    <div>
+        @Html.Action("Index", "Rate", new { foodId = Model.ID })
+    </div>
 
 </div>
 <br>
 <p>
     @Html.ActionLink("Sửa thông tin", "Edit", new { id = Model.ID, beforePage = "details" }) |
-    @Html.ActionLink("Quay lại danh sách", "Details", "Store", new {id = Model.StoreID }, null)
+    @Html.ActionLink("Quay lại danh sách", "Details", "Store", new { id = Model.StoreID }, null)
 </p>

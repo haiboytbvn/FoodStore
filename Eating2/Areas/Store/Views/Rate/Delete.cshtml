@@ -1,26 +1,26 @@
 ﻿@using Eating2.Business.ViewModels
-@model StoreViewModel
+@model RateViewModel
 @{
-    ViewBag.Title = "Xóa cửa hàng";
+    ViewBag.Title = "Xóa nhận xét";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h3>Xóa cửa hàng</h3>
+<h3>Xóa món ăn</h3>
 <div>
-    <h4>@Model.Name  </h4>
+    <h4>@Model.Comment  </h4>
     <hr />
         @*<dl class="dl-horizontal">
             <dt>
-                Cửa hàng:
+                món ăn:
             </dt>
 
             <dd>
                 @Html.DisplayFor(model => model.Name)
             </dd>
         </dl>*@
-    <h4 class="text-danger">Bạn thực sự muốn xóa cửa hàng này!</h4>
+    <h4 class="text-danger">Bạn thực sự muốn xóa nhận xét này!</h4>
     <h5 class="text-danger">Sau khi xóa sẽ không khôi phục lại được</h5>
-       <hr />
+    <hr />
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
@@ -33,6 +33,6 @@
 </div>
 <br />
 <div>
-    @Html.ActionLink("Quay lại danh sách", "Details", "Store", new { id = Model.ID }, null)
+    @Html.ActionLink("Quay lại danh sách", "Details", "Food", new { id = Model.FoodID }, null)
 </div>
 

@@ -24,6 +24,8 @@ namespace Eating2.DataAcess
 
         public DbSet<StoreDataModel> Stores { get; set; }
         public DbSet<FoodDataModel> Foods { get; set; }
+        public DbSet<CategoryDataModel> Categories { get; set; }
+        public DbSet<RateDataModel> Rates { get; set; }
 
         //Tu dinh nghia khoa ngoai cua cac bang
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -45,7 +47,17 @@ namespace Eating2.DataAcess
                  .HasForeignKey(t => t.StoreID)
                  .WillCascadeOnDelete(false);
 
-                
+            modelBuilder.Entity<CategoryDataModel>()
+                 .HasKey(t => t.ID);
+
+
+           modelBuilder.Entity<RateDataModel>()
+                 .HasKey(t => t.ID)
+                 .HasRequired(t => t.Food)
+                 .WithMany(t => t.Rates)
+                 .HasForeignKey(t => t.FoodID)
+                 .WillCascadeOnDelete(false);
+
         }
     }
 }

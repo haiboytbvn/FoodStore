@@ -15,5 +15,6 @@ namespace Eating2.DataAcess.Models
         public int StoreID { get; set; }
         [ForeignKey("StoreID")]
         public virtual StoreDataModel Store { get; set; }
+        public virtual ICollection<RateDataModel> Rates { get; set; }
     }
 }
