@@ -8,6 +8,9 @@ using System.Linq;
 using System.Web;
 using Eating2.DataAcess.Models;
 using Eating2.Business.Presenter;
+using System.IO;
+using Microsoft.AspNet.Identity;
+using Eating2.AppConfig;
 
 namespace Eating2.Business.Presenter
 {
@@ -164,7 +167,11 @@ namespace Eating2.Business.Presenter
             }
         }
 
-
+        public string GetStorePictureUrlForUpload(string StoreName, string UserName)
+        {
+            var folderPath = Path.Combine(StoreImageConfiguration.PhotosFolderPath, UserName, "Store", StoreName, StoreImageConfiguration.StoreImageFileName);
+            return folderPath;
+        }
 
     }
 

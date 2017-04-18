@@ -24,7 +24,7 @@ namespace Eating2.Business.ViewModels
         public string Description { get; set; }
         [Display(Name = "Số điện thoại")]
         public string PhoneNumber { get; set; }
-        public int NumberOfFood { get; set; }   
+        public int NumberOfFood { get; set; }
         [Display(Name = "Chủ sở hữu")]
         public string Owner { get; set; }
         [Display(Name = "Quận/Huyện")]
@@ -42,7 +42,7 @@ namespace Eating2.Business.ViewModels
                 district.Add(new SelectListItem { Text = "Đống Đa", Value = "Đống Đa" });
                 district.Add(new SelectListItem { Text = "Gia Lâm", Value = "Gia Lâm" });
                 district.Add(new SelectListItem { Text = "Hà Đông", Value = "Hà Đông" });
-                district.Add(new SelectListItem { Text = "Hai Bà Trưng", Value = "Hai Bà Trưng" });     
+                district.Add(new SelectListItem { Text = "Hai Bà Trưng", Value = "Hai Bà Trưng" });
                 district.Add(new SelectListItem { Text = "Hoàn Kiếm", Value = "Hoàn Kiếm" });
                 district.Add(new SelectListItem { Text = "Hoàng Mai", Value = "Hoàng Mai" });
                 district.Add(new SelectListItem { Text = "Long Biên", Value = "Long Biên" });
@@ -53,9 +53,9 @@ namespace Eating2.Business.ViewModels
 
                 return district;
             }
-           
-        }
 
+        }
+        public string StorePictureURL { get; set; }
 
     }
 }

@@ -58,10 +58,35 @@
         </dl>
         <dl class="dl-horizontal">
             <dt>
-                Thời gian phục vụ:
+                Thời gian phục vụ
             </dt>
             <dd>
                 @Html.DisplayFor(model => model.OpenTime)  -  @Html.DisplayFor(model => model.CloseTime)
+            </dd>
+        </dl>
+
+        <div class="form-group">
+            @using (Html.BeginForm("UploadStoreImage", "Store", new { StoreId = Model.ID }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                <dl class="dl-horizontal">
+                    <dt>
+                        <label for="file" , class="contro-label"> Tải hình ảnh </label>
+                    </dt>
+                    <dd >
+                        <div>
+                            <input type="file" name="file" id="file" class="btn btn-default" />
+                            <input type="submit" value="Upload Image" class="btn btn-default" />
+                        </div>
+                    </dd>
+                </dl>
+            }
+
+        </div>
+
+        <dl class="dl-horizontal">
+            <dd>
+                <img class="image-bordered"  src="@Url.Content(Model.StorePictureURL)" alt="IMAGES"  height="300" />
             </dd>
         </dl>
 

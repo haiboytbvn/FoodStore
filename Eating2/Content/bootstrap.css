@@ -1465,6 +1465,10 @@ th {
   border: 1px solid #dddddd;
 }
 
+.image-bordered{
+    border: 3px solid #000;
+}
+
 .table-bordered > thead > tr > th,
 .table-bordered > tbody > tr > th,
 .table-bordered > tfoot > tr > th,

@@ -10,6 +10,7 @@ using Eating2.DataAcess.Repositories;
 using Eating2.Exception;
 using Microsoft.AspNet.Identity;
 using Eating2.DataAcess.Models;
+using System.IO;
 
 namespace Eating2.Areas.Store.Controllers
 {
@@ -53,6 +54,7 @@ namespace Eating2.Areas.Store.Controllers
         // GET: Store/Store/Create
         public ActionResult Create()
         {
+
             var store = new StoreViewModel();
             return View(store);
         }
@@ -66,6 +68,8 @@ namespace Eating2.Areas.Store.Controllers
             {
                 Store.Owner = UserPresenterObject.FindUserByUserName(User.Identity.Name).ID;
                 StorePresenterObject.InsertStore(Store);
+
+
                 return RedirectToAction("Index");
             }
             return View();
@@ -80,6 +84,9 @@ namespace Eating2.Areas.Store.Controllers
                     throw new NotFoundException("Id was not valid.");
                 }
                 var Store = StorePresenterObject.GetStoreById(Id.Value);
+
+                var folderPath = StorePresenterObject.GetStorePictureUrlForUpload(Store.Name, User.Identity.Name);
+                Store.StorePictureURL = folderPath + "?time=" + DateTime.Now.Ticks.ToString();
                 return View("Details", Store);
             }
             catch (NotFoundException e)
@@ -133,10 +140,10 @@ namespace Eating2.Areas.Store.Controllers
                     if (details == null)
                         return RedirectToAction("Index");
                     else
-                        return RedirectToAction("Details",new { Id = id });
-                    
+                        return RedirectToAction("Details", new { Id = id });
 
-                    
+
+
                 }
                 return View();
             }
@@ -191,6 +198,34 @@ namespace Eating2.Areas.Store.Controllers
             {
                 return View("ResultNotFoundError");
             }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult UploadStoreImage(HttpPostedFileBase file, int StoreId)
+        {
+            if(file != null)
+            {
+                
+                var store = StorePresenterObject.GetStoreById(StoreId);
+                var folderPath = StorePresenterObject.GetStorePictureUrlForUpload(store.Name, User.Identity.Name);
+                var serverPath = Server.MapPath(folderPath);
+                var dirs = Path.GetDirectoryName(serverPath);
+                if (!Directory.Exists(dirs))
+                {
+                    Directory.CreateDirectory(dirs);
+                }
+                file.SaveAs(serverPath);
+
+            }
+            return RedirectToAction("Details", new {id = StoreId });
+        }
+        public ActionResult DisplayStoreImage(int StoreId)
+        {
+            var store = StorePresenterObject.GetStoreById(StoreId);
+            var folderPath = StorePresenterObject.GetStorePictureUrlForUpload(store.Name, User.Identity.Name);
+            store.StorePictureURL = Path.Combine(folderPath, "store.jpg");
+            return View("Details", store);
         }
     }
 }
