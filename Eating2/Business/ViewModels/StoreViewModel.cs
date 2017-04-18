@@ -24,6 +24,7 @@ namespace Eating2.Business.ViewModels
         public string Description { get; set; }
         [Display(Name = "Số điện thoại")]
         public string PhoneNumber { get; set; }
+        public int NumberOfFood { get; set; }   
         [Display(Name = "Chủ sở hữu")]
         public string Owner { get; set; }
         [Display(Name = "Quận/Huyện")]

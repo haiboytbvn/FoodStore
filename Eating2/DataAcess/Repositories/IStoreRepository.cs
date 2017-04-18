@@ -16,6 +16,8 @@ namespace Eating2.DataAcess.Repositories
         void UpdateStore(StoreDataModel Store);
         void Save();
         IEnumerable<StoreDataModel> ListAllForOwner(string id);
-       
+        int TotalStore(string UserID);
+
+
     }
 }

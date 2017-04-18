@@ -224,8 +224,8 @@
     <Compile Include="DataAcess\Repositories\ApplicationSignInManager.cs" />
     <Compile Include="DataAcess\Repositories\ApplicationUserManager.cs" />
     <Compile Include="DataAcess\Repositories\RateRepository.cs" />
-    <Compile Include="DataAcess\Repositories\IRateRepository.cs" />
     <Compile Include="DataAcess\Repositories\IFoodRepository.cs" />
+    <Compile Include="DataAcess\Repositories\IRateRepository.cs" />
     <Compile Include="DataAcess\Repositories\IStoreRepository.cs" />
     <Compile Include="DataAcess\Repositories\RepositoryBase.cs" />
     <Compile Include="DataAcess\Repositories\FoodRepository.cs" />

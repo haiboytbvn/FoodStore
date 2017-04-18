@@ -18,6 +18,7 @@ namespace Eating2.Business.Presenter
         protected ApplicationUserManager UserManager;
         protected UserPresenter userPresenter;
         protected FoodPresenter FoodPresenterObject;
+        protected FoodRepository FoodRepository;
         
         
         public StorePresenter(HttpContextBase context)
@@ -27,6 +28,7 @@ namespace Eating2.Business.Presenter
             UserManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
             userPresenter = new UserPresenter(context);
             FoodPresenterObject = new FoodPresenter(context);
+            FoodRepository = new FoodRepository();
         }
 
 
@@ -70,7 +72,7 @@ namespace Eating2.Business.Presenter
                     Owner = Store.Owner,
                     PhoneNumber = Store.PhoneNumber,
                     Place = Store.Place,
-                    District = Store.District
+                    District = Store.District,
                 };
                 listStoreViewModel.Add(StoreViewModel);
             }
@@ -84,7 +86,7 @@ namespace Eating2.Business.Presenter
             foreach(var Store in listStore)
             {
                 var StoreViewModel = new StoreViewModel()
-                { 
+                {
                     ID = Store.ID,
                     Name = Store.Name,
                     OpenTime = Store.OpenTime,
@@ -93,7 +95,8 @@ namespace Eating2.Business.Presenter
                     Owner = Store.Owner,
                     PhoneNumber = Store.PhoneNumber,
                     Place = Store.Place,
-                    District = Store.District
+                    District = Store.District,
+                    NumberOfFood = FoodRepository.TotalFood(Store.ID)
                 };
                 listStoreViewModel.Add(StoreViewModel);
             }
@@ -160,6 +163,8 @@ namespace Eating2.Business.Presenter
                 StoreRepository.Save();
             }
         }
+
+
 
     }
 

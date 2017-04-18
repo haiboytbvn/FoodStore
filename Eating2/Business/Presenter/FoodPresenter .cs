@@ -19,6 +19,7 @@ namespace Eating2.Business.Presenter
         protected UserPresenter userPresenter;
         protected IStoreRepository StoreRepository;
         protected RatePresenter RatePresenterObject;
+        protected RateRepository RateRepository;
 
         public FoodPresenter(HttpContextBase context)
         {
@@ -28,6 +29,7 @@ namespace Eating2.Business.Presenter
             userPresenter = new UserPresenter(context);
             StoreRepository = new StoreRepository();
             RatePresenterObject = new RatePresenter(context);
+            RateRepository = new RateRepository();
         }
 
 
@@ -83,7 +85,8 @@ namespace Eating2.Business.Presenter
                     Name = Food.Name,
                     Cost = Food.Cost,
                     Processing = Food.Processing,
-                    inStore = Food.Store.Name
+                    inStore = Food.Store.Name,
+                    NumberOfRate = RateRepository.TotalRate(Food.ID)
                     
                 };
                 listFoodViewModel.Add(FoodViewModel);

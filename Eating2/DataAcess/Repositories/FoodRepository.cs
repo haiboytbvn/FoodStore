@@ -40,6 +40,11 @@ namespace Eating2.DataAcess.Repositories
             dataContext.SaveChanges();
         }
 
+        public int TotalFood(int StoreId)
+        {
+            return dataContext.Foods.Where(f => f.StoreID == StoreId).Count();
+        }
+
         public void UpdateFood(FoodDataModel Food)
         {
             dataContext.Entry(Food).State = EntityState.Modified;

@@ -44,5 +44,10 @@ namespace Eating2.DataAcess.Repositories
         {
             dataContext.Entry(Store).State = EntityState.Modified;
         }
+
+        public int TotalStore(string UserID)
+        {
+            return dataContext.Stores.Where(s => s.Owner == UserID).Count();
+        }
     }
 }

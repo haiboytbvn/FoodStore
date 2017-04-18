@@ -15,6 +15,9 @@
             <h4>Giá </h4>
         </th>
         <th>
+            <h4>Số nhận xét</h4>
+        </th>
+        <th>
             <h4>Tác vụ</h4>
         </th>
     </tr>
@@ -28,6 +31,9 @@
             <td>
                 @String.Format("{0:0,0 VNĐ}",item.Cost)
                 @*@Html.DisplayFor(modelItem => item.Cost)*@    
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberOfRate)
             </td>
             <td>
                 @Html.ActionLink("Sửa", "Edit", new { id = item.ID }) |

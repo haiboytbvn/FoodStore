@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h3>Danh sách cửa hàng hiện có</h3>
+<h3>Danh sách cửa hàng hiện có: </h3>
 <p>
     @Html.ActionLink("Thêm cửa hàng mới", "Create", null, new { @class = "btn btn-default" })
 </p>
@@ -20,6 +20,9 @@
         </th>
         <th>
             <h4>Số điện thoại</h4>
+        </th>
+        <th>
+            <h4>Số món ăn</h4>
         </th>
         <th>
             <h4>Tác vụ</h4>
@@ -37,6 +40,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.PhoneNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberOfFood)
             </td>
             <td>
                 @Html.ActionLink("Sửa", "Edit", new { id = item.ID }) |
