@@ -73,22 +73,38 @@
                     <dt>
                         <label for="file" , class="contro-label"> Tải hình ảnh </label>
                     </dt>
-                    <dd >
+                    <dd>
                         <div>
                             <input type="file" name="file" id="file" class="btn btn-default" />
                             <input type="submit" value="Upload Image" class="btn btn-default" />
+                            <p class="text-muted">Chỉ hỗ trợ ảnh có đuôi: jpg, jpeg, png, gif</p>
                         </div>
                     </dd>
                 </dl>
             }
 
         </div>
+        @if (Model.HasStorePicture == true)
+        {
+            <dl class="dl-horizontal">
+                <dd>
+                    <img class="image-bordered" src="@Url.Content(Model.StorePictureURL)" alt="IMAGES" height="300" />
+                </dd>
+            </dl>
+        }
+        @if (ViewBag.upload == "yes")
+        {
+            <div class="text-success">
+                @ViewBag.Message
+            </div>
+        }
+        else
+        {
+            <div class="text-danger">
+                @ViewBag.Message
+            </div>
+        }
 
-        <dl class="dl-horizontal">
-            <dd>
-                <img class="image-bordered"  src="@Url.Content(Model.StorePictureURL)" alt="IMAGES"  height="300" />
-            </dd>
-        </dl>
 
     </div>
     <p>

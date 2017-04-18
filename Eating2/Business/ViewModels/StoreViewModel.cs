@@ -56,6 +56,7 @@ namespace Eating2.Business.ViewModels
 
         }
         public string StorePictureURL { get; set; }
+        public bool HasStorePicture { get; set; }
 
     }
 }

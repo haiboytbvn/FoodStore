@@ -11,6 +11,7 @@ using Eating2.Exception;
 using Microsoft.AspNet.Identity;
 using Eating2.DataAcess.Models;
 using System.IO;
+using Eating2.AppConfig;
 
 namespace Eating2.Areas.Store.Controllers
 {
@@ -75,7 +76,8 @@ namespace Eating2.Areas.Store.Controllers
             return View();
         }
 
-        public ActionResult Details(int? Id)
+        //get
+        public ActionResult Details(int? Id, string uploadMessage, string uploadState)
         {
             try
             {
@@ -87,6 +89,12 @@ namespace Eating2.Areas.Store.Controllers
 
                 var folderPath = StorePresenterObject.GetStorePictureUrlForUpload(Store.Name, User.Identity.Name);
                 Store.StorePictureURL = folderPath + "?time=" + DateTime.Now.Ticks.ToString();
+                Store.HasStorePicture = Server.IsRelativePathExisted(folderPath);
+
+                ViewBag.upload = uploadState;
+                ViewBag.Message = uploadMessage;
+               
+               
                 return View("Details", Store);
             }
             catch (NotFoundException e)
@@ -204,21 +212,37 @@ namespace Eating2.Areas.Store.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult UploadStoreImage(HttpPostedFileBase file, int StoreId)
         {
-            if(file != null)
+            var store = StorePresenterObject.GetStoreById(StoreId);
+            string message = "";
+            string upload = "no";
+            if (file != null)
             {
-                
-                var store = StorePresenterObject.GetStoreById(StoreId);
-                var folderPath = StorePresenterObject.GetStorePictureUrlForUpload(store.Name, User.Identity.Name);
-                var serverPath = Server.MapPath(folderPath);
-                var dirs = Path.GetDirectoryName(serverPath);
-                if (!Directory.Exists(dirs))
+                var ext = Path.GetExtension(file.FileName).ToLowerInvariant();
+                if (ext == ".jpg" || ext == ".png" || ext == ".jpeg" || ext == ".gif")
                 {
-                    Directory.CreateDirectory(dirs);
+                    var folderPath = StorePresenterObject.GetStorePictureUrlForUpload(store.Name, User.Identity.Name);
+                    var serverPath = Server.MapPath(folderPath);
+                    var dirs = Path.GetDirectoryName(serverPath);
+                    if (!Directory.Exists(dirs))
+                    {
+                        Directory.CreateDirectory(dirs);
+                    }
+                    file.SaveAs(serverPath);
+                    message = "Tải ảnh lên thành công!";
+                    upload = "yes";
                 }
-                file.SaveAs(serverPath);
-
+                else
+                {
+                    store.HasStorePicture = false;
+                    message = "Chỉ hỗ trợ tải lên ảnh có đuôi: jpg, jpeg, png, gif";
+                }
             }
-            return RedirectToAction("Details", new {id = StoreId });
+            else
+            {
+                store.HasStorePicture = false;
+                message = "Có lỗi xảy ra! Tải ảnh lên không thành công.";
+            }
+            return RedirectToAction("Details", new { id = StoreId, uploadMessage = message, uploadState = upload});
         }
         //public ActionResult DisplayStoreImage(int StoreId)
         //{
