@@ -220,12 +220,12 @@ namespace Eating2.Areas.Store.Controllers
             }
             return RedirectToAction("Details", new {id = StoreId });
         }
-        public ActionResult DisplayStoreImage(int StoreId)
-        {
-            var store = StorePresenterObject.GetStoreById(StoreId);
-            var folderPath = StorePresenterObject.GetStorePictureUrlForUpload(store.Name, User.Identity.Name);
-            store.StorePictureURL = Path.Combine(folderPath, "store.jpg");
-            return View("Details", store);
-        }
+        //public ActionResult DisplayStoreImage(int StoreId)
+        //{
+        //    var store = StorePresenterObject.GetStoreById(StoreId);
+        //    var folderPath = StorePresenterObject.GetStorePictureUrlForUpload(store.Name, User.Identity.Name);
+        //    store.StorePictureURL = Path.Combine(folderPath, "store.jpg");
+        //    return View("Details", store);
+        //}
     }
 }
