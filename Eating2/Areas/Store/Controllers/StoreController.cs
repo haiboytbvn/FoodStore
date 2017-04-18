@@ -53,12 +53,13 @@ namespace Eating2.Areas.Store.Controllers
         // GET: Store/Store/Create
         public ActionResult Create()
         {
-            return View();
+            var store = new StoreViewModel();
+            return View(store);
         }
         // POST: Store/Store/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Name, Place, PhoneNumber")] StoreViewModel Store)
+        public ActionResult Create([Bind(Include = "Name, Place, PhoneNumber, District")] StoreViewModel Store)
         {
 
             if (ModelState.IsValid)
@@ -111,7 +112,7 @@ namespace Eating2.Areas.Store.Controllers
         // Post Method
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, [Bind(Include = "Name, Place, PhoneNumber, Description, OpenTime, CloseTime, ID")] StoreViewModel Store, string details)
+        public ActionResult Edit(int id, [Bind(Include = "Name, Place, PhoneNumber, Description, OpenTime, CloseTime, ID, District")] StoreViewModel Store, string details)
         {
             try
             {
@@ -125,7 +126,8 @@ namespace Eating2.Areas.Store.Controllers
                         Description = Store.Description,
                         OpenTime = Store.OpenTime,
                         CloseTime = Store.CloseTime,
-                        Owner = UserPresenterObject.FindUserByUserName(User.Identity.Name).ID
+                        Owner = UserPresenterObject.FindUserByUserName(User.Identity.Name).ID,
+                        District = Store.District
                     };
                     StorePresenterObject.UpdateStore(id, updatedStore);
                     if (details == null)

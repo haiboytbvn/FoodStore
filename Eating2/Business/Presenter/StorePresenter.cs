@@ -17,6 +17,7 @@ namespace Eating2.Business.Presenter
         protected IStoreRepository StoreRepository;
         protected ApplicationUserManager UserManager;
         protected UserPresenter userPresenter;
+        protected FoodPresenter FoodPresenterObject;
         
         
         public StorePresenter(HttpContextBase context)
@@ -25,6 +26,7 @@ namespace Eating2.Business.Presenter
             StoreRepository = new StoreRepository();
             UserManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
             userPresenter = new UserPresenter(context);
+            FoodPresenterObject = new FoodPresenter(context);
         }
 
 
@@ -45,7 +47,8 @@ namespace Eating2.Business.Presenter
                 Description = Store.Description,
                 Owner = userPresenter.FindUserByID(Store.Owner).Email,
                 PhoneNumber = Store.PhoneNumber,
-                Place = Store.Place
+                Place = Store.Place,
+                District = Store.District
             };
             return StoreViewModel;
             
@@ -66,7 +69,8 @@ namespace Eating2.Business.Presenter
                     Description = Store.Description,
                     Owner = Store.Owner,
                     PhoneNumber = Store.PhoneNumber,
-                    Place = Store.Place
+                    Place = Store.Place,
+                    District = Store.District
                 };
                 listStoreViewModel.Add(StoreViewModel);
             }
@@ -88,7 +92,8 @@ namespace Eating2.Business.Presenter
                     Description = Store.Description,
                     Owner = Store.Owner,
                     PhoneNumber = Store.PhoneNumber,
-                    Place = Store.Place
+                    Place = Store.Place,
+                    District = Store.District
                 };
                 listStoreViewModel.Add(StoreViewModel);
             }
@@ -104,7 +109,8 @@ namespace Eating2.Business.Presenter
                 PhoneNumber = Store.PhoneNumber,
                 Place = Store.Place,
                 Description = Store.Description,
-                Owner = Store.Owner
+                Owner = Store.Owner,
+                District = Store.District
 
             };
             
@@ -128,6 +134,7 @@ namespace Eating2.Business.Presenter
                 StoreDataModel.Description = Store.Description;
                 StoreDataModel.OpenTime = Store.OpenTime;
                 StoreDataModel.CloseTime = Store.CloseTime;
+                StoreDataModel.District = Store.District;
 
                 StoreRepository.UpdateStore(StoreDataModel);
                 StoreRepository.Save();
@@ -136,6 +143,12 @@ namespace Eating2.Business.Presenter
 
         public void DeleteStore(int StoreID)
         {
+            List<FoodViewModel> listFoods = FoodPresenterObject.ListAllFoodForStore(StoreID);
+            foreach (var food in listFoods)
+            {
+                FoodPresenterObject.DeleteFood(food.ID);
+            }
+
             var StoreDataModel =StoreRepository.GetStoreByID(StoreID);
             if (StoreDataModel == null)
             {

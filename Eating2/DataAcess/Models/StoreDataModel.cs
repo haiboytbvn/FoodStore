@@ -15,6 +15,7 @@ namespace Eating2.DataAcess.Models
         public string Place { get; set; }
         public string Description { get; set; }
         public string PhoneNumber { get; set; }
+        public string District { get; set; }
         public string Owner { get; set; }
         [ForeignKey("Owner")]
         public virtual ApplicationUser ApplicationUser { get; set; }

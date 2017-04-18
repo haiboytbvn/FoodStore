@@ -26,8 +26,8 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                @String.Format("{0:0,0 vnđ}",item.Cost)
-                @*@Html.DisplayFor(modelItem => item.Cost)*@
+                @String.Format("{0:0,0 VNĐ}",item.Cost)
+                @*@Html.DisplayFor(modelItem => item.Cost)*@    
             </td>
             <td>
                 @Html.ActionLink("Sửa", "Edit", new { id = item.ID }) |

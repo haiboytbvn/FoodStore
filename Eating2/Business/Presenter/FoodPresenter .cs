@@ -18,7 +18,7 @@ namespace Eating2.Business.Presenter
         protected ApplicationUserManager UserManager;
         protected UserPresenter userPresenter;
         protected IStoreRepository StoreRepository;
-
+        protected RatePresenter RatePresenterObject;
 
         public FoodPresenter(HttpContextBase context)
         {
@@ -27,6 +27,7 @@ namespace Eating2.Business.Presenter
             UserManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
             userPresenter = new UserPresenter(context);
             StoreRepository = new StoreRepository();
+            RatePresenterObject = new RatePresenter(context);
         }
 
 
@@ -126,6 +127,13 @@ namespace Eating2.Business.Presenter
 
         public void DeleteFood(int FoodID)
         {
+
+            List<RateViewModel> listRates = RatePresenterObject.ListAllRateForFood(FoodID);
+            foreach(var rate in listRates)
+            {
+                RatePresenterObject.DeleteRate(rate.ID);
+            }
+
             var FoodDataModel = FoodRepository.GetFoodByID(FoodID);
             if (FoodDataModel == null)
             {

@@ -53,6 +53,18 @@ namespace Eating2.Areas.Store.Controllers
             }
         }
 
+        private IRatePresenter ratePresenterObject;
+        protected IRatePresenter RatePresenterObject
+        {
+            get
+            {
+                if (ratePresenterObject == null)
+                {
+                    ratePresenterObject = new RatePresenter(HttpContext);
+                }
+                return ratePresenterObject;
+            }
+        }
         // GET: Food/Food
         public ActionResult Index(int storeId)
         {
