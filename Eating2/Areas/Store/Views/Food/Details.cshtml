@@ -72,21 +72,22 @@
             </div>
         }
 
-
-        @foreach (var image in Model.listFoodPicturesURL)
-        {
-            if (image.exist == true)
+        <div class="row center-block" >
+            @foreach (var image in Model.listFoodPicturesURL)
             {
-                <dl class="dl-horizontal">
-                    <dd>
-                        <img class="image-bordered" src="@Url.Content(image.path)" alt="IMAGE @image.number" height="100" width="100" />
-                        @Html.ActionLink("[Xóa hình ảnh]", "RemoveFoodImage", new { foodId = Model.ID, number = image.number })
-                    </dd>
-                </dl>
-            }
-        }
+                if (image.exist == true)
+                {
+                    <div class="col-md-2">
 
-        
+                        <img class="image-bordered" src="@Url.Content(image.path)" alt="IMAGE @image.number" height="100" width="100" />
+                        <br />
+                        @Html.ActionLink("[Xóa hình ảnh]", "RemoveFoodImage", new { foodId = Model.ID, number = image.number })
+
+                    </div>
+                }
+            }
+        </div>
+
 
 
     </div>

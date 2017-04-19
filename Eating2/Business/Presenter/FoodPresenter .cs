@@ -158,9 +158,15 @@ namespace Eating2.Business.Presenter
 
         public string GetFoodPictureUrlForUpload(string FoodName, int number, string StoreName, string UserName)
         {
-            var folderPath = Path.Combine("~/uploads/photo", UserName, StoreName + " store",
-                FoodName + " food", "food" + number.ToString() + ".jpg");
+            var folderPath = Path.Combine("~/uploads/photo", UserName, StoreName + "Store",
+                FoodName + "Food", "Food" + number.ToString() + ".jpg");
             return folderPath;
+        }
+
+        public string GetFoodDirectionPicture(string FoodName, string StoreName, string UserName)
+        {
+            var directPath = Path.Combine("~/uploads/photo", UserName, StoreName + "Store", FoodName + "Food");
+            return directPath;
         }
     }
 

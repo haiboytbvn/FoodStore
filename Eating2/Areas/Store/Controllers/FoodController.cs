@@ -111,7 +111,7 @@ namespace Eating2.Areas.Store.Controllers
                 //if (food.HasFoodPicture == false)
                 //    food.numberOfFoodPicture = 0;
                 food.listFoodPicturesURL = new List<Image>();
-                for (int i = 0; i < 5; i++)
+                for (int i = 0; i < 6; i++)
                 {
                     var folderPath = FoodPresenterObject.GetFoodPictureUrlForUpload(food.Name, i, store.Name, User.Identity.Name);
                     var foodPictureURL = folderPath + "?time=" + DateTime.Now.Ticks.ToString();
@@ -219,8 +219,19 @@ namespace Eating2.Areas.Store.Controllers
         {
             try
             {
-                int storeID = FoodPresenterObject.GetFoodById(id).StoreID;
+                var food = FoodPresenterObject.GetFoodById(id);
+                int storeID = food.StoreID;
+                var store = StorePresenterObject.GetStoreById(storeID);
+
+                var directPath = FoodPresenterObject.GetFoodDirectionPicture(food.Name, store.Name, User.Identity.Name);
+                var serverPath = Server.MapPath(directPath);
+                DirectoryInfo dir = new DirectoryInfo(serverPath);
+                if (dir.Exists)
+                {
+                    dir.Delete(true);
+                }
                 FoodPresenterObject.DeleteFood(id);
+
                 return RedirectToAction("Details", "Store", new { Id = storeID });
             }
             catch (NotFoundException e)
@@ -238,6 +249,7 @@ namespace Eating2.Areas.Store.Controllers
             string message = "";
             string upload = "no";
 
+            //kiem tra file upload
             if (file == null)
             {
 
@@ -245,6 +257,7 @@ namespace Eating2.Areas.Store.Controllers
                 return RedirectToAction("Details", new { id = FoodId, uploadMessage = message, uploadState = upload });
             }
 
+            //kiem tra phan mo rong file upload
             var ext = Path.GetExtension(file.FileName).ToLowerInvariant();
             if (!(ext == ".jpg" || ext == ".png" || ext == ".jpeg" || ext == ".gif"))
             {
@@ -252,10 +265,9 @@ namespace Eating2.Areas.Store.Controllers
                 return RedirectToAction("Details", new { id = FoodId, uploadMessage = message, uploadState = upload });
             }
 
-            
-
+            //xac dinh vi tri anh se upload
             int numberOfFoodImage = 0;
-            while (numberOfFoodImage < 5)
+            while (numberOfFoodImage < 6)
             {
                 var path = FoodPresenterObject.GetFoodPictureUrlForUpload(food.Name, numberOfFoodImage, store.Name, User.Identity.Name);
                 if (Server.IsRelativePathExisted(path))
@@ -267,11 +279,15 @@ namespace Eating2.Areas.Store.Controllers
                     break;
                 }
             }
-            if (numberOfFoodImage == 5)
+
+            //kiem tra so luong anh da up load, chi duoc up ko qua 6 anh
+            if (numberOfFoodImage == 6)
             {
-                message = "Chỉ được phép tải lên không quá 5 ảnh!";
+                message = "Chỉ được phép tải lên không quá 6 ảnh!";
                 return RedirectToAction("Details", new { id = FoodId, uploadMessage = message, uploadState = upload });
             }
+
+            //upload anh
             var folderPath = FoodPresenterObject.GetFoodPictureUrlForUpload(food.Name, numberOfFoodImage, store.Name, User.Identity.Name);
             var serverPath = Server.MapPath(folderPath);
             var dirs = Path.GetDirectoryName(serverPath);
@@ -280,8 +296,7 @@ namespace Eating2.Areas.Store.Controllers
                 Directory.CreateDirectory(dirs);
             }
             file.SaveAs(serverPath);
-            //food.numberOfFoodPicture++;
-            //FoodPresenterObject.UpdateFood(food.ID, food);
+            
             message = "Tải ảnh lên thành công!";
             upload = "yes";
             return RedirectToAction("Details", new { id = FoodId, uploadMessage = message, uploadState = upload });
@@ -294,18 +309,22 @@ namespace Eating2.Areas.Store.Controllers
             string message = "";
             string remove = "no";
 
+            //xac dinh duong dan anh can xoa
             var folderPath = FoodPresenterObject.GetFoodPictureUrlForUpload(food.Name, number, store.Name, User.Identity.Name);
             var serverPath = Server.MapPath(folderPath);
             FileInfo deleteFile = new FileInfo(serverPath);
+
+            //kiem tra anh con ton tai ko
             if (!(deleteFile.Exists))
             {
                 message = "Hình ảnh này không còn tồn tại!";
                 remove = "no";
                 return RedirectToAction("Details", new { id = foodId, uploadMessage = message, removeState = remove });
             }
+
+            //xoa anh
             deleteFile.Delete();
-            //food.numberOfFoodPicture--;
-            //FoodPresenterObject.UpdateFood(food.ID, food);
+            
             message = "Đã xóa hình ảnh";
             remove = "yes";
             return RedirectToAction("Details", new { id = foodId, uploadMessage = message, removeState = remove });

@@ -172,6 +172,11 @@ namespace Eating2.Business.Presenter
             var folderPath = Path.Combine("~/uploads/photo", UserName, StoreName + " store", "store.jpg");
             return folderPath;
         }
+        public string GetStoreDirectionPicture(string StoreName, string UserName)
+        {
+            var directPath = Path.Combine("~/uploads/photo", UserName, StoreName + "Store");
+            return directPath;
+        }
 
     }
 

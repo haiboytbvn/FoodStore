@@ -187,6 +187,14 @@ namespace Eating2.Areas.Store.Controllers
         {
             try
             {
+                var store = StorePresenterObject.GetStoreById(id);
+                var directPath = StorePresenterObject.GetStoreDirectionPicture(store.Name, User.Identity.Name);
+                var serverPath = Server.MapPath(directPath);
+                DirectoryInfo dir = new DirectoryInfo(serverPath);
+                if (dir.Exists)
+                {
+                    dir.Delete(true);
+                }
                 StorePresenterObject.DeleteStore(id);
                 return RedirectToAction("Index");
             }
@@ -215,42 +223,38 @@ namespace Eating2.Areas.Store.Controllers
             var store = StorePresenterObject.GetStoreById(StoreId);
             string message = "";
             string upload = "no";
-            if (file != null)
-            {
-                var ext = Path.GetExtension(file.FileName).ToLowerInvariant();
-                if (ext == ".jpg" || ext == ".png" || ext == ".jpeg" || ext == ".gif")
-                {
-                    var folderPath = StorePresenterObject.GetStorePictureUrlForUpload(store.Name, User.Identity.Name);
-                    var serverPath = Server.MapPath(folderPath);
-                    var dirs = Path.GetDirectoryName(serverPath);
-                    if (!Directory.Exists(dirs))
-                    {
-                        Directory.CreateDirectory(dirs);
-                    }
-                    file.SaveAs(serverPath);
-                    message = "Tải ảnh lên thành công!";
-                    upload = "yes";
-                }
-                else
-                {
-                    store.HasStorePicture = false;
-                    message = "Chỉ hỗ trợ tải lên ảnh có đuôi: jpg, jpeg, png, gif";
-                }
-            }
-            else
+
+            //kiem tra file upload
+            if (file == null)
             {
                 store.HasStorePicture = false;
                 message = "Có lỗi xảy ra! Tải ảnh lên không thành công.";
+                return RedirectToAction("Details", new { id = StoreId, uploadMessage = message, uploadState = upload });
             }
+
+            //kiem tra phan mo rong dinh dang anh
+            var ext = Path.GetExtension(file.FileName).ToLowerInvariant();
+            if (!(ext == ".jpg" || ext == ".png" || ext == ".jpeg" || ext == ".gif"))
+            {
+                store.HasStorePicture = false;
+                message = "Chỉ hỗ trợ tải lên ảnh có đuôi: jpg, jpeg, png, gif";
+                return RedirectToAction("Details", new { id = StoreId, uploadMessage = message, uploadState = upload });
+            }
+
+            // upload anh
+            var folderPath = StorePresenterObject.GetStorePictureUrlForUpload(store.Name, User.Identity.Name);
+            var serverPath = Server.MapPath(folderPath);
+            var dirs = Path.GetDirectoryName(serverPath);
+            if (!Directory.Exists(dirs))
+            {
+                Directory.CreateDirectory(dirs);
+            }
+            file.SaveAs(serverPath);
+            message = "Tải ảnh lên thành công!";
+            upload = "yes";
             return RedirectToAction("Details", new { id = StoreId, uploadMessage = message, uploadState = upload });
         }
-        //public ActionResult DisplayStoreImage(int StoreId)
-        //{
-        //    var store = StorePresenterObject.GetStoreById(StoreId);
-        //    var folderPath = StorePresenterObject.GetStorePictureUrlForUpload(store.Name, User.Identity.Name);
-        //    store.StorePictureURL = Path.Combine(folderPath, "store.jpg");
-        //    return View("Details", store);
-        //}
+        
 
 
         public ActionResult RemoveStoreImage(int storeId)
@@ -259,15 +263,20 @@ namespace Eating2.Areas.Store.Controllers
             string message = "";
             string remove = "no";
 
+            //xac dinh ten anh can xoa
             var folderPath = StorePresenterObject.GetStorePictureUrlForUpload(store.Name, User.Identity.Name);
             var serverPath = Server.MapPath(folderPath);
             FileInfo deleteFile = new FileInfo(serverPath);
+
+            //kiem tra anh con ton tai ko
             if (!(deleteFile.Exists))
             {
                 message = "Hình ảnh này không còn tồn tại!";
                 remove = "no";
                 return RedirectToAction("Details", new { id = storeId, uploadMessage = message, removeState = remove });
             }
+
+            //xoa anh
             deleteFile.Delete();
             message = "Đã xóa hình ảnh";
             remove = "yes";

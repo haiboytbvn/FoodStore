@@ -17,5 +17,7 @@ namespace Eating2.Business.Presenter
         void DeleteFood(int FoodID);
         void UpdateFood(int FoodID, FoodViewModel Food);
         string GetFoodPictureUrlForUpload(string FoodName, int number, string StoreName, string UserName);
-    }
+        string GetFoodDirectionPicture(string FoodName, string StoreName, string UserName);
+        
+        }
 }

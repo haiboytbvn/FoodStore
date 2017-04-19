@@ -2305,6 +2305,11 @@ th {
 .table-bordered {
   border: 1px solid #ddd;
 }
+
+.image-bordered {
+  border: 2px solid #555;
+}
+
 .table-bordered > thead > tr > th,
 .table-bordered > tbody > tr > th,
 .table-bordered > tfoot > tr > th,

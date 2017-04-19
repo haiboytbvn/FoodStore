@@ -16,5 +16,6 @@ namespace Eating2.Business.Presenter
         void DeleteStore(int StoreID);
         void UpdateStore(int storeID, StoreViewModel store);
         string GetStorePictureUrlForUpload(string StoreName, string UserId);
+        string GetStoreDirectionPicture(string StoreName, string UserName);
     }
 }
