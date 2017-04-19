@@ -21,6 +21,16 @@ namespace Eating2.Business.ViewModels
         public string inStore { get; set; }
         public int NumberOfRate { get; set; }
 
+        public string FoodPictureURL { get; set; }
+        public bool HasFoodPicture { get; set; }
+        public List<Image> listFoodPicturesURL { get; set; }
+        public int numberOfFoodPicture { get; set; }
 
+    }
+
+    public class Image
+    {
+        public int number;
+        public string path;
     }
 }

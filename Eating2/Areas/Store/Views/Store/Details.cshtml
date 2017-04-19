@@ -84,14 +84,7 @@
             }
 
         </div>
-        @if (Model.HasStorePicture == true)
-        {
-            <dl class="dl-horizontal">
-                <dd>
-                    <img class="image-bordered" src="@Url.Content(Model.StorePictureURL)" alt="IMAGES" height="300" />
-                </dd>
-            </dl>
-        }
+
         @if (ViewBag.upload == "yes")
         {
             <div class="text-success">
@@ -104,6 +97,18 @@
                 @ViewBag.Message
             </div>
         }
+
+        @if (Model.HasStorePicture == true)
+        {
+            <dl class="dl-horizontal">
+                <dd>
+                    <img class="image-bordered" src="@Url.Content(Model.StorePictureURL)" alt="IMAGE" height="300" />
+                    <br />
+                    @Html.ActionLink("[Xóa hình ảnh]", "RemoveStoreImage", new {storeId = Model.ID })
+                </dd>
+            </dl>
+        }
+        
 
 
     </div>

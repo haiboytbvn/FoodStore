@@ -9,6 +9,8 @@ using Eating2.DataAcess.Repositories;
 using Eating2.Exception;
 using Microsoft.AspNet.Identity;
 using Eating2.DataAcess.Models;
+using System.IO;
+using Eating2.AppConfig;
 
 namespace Eating2.Areas.Store.Controllers
 {
@@ -96,7 +98,7 @@ namespace Eating2.Areas.Store.Controllers
         }
 
         //Get method
-        public ActionResult Details(int? Id)
+        public ActionResult Details(int? Id, string uploadMessage, string uploadState)
         {
             try
             {
@@ -104,9 +106,31 @@ namespace Eating2.Areas.Store.Controllers
                 {
                     throw new NotFoundException("Id was not valid.");
                 }
-                var Food = FoodPresenterObject.GetFoodById(Id.Value);
-                
-                return View("Details", Food);
+                var food = FoodPresenterObject.GetFoodById(Id.Value);
+                var store = StorePresenterObject.GetStoreById(food.StoreID);
+                //if (food.HasFoodPicture == false)
+                //    food.numberOfFoodPicture = 0;
+                food.listFoodPicturesURL = new List<Image>();
+                for (int i = 0; i < food.numberOfFoodPicture; i++)
+                {
+                    var folderPath = FoodPresenterObject.GetFoodPictureUrlForUpload(food.Name, i, store.Name, User.Identity.Name);
+                    var foodPictureURL = folderPath + "?time=" + DateTime.Now.Ticks.ToString();
+                    var image = new Image
+                    {
+                        number = i,
+                        path = foodPictureURL
+                    };
+
+                    food.listFoodPicturesURL.Add(image);
+                    food.HasFoodPicture = Server.IsRelativePathExisted(folderPath);
+                }
+
+
+                ViewBag.upload = uploadState;
+                ViewBag.Message = uploadMessage;
+
+
+                return View("Details", food);
             }
             catch (NotFoundException e)
             {
@@ -153,7 +177,7 @@ namespace Eating2.Areas.Store.Controllers
                         StoreID = storeID,
                     };
                     FoodPresenterObject.UpdateFood(id, updatedFood);
-                    if(details == null)
+                    if (details == null)
                         return RedirectToAction("Details", "Store", new { Id = storeID });
                     else
                         return RedirectToAction("Details", "Food", new { Id = id });
@@ -201,5 +225,74 @@ namespace Eating2.Areas.Store.Controllers
                 return View("ResultNotFoundError");
             }
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult UploadFoodImage(HttpPostedFileBase file, int FoodId)
+        {
+            var food = FoodPresenterObject.GetFoodById(FoodId);
+            var store = StorePresenterObject.GetStoreById(food.StoreID);
+            string message = "";
+            string upload = "no";
+
+            if (file == null)
+            {
+                
+                message = "Có lỗi xảy ra! Tải ảnh lên không thành công.";
+                return RedirectToAction("Details", new { id = FoodId, uploadMessage = message, uploadState = upload });
+            }
+
+            var ext = Path.GetExtension(file.FileName).ToLowerInvariant();
+            if (!(ext == ".jpg" || ext == ".png" || ext == ".jpeg" || ext == ".gif"))
+            {
+                message = "Chỉ hỗ trợ tải lên ảnh có đuôi: jpg, jpeg, png, gif";
+                return RedirectToAction("Details", new { id = FoodId, uploadMessage = message, uploadState = upload });
+            }
+
+            if(food.numberOfFoodPicture >= 5)
+            {
+                message = "Chỉ được phép tải lên không quá 5 ảnh!";
+                return RedirectToAction("Details", new { id = FoodId, uploadMessage = message, uploadState = upload });
+            }
+
+            var folderPath = FoodPresenterObject.GetFoodPictureUrlForUpload(food.Name, food.numberOfFoodPicture, store.Name, User.Identity.Name);
+            var serverPath = Server.MapPath(folderPath);
+            var dirs = Path.GetDirectoryName(serverPath);
+            if (!Directory.Exists(dirs))
+            {
+                Directory.CreateDirectory(dirs);
+            }
+            file.SaveAs(serverPath);
+            food.numberOfFoodPicture++;
+            FoodPresenterObject.UpdateFood(food.ID, food);
+            message = "Tải ảnh lên thành công!";
+            upload = "yes";
+            return RedirectToAction("Details", new { id = FoodId, uploadMessage = message, uploadState = upload });
+        }
+
+        public ActionResult RemoveFoodImage(int foodId, int number)
+        {
+            var food = FoodPresenterObject.GetFoodById(foodId);
+            var store = StorePresenterObject.GetStoreById(food.StoreID);
+            string message = "";
+            string remove = "no";
+
+            var folderPath = FoodPresenterObject.GetFoodPictureUrlForUpload(food.Name, number, store.Name, User.Identity.Name);
+            var serverPath = Server.MapPath(folderPath);
+            FileInfo deleteFile = new FileInfo(serverPath);
+            if (!(deleteFile.Exists))
+            {
+                message = "Hình ảnh này không còn tồn tại!";
+                remove = "no";
+                return RedirectToAction("Details", new { id = foodId, uploadMessage = message, removeState = remove });
+            }
+            deleteFile.Delete();
+            food.numberOfFoodPicture--;
+            FoodPresenterObject.UpdateFood(food.ID, food);
+            message = "Đã xóa hình ảnh";
+            remove = "yes";
+            return RedirectToAction("Details", new { id = foodId, uploadMessage = message, removeState = remove });
+        }
+
     }
 }

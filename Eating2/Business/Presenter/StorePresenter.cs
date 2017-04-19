@@ -169,7 +169,7 @@ namespace Eating2.Business.Presenter
 
         public string GetStorePictureUrlForUpload(string StoreName, string UserName)
         {
-            var folderPath = Path.Combine(StoreImageConfiguration.PhotosFolderPath, UserName, "Store", StoreName, StoreImageConfiguration.StoreImageFileName);
+            var folderPath = Path.Combine("~/uploads/photo", UserName, StoreName + " store", "store.jpg");
             return folderPath;
         }
 

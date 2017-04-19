@@ -93,8 +93,8 @@ namespace Eating2.Areas.Store.Controllers
 
                 ViewBag.upload = uploadState;
                 ViewBag.Message = uploadMessage;
-               
-               
+
+
                 return View("Details", Store);
             }
             catch (NotFoundException e)
@@ -242,7 +242,7 @@ namespace Eating2.Areas.Store.Controllers
                 store.HasStorePicture = false;
                 message = "Có lỗi xảy ra! Tải ảnh lên không thành công.";
             }
-            return RedirectToAction("Details", new { id = StoreId, uploadMessage = message, uploadState = upload});
+            return RedirectToAction("Details", new { id = StoreId, uploadMessage = message, uploadState = upload });
         }
         //public ActionResult DisplayStoreImage(int StoreId)
         //{
@@ -251,5 +251,28 @@ namespace Eating2.Areas.Store.Controllers
         //    store.StorePictureURL = Path.Combine(folderPath, "store.jpg");
         //    return View("Details", store);
         //}
+
+
+        public ActionResult RemoveStoreImage(int storeId)
+        {
+            var store = StorePresenterObject.GetStoreById(storeId);
+            string message = "";
+            string remove = "no";
+
+            var folderPath = StorePresenterObject.GetStorePictureUrlForUpload(store.Name, User.Identity.Name);
+            var serverPath = Server.MapPath(folderPath);
+            FileInfo deleteFile = new FileInfo(serverPath);
+            if (!(deleteFile.Exists))
+            {
+                message = "Hình ảnh này không còn tồn tại!";
+                remove = "no";
+                return RedirectToAction("Details", new { id = storeId, uploadMessage = message, removeState = remove });
+            }
+            deleteFile.Delete();
+            message = "Đã xóa hình ảnh";
+            remove = "yes";
+            return RedirectToAction("Details", new { id = storeId, uploadMessage = message, removeState = remove });
+        }
+
     }
 }

@@ -8,6 +8,8 @@ using System.Linq;
 using System.Web;
 using Eating2.DataAcess.Models;
 using Eating2.Business.Presenter;
+using Eating2.AppConfig;
+using System.IO;
 
 namespace Eating2.Business.Presenter
 {
@@ -48,7 +50,8 @@ namespace Eating2.Business.Presenter
                 Cost = Food.Cost,
                 Processing = Food.Processing,
                 StoreID = Food.StoreID,
-                inStore = Food.Store.Name
+                inStore = Food.Store.Name,
+                numberOfFoodPicture = Food.numberOfFoodPicture
             };
             return FoodViewModel;
 
@@ -66,7 +69,8 @@ namespace Eating2.Business.Presenter
                     Name = Food.Name,
                     Cost = Food.Cost,
                     Processing = Food.Processing,
-                    inStore = Food.Store.Name
+                    inStore = Food.Store.Name,
+                    numberOfFoodPicture = Food.numberOfFoodPicture
                 };
                 listFoodViewModel.Add(FoodViewModel);
             }
@@ -86,8 +90,9 @@ namespace Eating2.Business.Presenter
                     Cost = Food.Cost,
                     Processing = Food.Processing,
                     inStore = Food.Store.Name,
-                    NumberOfRate = RateRepository.TotalRate(Food.ID)
-                    
+                    NumberOfRate = RateRepository.TotalRate(Food.ID),
+                    numberOfFoodPicture = Food.numberOfFoodPicture
+
                 };
                 listFoodViewModel.Add(FoodViewModel);
             }
@@ -101,8 +106,9 @@ namespace Eating2.Business.Presenter
                 Name = Food.Name,
                 Cost = Food.Cost,
                 Processing = Food.Processing,
-                StoreID = Food.StoreID
-                
+                StoreID = Food.StoreID,
+                numberOfFoodPicture = Food.numberOfFoodPicture
+
             };
 
             FoodRepository.InsertFood(FoodDataModel);
@@ -122,6 +128,7 @@ namespace Eating2.Business.Presenter
                 FoodDataModel.Name = Food.Name;
                 FoodDataModel.Cost = Food.Cost;
                 FoodDataModel.Processing = Food.Processing;
+                FoodDataModel.numberOfFoodPicture = Food.numberOfFoodPicture;
 
                 FoodRepository.UpdateFood(FoodDataModel);
                 FoodRepository.Save();
@@ -149,6 +156,12 @@ namespace Eating2.Business.Presenter
             }
         }
 
+        public string GetFoodPictureUrlForUpload(string FoodName, int number, string StoreName, string UserName)
+        {
+            var folderPath = Path.Combine("~/uploads/photo", UserName, StoreName + " store",
+                FoodName + " food", "food" + number.ToString() + ".jpg");
+            return folderPath;
+        }
     }
 
 }

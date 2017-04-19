@@ -39,6 +39,54 @@
                 @String.Format("{0:0,0 VNĐ}", Model.Cost)
             </dd>
         </dl>
+
+        <div class="form-group">
+            @using (Html.BeginForm("UploadFoodImage", "Food", new { FoodId = Model.ID }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                <dl class="dl-horizontal">
+                    <dt>
+                        <label for="file" , class="contro-label"> Tải hình ảnh </label>
+                    </dt>
+                    <dd>
+                        <div>
+                            <input type="file" name="file" id="file" class="btn btn-default" />
+                            <input type="submit" value="Upload Image" class="btn btn-default" />
+                            <p class="text-muted">Chỉ hỗ trợ ảnh có đuôi: jpg, jpeg, png, gif</p>
+                        </div>
+                    </dd>
+                </dl>
+            }
+        </div>
+
+        @if (ViewBag.upload == "yes")
+        {
+            <div class="text-success">
+                @ViewBag.Message
+            </div>
+        }
+        else
+        {
+            <div class="text-danger">
+                @ViewBag.Message
+            </div>
+        }
+        
+        @if (Model.HasFoodPicture == true)
+        {
+            foreach (var image in Model.listFoodPicturesURL)
+            {
+                <dl class="dl-horizontal">
+                    <dd>
+                        <img class="image-bordered" src="@Url.Content(image.path)" alt="IMAGE @image.number" height="300" width="300"/>
+                        @Html.ActionLink("[Xóa hình ảnh]", "RemoveFoodImage", new { foodId = Model.ID, number = image.number})
+                    </dd>
+                </dl>
+            }
+
+        }
+       
+
     </div>
     <div style="background-color:#dddddd; border-radius: 5px; margin-bottom: 20px; padding: 5px 0 5px 0;">
         <p>

@@ -191,6 +191,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppConfig\FileExtension.cs" />
+    <Compile Include="AppConfig\FoodImageConfiguration.cs" />
     <Compile Include="AppConfig\StoreImageConfiguration.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
