@@ -111,18 +111,21 @@ namespace Eating2.Areas.Store.Controllers
                 //if (food.HasFoodPicture == false)
                 //    food.numberOfFoodPicture = 0;
                 food.listFoodPicturesURL = new List<Image>();
-                for (int i = 0; i < food.numberOfFoodPicture; i++)
+                for (int i = 0; i < 5; i++)
                 {
                     var folderPath = FoodPresenterObject.GetFoodPictureUrlForUpload(food.Name, i, store.Name, User.Identity.Name);
                     var foodPictureURL = folderPath + "?time=" + DateTime.Now.Ticks.ToString();
                     var image = new Image
                     {
+                        exist = Server.IsRelativePathExisted(folderPath),
                         number = i,
                         path = foodPictureURL
                     };
-
-                    food.listFoodPicturesURL.Add(image);
-                    food.HasFoodPicture = Server.IsRelativePathExisted(folderPath);
+                    if (image.exist == true)
+                    {
+                        food.listFoodPicturesURL.Add(image);
+                        food.HasFoodPicture = Server.IsRelativePathExisted(folderPath);
+                    }
                 }
 
 
@@ -237,7 +240,7 @@ namespace Eating2.Areas.Store.Controllers
 
             if (file == null)
             {
-                
+
                 message = "Có lỗi xảy ra! Tải ảnh lên không thành công.";
                 return RedirectToAction("Details", new { id = FoodId, uploadMessage = message, uploadState = upload });
             }
@@ -249,13 +252,27 @@ namespace Eating2.Areas.Store.Controllers
                 return RedirectToAction("Details", new { id = FoodId, uploadMessage = message, uploadState = upload });
             }
 
-            if(food.numberOfFoodPicture >= 5)
+            
+
+            int numberOfFoodImage = 0;
+            while (numberOfFoodImage < 5)
+            {
+                var path = FoodPresenterObject.GetFoodPictureUrlForUpload(food.Name, numberOfFoodImage, store.Name, User.Identity.Name);
+                if (Server.IsRelativePathExisted(path))
+                {
+                    numberOfFoodImage++;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            if (numberOfFoodImage == 5)
             {
                 message = "Chỉ được phép tải lên không quá 5 ảnh!";
                 return RedirectToAction("Details", new { id = FoodId, uploadMessage = message, uploadState = upload });
             }
-
-            var folderPath = FoodPresenterObject.GetFoodPictureUrlForUpload(food.Name, food.numberOfFoodPicture, store.Name, User.Identity.Name);
+            var folderPath = FoodPresenterObject.GetFoodPictureUrlForUpload(food.Name, numberOfFoodImage, store.Name, User.Identity.Name);
             var serverPath = Server.MapPath(folderPath);
             var dirs = Path.GetDirectoryName(serverPath);
             if (!Directory.Exists(dirs))
@@ -263,8 +280,8 @@ namespace Eating2.Areas.Store.Controllers
                 Directory.CreateDirectory(dirs);
             }
             file.SaveAs(serverPath);
-            food.numberOfFoodPicture++;
-            FoodPresenterObject.UpdateFood(food.ID, food);
+            //food.numberOfFoodPicture++;
+            //FoodPresenterObject.UpdateFood(food.ID, food);
             message = "Tải ảnh lên thành công!";
             upload = "yes";
             return RedirectToAction("Details", new { id = FoodId, uploadMessage = message, uploadState = upload });
@@ -287,8 +304,8 @@ namespace Eating2.Areas.Store.Controllers
                 return RedirectToAction("Details", new { id = foodId, uploadMessage = message, removeState = remove });
             }
             deleteFile.Delete();
-            food.numberOfFoodPicture--;
-            FoodPresenterObject.UpdateFood(food.ID, food);
+            //food.numberOfFoodPicture--;
+            //FoodPresenterObject.UpdateFood(food.ID, food);
             message = "Đã xóa hình ảnh";
             remove = "yes";
             return RedirectToAction("Details", new { id = foodId, uploadMessage = message, removeState = remove });

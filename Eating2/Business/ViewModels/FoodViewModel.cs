@@ -32,5 +32,6 @@ namespace Eating2.Business.ViewModels
     {
         public int number;
         public string path;
+        public bool exist;
     }
 }

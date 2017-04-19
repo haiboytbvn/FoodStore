@@ -102,7 +102,7 @@
         {
             <dl class="dl-horizontal">
                 <dd>
-                    <img class="image-bordered" src="@Url.Content(Model.StorePictureURL)" alt="IMAGE" height="300" />
+                    <img class="image-bordered" src="@Url.Content(Model.StorePictureURL)" alt="IMAGE" height="100", width="100" />
                     <br />
                     @Html.ActionLink("[Xóa hình ảnh]", "RemoveStoreImage", new {storeId = Model.ID })
                 </dd>

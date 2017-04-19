@@ -71,21 +71,23 @@
                 @ViewBag.Message
             </div>
         }
-        
-        @if (Model.HasFoodPicture == true)
+
+
+        @foreach (var image in Model.listFoodPicturesURL)
         {
-            foreach (var image in Model.listFoodPicturesURL)
+            if (image.exist == true)
             {
                 <dl class="dl-horizontal">
                     <dd>
-                        <img class="image-bordered" src="@Url.Content(image.path)" alt="IMAGE @image.number" height="300" width="300"/>
-                        @Html.ActionLink("[Xóa hình ảnh]", "RemoveFoodImage", new { foodId = Model.ID, number = image.number})
+                        <img class="image-bordered" src="@Url.Content(image.path)" alt="IMAGE @image.number" height="100" width="100" />
+                        @Html.ActionLink("[Xóa hình ảnh]", "RemoveFoodImage", new { foodId = Model.ID, number = image.number })
                     </dd>
                 </dl>
             }
-
         }
-       
+
+        
+
 
     </div>
     <div style="background-color:#dddddd; border-radius: 5px; margin-bottom: 20px; padding: 5px 0 5px 0;">
