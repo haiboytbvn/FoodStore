@@ -18,13 +18,18 @@ namespace Eating2.Business.ViewModels
         public string Recipe { get; set; }
         public int StoreID { get; set; }
         [Display(Name = "Cửa hàng")]
-        public string inStore { get; set; }
+        //public string inStore { get; set; }
+        public string StoreNameDisplayOnly { get; set; }
+        public string DistrictDisplayOnly { get; set; }
         public int NumberOfRate { get; set; }
+        
+        public double AveragePoint { get; set; }
 
         public string FoodPictureURL { get; set; }
         public bool HasFoodPicture { get; set; }
         public List<Image> listFoodPicturesURL { get; set; }
         //public int numberOfFoodPicture { get; set; }
+        
 
     }
 

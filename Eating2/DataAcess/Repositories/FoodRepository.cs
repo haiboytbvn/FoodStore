@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using Eating2.DataAcess.Models;
 using System.Data.Entity;
+using PagedList;
+using Eating2.AppConfig;
 
 namespace Eating2.DataAcess.Repositories
 {
@@ -49,5 +51,61 @@ namespace Eating2.DataAcess.Repositories
         {
             dataContext.Entry(Food).State = EntityState.Modified;
         }
+
+        public IPagedList<FoodDataModel> GetFoodsForSearch(FilterOptions filterOptions)
+        {
+            IQueryable<FoodDataModel> query = dataContext.Foods.Select(t => t).OrderBy(t => t.ID);
+            if (filterOptions == null)
+            {
+                return query.ToCustomPagedList<FoodDataModel>(0, 10);
+            }
+            if (!string.IsNullOrEmpty(filterOptions.Keyword))
+            {
+                foreach (var field in filterOptions.FilterFields)
+                {
+                    switch (field.ToLowerInvariant())
+                    {
+                        case "storenamedisplayonly":
+                            query = query.Where(t => t.Name.Contains(filterOptions.Keyword));
+                            break;
+                        case "name":
+                            query = query.Where(t => t.Name.Contains(filterOptions.Keyword));
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+
+            if (filterOptions.SortOptions != null)
+            {
+                var sortOptions = filterOptions.SortOptions;
+                switch (sortOptions.Field.ToLowerInvariant())
+                {
+                    case "name":
+                        query = sortOptions.Direction == SortDirections.Asc ? query.OrderBy(t => t.Name) : query.OrderByDescending(t => t.Name);
+                        break;
+                    case "cost":
+                        query = sortOptions.Direction == SortDirections.Asc ? query.OrderBy(t => t.Cost) : query.OrderByDescending(t => t.Cost);
+                        break;
+                    case "storenamedisplayonly":
+                        query = sortOptions.Direction == SortDirections.Asc ? query.OrderBy(t => t.StoreNameDisplayOnly) : query.OrderByDescending(t => t.StoreNameDisplayOnly);
+                        break;
+                    case "districtdisplayonly":
+                        query = sortOptions.Direction == SortDirections.Asc ? query.OrderBy(t => t.DistrictDisplayOnly) : query.OrderByDescending(t => t.DistrictDisplayOnly);
+                        break;
+
+                }
+               // query = OrderByID(query);
+            }
+
+            if (filterOptions.PagingOptions != null)
+            {
+                var pagingOption = filterOptions.PagingOptions;
+                return query.ToCustomPagedList(pagingOption.CurrentPage, pagingOption.PageSize);
+            }
+            return query.ToCustomPagedList(0, 10);
+        }
+
     }
 }

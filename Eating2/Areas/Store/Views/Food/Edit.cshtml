@@ -38,10 +38,10 @@
 
 
         <div class="form-group", >
-            @Html.LabelFor(model => model.inStore, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.StoreNameDisplayOnly, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.inStore, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
-                @Html.ValidationMessageFor(model => model.inStore, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.StoreNameDisplayOnly, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                @Html.ValidationMessageFor(model => model.StoreNameDisplayOnly, "", new { @class = "text-danger" })
             </div>
         </div>
 

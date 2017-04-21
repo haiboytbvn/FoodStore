@@ -10,6 +10,7 @@ using Eating2.DataAcess.Models;
 using Eating2.Business.Presenter;
 using Eating2.AppConfig;
 using System.IO;
+using PagedList;
 
 namespace Eating2.Business.Presenter
 {
@@ -43,16 +44,18 @@ namespace Eating2.Business.Presenter
             {
                 throw new NotFoundException("Food was not found.");
             }
-            var FoodViewModel = new FoodViewModel()
-            {
-                ID = Food.ID,
-                Name = Food.Name,
-                Cost = Food.Cost,
-                Recipe = Food.Recipe,
-                StoreID = Food.StoreID,
-                inStore = Food.Store.Name,
-               // numberOfFoodPicture = Food.numberOfFoodPicture
-            };
+            var FoodViewModel = new FoodViewModel();
+            FoodViewModel = Food.MapTo<FoodDataModel, FoodViewModel>();
+            //FoodViewModel.AveragePoint = RateRepository.AveragePoint(FoodID);
+            //{
+            //    ID = Food.ID,
+            //    Name = Food.Name,
+            //    Cost = Food.Cost,
+            //    Recipe = Food.Recipe,
+            //    StoreID = Food.StoreID,
+            //    StoreNameDisplayOnly = Food.Store.Name,
+            //   // numberOfFoodPicture = Food.numberOfFoodPicture
+            //};
             return FoodViewModel;
 
         }
@@ -63,15 +66,16 @@ namespace Eating2.Business.Presenter
             var listFood = FoodRepository.ListAll();
             foreach (var Food in listFood)
             {
-                var FoodViewModel = new FoodViewModel()
-                {
-                    ID = Food.ID,
-                    Name = Food.Name,
-                    Cost = Food.Cost,
-                    Recipe = Food.Recipe,
-                    inStore = Food.Store.Name,
+                var FoodViewModel = Food.MapTo<FoodDataModel, FoodViewModel>();
+                //var FoodViewModel = new FoodViewModel()
+                //{
+                //    ID = Food.ID,
+                //    Name = Food.Name,
+                //    Cost = Food.Cost,
+                //    Recipe = Food.Recipe,
+                //    StoreNameDisplayOnly = Food.Store.Name,
                     
-                };
+                //};
                 listFoodViewModel.Add(FoodViewModel);
             }
             return listFoodViewModel;
@@ -83,34 +87,30 @@ namespace Eating2.Business.Presenter
             var listFood = FoodRepository.ListAllForStore(id);
             foreach (var Food in listFood)
             {
-                var FoodViewModel = new FoodViewModel()
-                {
-                    ID = Food.ID,
-                    Name = Food.Name,
-                    Cost = Food.Cost,
-                    Recipe = Food.Recipe,
-                    inStore = Food.Store.Name,
-                    NumberOfRate = RateRepository.TotalRate(Food.ID),
-                   // numberOfFoodPicture = Food.numberOfFoodPicture
+                var FoodViewModel = Food.MapTo<FoodDataModel, FoodViewModel>();
+                //var FoodViewModel = new FoodViewModel()
+                //{
+                //    ID = Food.ID,
+                //    Name = Food.Name,
+                //    Cost = Food.Cost,
+                //    Recipe = Food.Recipe,
+                //    StoreNameDisplayOnly = Food.Store.Name,
+                //    NumberOfRate = RateRepository.TotalRate(Food.ID),
+                //   // numberOfFoodPicture = Food.numberOfFoodPicture
 
-                };
+                //};
                 listFoodViewModel.Add(FoodViewModel);
             }
             return listFoodViewModel;
         }
         public void InsertFood(FoodViewModel Food)
         {
-            var FoodDataModel = new FoodDataModel()
-            {
-                ID = Food.ID,
-                Name = Food.Name,
-                Cost = Food.Cost,
-                Recipe = Food.Recipe,
-                StoreID = Food.StoreID,
-                //numberOfFoodPicture = Food.numberOfFoodPicture
+            var FoodDataModel = Food.MapTo<FoodViewModel, FoodDataModel>();
 
-            };
-
+            var store = StoreRepository.GetStoreByID(Food.StoreID);
+            FoodDataModel.DistrictDisplayOnly = store.District;
+            FoodDataModel.StoreNameDisplayOnly = store.Name;
+            
             FoodRepository.InsertFood(FoodDataModel);
             FoodRepository.Save();
         }
@@ -118,17 +118,18 @@ namespace Eating2.Business.Presenter
         public void UpdateFood(int FoodID, FoodViewModel Food)
         {
             var FoodDataModel = FoodRepository.GetFoodByID(FoodID);
+
             if (FoodDataModel == null)
             {
                 throw new NotFoundException("Food was not found.");
             }
             else
             {
-                FoodDataModel.ID = Food.ID;
-                FoodDataModel.Name = Food.Name;
-                FoodDataModel.Cost = Food.Cost;
-                FoodDataModel.Recipe = Food.Recipe;
-               
+                FoodDataModel = Food.MapTo<FoodViewModel, FoodDataModel>();
+                var store = StoreRepository.GetStoreByID(Food.StoreID);
+                FoodDataModel.DistrictDisplayOnly = store.District;
+                FoodDataModel.StoreNameDisplayOnly = store.Name;
+
 
                 FoodRepository.UpdateFood(FoodDataModel);
                 FoodRepository.Save();
@@ -167,6 +168,13 @@ namespace Eating2.Business.Presenter
         {
             var directPath = Path.Combine("~/uploads/photo", UserName, StoreName + "Store", FoodName + "Food");
             return directPath;
+        }
+
+        public IPagedList<FoodViewModel> GetFoodsForSearch(FilterOptions filterOptions)
+        {
+            var list = FoodRepository.GetFoodsForSearch(filterOptions);
+            var mappedList = list.MapTo<IPagedList<FoodDataModel>, IPagedList<FoodViewModel>>();
+            return mappedList;
         }
     }
 

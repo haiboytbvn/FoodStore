@@ -1,5 +1,7 @@
-﻿using Eating2.Business.ViewModels;
+﻿using Eating2.AppConfig;
+using Eating2.Business.ViewModels;
 using Eating2.DataAcess.Models;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +20,7 @@ namespace Eating2.Business.Presenter
         void UpdateFood(int FoodID, FoodViewModel Food);
         string GetFoodPictureUrlForUpload(string FoodName, int number, string StoreName, string UserName);
         string GetFoodDirectionPicture(string FoodName, string StoreName, string UserName);
-        
-        }
+        IPagedList<FoodViewModel> GetFoodsForSearch(FilterOptions filterOptions);
+
+    }
 }

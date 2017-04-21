@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Eating2.DataAcess.Models;
+using PagedList;
+using Eating2.AppConfig;
 
 namespace Eating2.DataAcess.Repositories
 {
@@ -17,5 +19,6 @@ namespace Eating2.DataAcess.Repositories
         void Save();
         IEnumerable<FoodDataModel> ListAllForStore(int id);
         int TotalFood(int StoreId);
+        IPagedList<FoodDataModel> GetFoodsForSearch(FilterOptions filterOptions);
     }
 }

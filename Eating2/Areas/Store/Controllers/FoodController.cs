@@ -89,7 +89,10 @@ namespace Eating2.Areas.Store.Controllers
 
             if (ModelState.IsValid)
             {
+                //var store = StorePresenterObject.GetStoreById(STOREID);
                 Food.StoreID = STOREID;
+                //Food.DistrictDisplayOnly = store.District;
+              
                 FoodPresenterObject.InsertFood(Food);
                 return RedirectToAction("Details", "Store", new { Id = STOREID });
 
@@ -329,6 +332,54 @@ namespace Eating2.Areas.Store.Controllers
             remove = "yes";
             return RedirectToAction("Details", new { id = foodId, uploadMessage = message, removeState = remove });
         }
+
+
+       
+        public ActionResult DetailsForUser(int? Id, string uploadMessage, string uploadState)
+        {
+            try
+            {
+                if (!Id.HasValue)
+                {
+                    throw new NotFoundException("Id was not valid.");
+                }
+                var food = FoodPresenterObject.GetFoodById(Id.Value);
+                var store = StorePresenterObject.GetStoreById(food.StoreID);
+                //if (food.HasFoodPicture == false)
+                //    food.numberOfFoodPicture = 0;
+                food.listFoodPicturesURL = new List<Image>();
+                for (int i = 0; i < 6; i++)
+                {
+                    var folderPath = FoodPresenterObject.GetFoodPictureUrlForUpload(food.Name, i, store.Name, User.Identity.Name);
+                    var foodPictureURL = folderPath + "?time=" + DateTime.Now.Ticks.ToString();
+                    var image = new Image
+                    {
+                        exist = Server.IsRelativePathExisted(folderPath),
+                        number = i,
+                        path = foodPictureURL
+                    };
+                    if (image.exist == true)
+                    {
+                        food.listFoodPicturesURL.Add(image);
+                        food.HasFoodPicture = Server.IsRelativePathExisted(folderPath);
+                    }
+                }
+
+
+                ViewBag.upload = uploadState;
+                ViewBag.Message = uploadMessage;
+
+
+                return View("Details", food);
+            }
+            catch (NotFoundException e)
+            {
+                return View("ResultNotFoundError");
+            }
+
+        }
+
+
 
     }
 }

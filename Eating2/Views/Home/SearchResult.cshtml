@@ -1,0 +1,64 @@
+﻿@using Eating2.Business.ViewModels;
+@using PagedList;
+@using PagedList.Mvc;
+@using Eating2.AppConfig
+@model PagedList.IPagedList<FoodViewModel>
+
+<div class="jumbotron">
+    <h1>Bạn muốn ăn gì?</h1>
+    <p class="lead">Cùng tìm kiếm những địa điểm ăn uống xung quanh mình!</p>
+    
+    @Html.Action("FilterForFood", "Filter", new { area = "" })
+    <br />
+</div>
+<br />
+<table class="table table-bordered">
+    <tr>
+        <th>
+            <h4>@Html.SortableLink(Request, "Name", "Tên món ăn")</h4>
+        </th>
+        <th>
+            <h4>@Html.SortableLink(Request, "Cost", "Giá")</h4>
+        </th>
+        <th>
+            <h4>@Html.SortableLink(Request, "StoreNameDisplayOnly", "Cửa hàng")</h4>
+        </th>
+        <th>
+            <h4>@Html.SortableLink(Request, "DistrictDisplayOnly", "Khu vực")</h4>
+        </th>
+        <th>
+            <h4>@Html.SortableLink(Request, "AveragePoint", "Điểm")</h4>
+        </th>
+        <th>
+
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @String.Format("{0:0,0 VNĐ}", item.Cost)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StoreNameDisplayOnly)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DistrictDisplayOnly)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AveragePoint) (@Html.DisplayFor(modelItem => item.NumberOfRate) lượt)
+            </td>
+            <td>
+                @Html.ActionLink("Chi tiết", "DetailsForUser", "User", new { Id = item.ID }, null)
+            </td>
+        </tr>
+    }
+</table>
+@Html.PagedListPager(Model, page => Request.AddQueryString(new KeyValuePair<string, string>("p", page.ToString())))
+
+
+

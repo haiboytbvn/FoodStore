@@ -1,4 +1,7 @@
-﻿using System;
+﻿using AutoMapper;
+using Eating2.AppConfig;
+using Eating2.Business;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -16,6 +19,11 @@ namespace Eating2
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            ModelBinders.Binders.Add(typeof(FilterOptions), new FilterOptionsBinding());
+            Mapper.Initialize(cfg =>
+            {
+                cfg.AddProfile(new FoodMappingProfile("FoodMapping"));
+            });
         }
     }
 }

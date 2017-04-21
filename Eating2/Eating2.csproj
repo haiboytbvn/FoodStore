@@ -48,6 +48,10 @@
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="AutoMapper, Version=6.0.2.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.6.0.2\lib\net45\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=2.0.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.2.0.7\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
       <Private>True</Private>
@@ -119,6 +123,14 @@
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -200,7 +212,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppConfig\CustomPagedList.cs" />
+    <Compile Include="AppConfig\CustomPagedListExtensions.cs" />
     <Compile Include="AppConfig\FileExtension.cs" />
+    <Compile Include="AppConfig\FilterOptions.cs" />
+    <Compile Include="AppConfig\FilterOptionsBinding.cs" />
+    <Compile Include="AppConfig\HtmlExtensions.cs" />
+    <Compile Include="AppConfig\MapperExtensions.cs" />
+    <Compile Include="AppConfig\PagingConfig.cs" />
+    <Compile Include="AppConfig\PagingOptions.cs" />
+    <Compile Include="AppConfig\SearchOptions.cs" />
+    <Compile Include="AppConfig\SortOptions.cs" />
+    <Compile Include="AppConfig\StringExtensions.cs" />
+    <Compile Include="AppConfig\UrlExtensions.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -210,6 +234,8 @@
     <Compile Include="Areas\Store\Controllers\RateController.cs" />
     <Compile Include="Areas\Store\Controllers\FoodController.cs" />
     <Compile Include="Areas\Store\Controllers\StoreController.cs" />
+    <Compile Include="Business\FoodMappingProfile.cs" />
+    <Compile Include="Business\PageListConverter.cs" />
     <Compile Include="Business\Presenter\RatePresenter.cs" />
     <Compile Include="Business\Presenter\IRatePresenter.cs" />
     <Compile Include="Business\Presenter\IFoodPresenter.cs" />
@@ -218,9 +244,12 @@
     <Compile Include="Business\Presenter\FoodPresenter .cs" />
     <Compile Include="Business\Presenter\StorePresenter.cs" />
     <Compile Include="Business\Presenter\UserPresenter.cs" />
+    <Compile Include="Business\ViewModels\FilterOptionViewModel.cs" />
     <Compile Include="Business\ViewModels\RateViewModel.cs" />
     <Compile Include="Business\ViewModels\FoodViewModel.cs" />
     <Compile Include="Business\ViewModels\UserViewModel.cs" />
+    <Compile Include="Controllers\FilterController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DataAcess\Models\CategoryDataModel.cs" />
     <Compile Include="DataAcess\Models\RateDataModel.cs" />
     <Compile Include="DataAcess\Models\FoodDataModel.cs" />
@@ -262,6 +291,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -294,6 +324,7 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Views\User\DetailsForUser.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -353,6 +384,9 @@
     <Content Include="Views\Shared\ResultNotFoundError.cshtml" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
+    <Content Include="Views\Shared\Filter\_FilterOptionPartialView.cshtml" />
+    <Content Include="Views\Shared\Filter\_FilterPartialView.cshtml" />
+    <Content Include="Views\Home\SearchResult.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

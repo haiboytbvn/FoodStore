@@ -1,0 +1,19 @@
+﻿@using Eating2.Business.ViewModels
+@using Eating2.AppConfig
+@model FilterViewModel
+@using (Html.BeginFormGet())
+{
+    <div class="search-box search-bar navbar-form navbar-left">
+        <div class="form-group">
+            @Html.TextBox("filterKeyword", Model.FilterOptions.Keyword, new { @class = "form-control" })
+        </div>
+        <input type="submit" value="Tìm kiếm" class="btn btn-default">
+        <div class="form-group">
+            <strong>By</strong>
+            @foreach (var item in Model.FilterFields)
+                {
+                @Html.Partial("~/Views/Shared/Filter/_FilterOptionPartialView.cshtml", item)
+            }
+        </div>
+    </div>
+}

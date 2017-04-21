@@ -49,5 +49,22 @@ namespace Eating2.DataAcess.Repositories
         {
             dataContext.Entry(Rate).State = EntityState.Modified;
         }
+
+        public double AveragePoint(int FoodId)
+        {
+            double averagePoint;
+            var list = dataContext.Rates.Where(rate => rate.FoodID == FoodId);
+
+            if(list.Count() > 0)
+            {
+                averagePoint = list.Average(p => p.Point);
+            }
+            else
+            {
+                averagePoint = 5.0;
+            }
+                
+            return averagePoint;
+        }
     }
 }
