@@ -15,7 +15,7 @@ namespace Eating2.Business.ViewModels
         [Display(Name = "Giá")]
         public double Cost { get; set; }
         [Display(Name = "Cách chế biến")]
-        public string Processing { get; set; }
+        public string Recipe { get; set; }
         public int StoreID { get; set; }
         [Display(Name = "Cửa hàng")]
         public string inStore { get; set; }
@@ -24,7 +24,7 @@ namespace Eating2.Business.ViewModels
         public string FoodPictureURL { get; set; }
         public bool HasFoodPicture { get; set; }
         public List<Image> listFoodPicturesURL { get; set; }
-        public int numberOfFoodPicture { get; set; }
+        //public int numberOfFoodPicture { get; set; }
 
     }
 

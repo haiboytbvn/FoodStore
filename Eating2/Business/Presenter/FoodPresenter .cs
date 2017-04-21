@@ -48,10 +48,10 @@ namespace Eating2.Business.Presenter
                 ID = Food.ID,
                 Name = Food.Name,
                 Cost = Food.Cost,
-                Processing = Food.Processing,
+                Recipe = Food.Recipe,
                 StoreID = Food.StoreID,
                 inStore = Food.Store.Name,
-                numberOfFoodPicture = Food.numberOfFoodPicture
+               // numberOfFoodPicture = Food.numberOfFoodPicture
             };
             return FoodViewModel;
 
@@ -68,9 +68,9 @@ namespace Eating2.Business.Presenter
                     ID = Food.ID,
                     Name = Food.Name,
                     Cost = Food.Cost,
-                    Processing = Food.Processing,
+                    Recipe = Food.Recipe,
                     inStore = Food.Store.Name,
-                    numberOfFoodPicture = Food.numberOfFoodPicture
+                    
                 };
                 listFoodViewModel.Add(FoodViewModel);
             }
@@ -88,10 +88,10 @@ namespace Eating2.Business.Presenter
                     ID = Food.ID,
                     Name = Food.Name,
                     Cost = Food.Cost,
-                    Processing = Food.Processing,
+                    Recipe = Food.Recipe,
                     inStore = Food.Store.Name,
                     NumberOfRate = RateRepository.TotalRate(Food.ID),
-                    numberOfFoodPicture = Food.numberOfFoodPicture
+                   // numberOfFoodPicture = Food.numberOfFoodPicture
 
                 };
                 listFoodViewModel.Add(FoodViewModel);
@@ -105,9 +105,9 @@ namespace Eating2.Business.Presenter
                 ID = Food.ID,
                 Name = Food.Name,
                 Cost = Food.Cost,
-                Processing = Food.Processing,
+                Recipe = Food.Recipe,
                 StoreID = Food.StoreID,
-                numberOfFoodPicture = Food.numberOfFoodPicture
+                //numberOfFoodPicture = Food.numberOfFoodPicture
 
             };
 
@@ -127,8 +127,8 @@ namespace Eating2.Business.Presenter
                 FoodDataModel.ID = Food.ID;
                 FoodDataModel.Name = Food.Name;
                 FoodDataModel.Cost = Food.Cost;
-                FoodDataModel.Processing = Food.Processing;
-                FoodDataModel.numberOfFoodPicture = Food.numberOfFoodPicture;
+                FoodDataModel.Recipe = Food.Recipe;
+               
 
                 FoodRepository.UpdateFood(FoodDataModel);
                 FoodRepository.Save();
