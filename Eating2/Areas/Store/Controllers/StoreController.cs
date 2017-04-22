@@ -15,6 +15,7 @@ using Eating2.AppConfig;
 
 namespace Eating2.Areas.Store.Controllers
 {
+    [Authorize]
     public class StoreController : Controller
     {
         private IStorePresenter storePresenterObject;

@@ -64,15 +64,30 @@ namespace Eating2.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            return RedirectToAction("Search", "Home", new { search = 0 });
         }
 
-        public ActionResult Search([ModelBinder(typeof(FilterOptionsBinding))] FilterOptions filterOptions)
+        public ActionResult Search(int? search, [ModelBinder(typeof(FilterOptionsBinding))] FilterOptions filterOptions)
         {
 
-            var foods = FoodPresenterObject.GetFoodsForSearch(filterOptions);
-            return View("SearchResult", foods);
+            if (search.HasValue)
+            {
+                return View("Index");
+            }
 
+            if (filterOptions.Keyword == "")
+            {
+                ViewBag.Message = "Nhập cụm từ tìm kiếm !";
+                return View("Index");
+            }
+
+            var foods = FoodPresenterObject.GetFoodsForSearch(filterOptions);
+            if(foods.Count() == 0)
+            {
+                ViewBag.NoResult = "Không tìm thấy món ăn nào !";
+                return View("Index");
+            }
+            return View("SearchResult", foods);
 
         }
         public ActionResult About()

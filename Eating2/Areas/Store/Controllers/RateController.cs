@@ -12,6 +12,7 @@ using Eating2.DataAcess.Models;
 
 namespace Eating2.Areas.Store.Controllers
 {
+    [Authorize]
     public class RateController : Controller
     {
         private IRatePresenter ratePresenterObject;
