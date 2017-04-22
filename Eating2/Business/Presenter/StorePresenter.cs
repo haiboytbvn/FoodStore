@@ -43,18 +43,9 @@ namespace Eating2.Business.Presenter
             {
                 throw new NotFoundException("Store was not found.");
             }
-            var StoreViewModel = new StoreViewModel()
-            {
-                ID = Store.ID,
-                Name = Store.Name,
-                OpenTime = Store.OpenTime,
-                CloseTime = Store.CloseTime,
-                Description = Store.Description,
-                Owner = userPresenter.FindUserByID(Store.Owner).Email,
-                PhoneNumber = Store.PhoneNumber,
-                Place = Store.Place,
-                District = Store.District
-            };
+            var StoreViewModel = new StoreViewModel();
+            StoreViewModel = Store.MapTo<StoreDataModel, StoreViewModel>();
+
             return StoreViewModel;
             
         }
@@ -65,18 +56,8 @@ namespace Eating2.Business.Presenter
             var listStore = StoreRepository.ListAll();
             foreach(var Store in listStore)
             {
-                var StoreViewModel = new StoreViewModel()
-                {
-                    ID = Store.ID,
-                    Name = Store.Name,
-                    OpenTime = Store.OpenTime,
-                    CloseTime = Store.CloseTime,
-                    Description = Store.Description,
-                    Owner = Store.Owner,
-                    PhoneNumber = Store.PhoneNumber,
-                    Place = Store.Place,
-                    District = Store.District,
-                };
+                var StoreViewModel = Store.MapTo<StoreDataModel, StoreViewModel>();
+
                 listStoreViewModel.Add(StoreViewModel);
             }
             return listStoreViewModel;
@@ -88,38 +69,14 @@ namespace Eating2.Business.Presenter
             var listStore = StoreRepository.ListAllForOwner(id);
             foreach(var Store in listStore)
             {
-                var StoreViewModel = new StoreViewModel()
-                {
-                    ID = Store.ID,
-                    Name = Store.Name,
-                    OpenTime = Store.OpenTime,
-                    CloseTime = Store.CloseTime,
-                    Description = Store.Description,
-                    Owner = Store.Owner,
-                    PhoneNumber = Store.PhoneNumber,
-                    Place = Store.Place,
-                    District = Store.District,
-                    NumberOfFood = FoodRepository.TotalFood(Store.ID)
-                };
+                var StoreViewModel = Store.MapTo<StoreDataModel, StoreViewModel>();
                 listStoreViewModel.Add(StoreViewModel);
             }
             return listStoreViewModel;
         }
         public void InsertStore(StoreViewModel Store)
         {
-            var StoreDataModel = new StoreDataModel()
-            {
-                Name = Store.Name,
-                CloseTime = Store.CloseTime,
-                OpenTime = Store.OpenTime,
-                PhoneNumber = Store.PhoneNumber,
-                Place = Store.Place,
-                Description = Store.Description,
-                Owner = Store.Owner,
-                District = Store.District
-
-            };
-            
+            var StoreDataModel = Store.MapTo<StoreViewModel, StoreDataModel>();
             StoreRepository.InsertStore(StoreDataModel);
             StoreRepository.Save();
         }
@@ -133,15 +90,7 @@ namespace Eating2.Business.Presenter
             }
             else
             {
-                StoreDataModel.Name = Store.Name;
-                StoreDataModel.Place = Store.Place;
-                StoreDataModel.PhoneNumber = Store.PhoneNumber;
-                StoreDataModel.Owner = Store.Owner;
-                StoreDataModel.Description = Store.Description;
-                StoreDataModel.OpenTime = Store.OpenTime;
-                StoreDataModel.CloseTime = Store.CloseTime;
-                StoreDataModel.District = Store.District;
-
+                StoreDataModel = Store.MapTo<StoreViewModel, StoreDataModel>(StoreDataModel);
                 StoreRepository.UpdateStore(StoreDataModel);
                 StoreRepository.Save();
             }
@@ -167,14 +116,14 @@ namespace Eating2.Business.Presenter
             }
         }
 
-        public string GetStorePictureUrlForUpload(string StoreName, string UserName)
+        public string GetStorePictureUrlForUpload(int storeID, string UserName)
         {
-            var folderPath = Path.Combine("~/uploads/photo", UserName, StoreName + "Store", "store.jpg");
+            var folderPath = Path.Combine("~/uploads/photo", UserName, "Store" + storeID.ToString(), "store.jpg");
             return folderPath;
         }
-        public string GetStoreDirectionPicture(string StoreName, string UserName)
+        public string GetStoreDirectionPicture(int storeID, string UserName)
         {
-            var directPath = Path.Combine("~/uploads/photo", UserName, StoreName + "Store");
+            var directPath = Path.Combine("~/uploads/photo", UserName, "Store" + storeID.ToString());
             return directPath;
         }
 

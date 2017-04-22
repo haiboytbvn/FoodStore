@@ -234,6 +234,7 @@
     <Compile Include="Areas\Store\Controllers\RateController.cs" />
     <Compile Include="Areas\Store\Controllers\FoodController.cs" />
     <Compile Include="Areas\Store\Controllers\StoreController.cs" />
+    <Compile Include="Business\StoreMappingProfile.cs" />
     <Compile Include="Business\FoodMappingProfile.cs" />
     <Compile Include="Business\PageListConverter.cs" />
     <Compile Include="Business\Presenter\RatePresenter.cs" />

@@ -23,6 +23,8 @@ namespace Eating2
             Mapper.Initialize(cfg =>
             {
                 cfg.AddProfile(new FoodMappingProfile("FoodMapping"));
+                cfg.AddProfile(new StoreMappingProfile("StoreMapping"));
+
             });
         }
     }

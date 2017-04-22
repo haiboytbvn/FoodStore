@@ -80,7 +80,7 @@ namespace Eating2.Controllers
                 food.listFoodPicturesURL = new List<Image>();
                 for (int i = 0; i < 6; i++)
                 {
-                    var folderPath = FoodPresenterObject.GetFoodPictureUrlForUpload(food.Name, i, store.Name, store.Owner);
+                    var folderPath = FoodPresenterObject.GetFoodPictureUrlForUpload(food.ID, i, store.ID, store.Owner);
                     var foodPictureURL = folderPath + "?time=" + DateTime.Now.Ticks.ToString();
                     var image = new Image
                     {

@@ -117,7 +117,7 @@ namespace Eating2.Areas.Store.Controllers
                 food.listFoodPicturesURL = new List<Image>();
                 for (int i = 0; i < 6; i++)
                 {
-                    var folderPath = FoodPresenterObject.GetFoodPictureUrlForUpload(food.Name, i, store.Name, User.Identity.Name);
+                    var folderPath = FoodPresenterObject.GetFoodPictureUrlForUpload(food.ID, i, store.ID, User.Identity.Name);
                     var foodPictureURL = folderPath + "?time=" + DateTime.Now.Ticks.ToString();
                     var image = new Image
                     {
@@ -227,7 +227,7 @@ namespace Eating2.Areas.Store.Controllers
                 int storeID = food.StoreID;
                 var store = StorePresenterObject.GetStoreById(storeID);
 
-                var directPath = FoodPresenterObject.GetFoodDirectionPicture(food.Name, store.Name, User.Identity.Name);
+                var directPath = FoodPresenterObject.GetFoodDirectionPicture(food.ID, store.ID, User.Identity.Name);
                 var serverPath = Server.MapPath(directPath);
                 DirectoryInfo dir = new DirectoryInfo(serverPath);
                 if (dir.Exists)
@@ -273,7 +273,7 @@ namespace Eating2.Areas.Store.Controllers
             int numberOfFoodImage = 0;
             while (numberOfFoodImage < 6)
             {
-                var path = FoodPresenterObject.GetFoodPictureUrlForUpload(food.Name, numberOfFoodImage, store.Name, User.Identity.Name);
+                var path = FoodPresenterObject.GetFoodPictureUrlForUpload(food.ID, numberOfFoodImage, store.ID, User.Identity.Name);
                 if (Server.IsRelativePathExisted(path))
                 {
                     numberOfFoodImage++;
@@ -292,7 +292,7 @@ namespace Eating2.Areas.Store.Controllers
             }
 
             //upload anh
-            var folderPath = FoodPresenterObject.GetFoodPictureUrlForUpload(food.Name, numberOfFoodImage, store.Name, User.Identity.Name);
+            var folderPath = FoodPresenterObject.GetFoodPictureUrlForUpload(food.ID, numberOfFoodImage, store.ID, User.Identity.Name);
             var serverPath = Server.MapPath(folderPath);
             var dirs = Path.GetDirectoryName(serverPath);
             if (!Directory.Exists(dirs))
@@ -314,7 +314,7 @@ namespace Eating2.Areas.Store.Controllers
             string remove = "no";
 
             //xac dinh duong dan anh can xoa
-            var folderPath = FoodPresenterObject.GetFoodPictureUrlForUpload(food.Name, number, store.Name, User.Identity.Name);
+            var folderPath = FoodPresenterObject.GetFoodPictureUrlForUpload(food.ID, number, store.ID, User.Identity.Name);
             var serverPath = Server.MapPath(folderPath);
             FileInfo deleteFile = new FileInfo(serverPath);
 
@@ -336,49 +336,49 @@ namespace Eating2.Areas.Store.Controllers
 
 
        
-        public ActionResult DetailsForUser(int? Id, string uploadMessage, string uploadState)
-        {
-            try
-            {
-                if (!Id.HasValue)
-                {
-                    throw new NotFoundException("Id was not valid.");
-                }
-                var food = FoodPresenterObject.GetFoodById(Id.Value);
-                var store = StorePresenterObject.GetStoreById(food.StoreID);
-                //if (food.HasFoodPicture == false)
-                //    food.numberOfFoodPicture = 0;
-                food.listFoodPicturesURL = new List<Image>();
-                for (int i = 0; i < 6; i++)
-                {
-                    var folderPath = FoodPresenterObject.GetFoodPictureUrlForUpload(food.Name, i, store.Name, User.Identity.Name);
-                    var foodPictureURL = folderPath + "?time=" + DateTime.Now.Ticks.ToString();
-                    var image = new Image
-                    {
-                        exist = Server.IsRelativePathExisted(folderPath),
-                        number = i,
-                        path = foodPictureURL
-                    };
-                    if (image.exist == true)
-                    {
-                        food.listFoodPicturesURL.Add(image);
-                        food.HasFoodPicture = Server.IsRelativePathExisted(folderPath);
-                    }
-                }
+        //public ActionResult DetailsForUser(int? Id, string uploadMessage, string uploadState)
+        //{
+        //    try
+        //    {
+        //        if (!Id.HasValue)
+        //        {
+        //            throw new NotFoundException("Id was not valid.");
+        //        }
+        //        var food = FoodPresenterObject.GetFoodById(Id.Value);
+        //        var store = StorePresenterObject.GetStoreById(food.StoreID);
+        //        //if (food.HasFoodPicture == false)
+        //        //    food.numberOfFoodPicture = 0;
+        //        food.listFoodPicturesURL = new List<Image>();
+        //        for (int i = 0; i < 6; i++)
+        //        {
+        //            var folderPath = FoodPresenterObject.GetFoodPictureUrlForUpload(food.ID, i, store.ID, User.Identity.Name);
+        //            var foodPictureURL = folderPath + "?time=" + DateTime.Now.Ticks.ToString();
+        //            var image = new Image
+        //            {
+        //                exist = Server.IsRelativePathExisted(folderPath),
+        //                number = i,
+        //                path = foodPictureURL
+        //            };
+        //            if (image.exist == true)
+        //            {
+        //                food.listFoodPicturesURL.Add(image);
+        //                food.HasFoodPicture = Server.IsRelativePathExisted(folderPath);
+        //            }
+        //        }
 
 
-                ViewBag.upload = uploadState;
-                ViewBag.Message = uploadMessage;
+        //        ViewBag.upload = uploadState;
+        //        ViewBag.Message = uploadMessage;
 
 
-                return View("Details", food);
-            }
-            catch (NotFoundException e)
-            {
-                return View("ResultNotFoundError");
-            }
+        //        return View("Details", food);
+        //    }
+        //    catch (NotFoundException e)
+        //    {
+        //        return View("ResultNotFoundError");
+        //    }
 
-        }
+        //}
 
 
 

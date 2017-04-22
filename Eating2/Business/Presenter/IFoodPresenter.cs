@@ -18,8 +18,8 @@ namespace Eating2.Business.Presenter
         void InsertFood(FoodViewModel Food);
         void DeleteFood(int FoodID);
         void UpdateFood(int FoodID, FoodViewModel Food);
-        string GetFoodPictureUrlForUpload(string FoodName, int number, string StoreName, string UserName);
-        string GetFoodDirectionPicture(string FoodName, string StoreName, string UserName);
+        string GetFoodDirectionPicture(int foodID, int storeID, string UserName);
+        string GetFoodPictureUrlForUpload(int foodID, int number, int storeID, string UserName);
         IPagedList<FoodViewModel> GetFoodsForSearch(FilterOptions filterOptions);
 
     }

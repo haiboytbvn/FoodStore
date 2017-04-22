@@ -46,16 +46,7 @@ namespace Eating2.Business.Presenter
             }
             var FoodViewModel = new FoodViewModel();
             FoodViewModel = Food.MapTo<FoodDataModel, FoodViewModel>();
-            //FoodViewModel.AveragePoint = RateRepository.AveragePoint(FoodID);
-            //{
-            //    ID = Food.ID,
-            //    Name = Food.Name,
-            //    Cost = Food.Cost,
-            //    Recipe = Food.Recipe,
-            //    StoreID = Food.StoreID,
-            //    StoreNameDisplayOnly = Food.Store.Name,
-            //   // numberOfFoodPicture = Food.numberOfFoodPicture
-            //};
+           
             return FoodViewModel;
 
         }
@@ -67,15 +58,7 @@ namespace Eating2.Business.Presenter
             foreach (var Food in listFood)
             {
                 var FoodViewModel = Food.MapTo<FoodDataModel, FoodViewModel>();
-                //var FoodViewModel = new FoodViewModel()
-                //{
-                //    ID = Food.ID,
-                //    Name = Food.Name,
-                //    Cost = Food.Cost,
-                //    Recipe = Food.Recipe,
-                //    StoreNameDisplayOnly = Food.Store.Name,
-                    
-                //};
+              
                 listFoodViewModel.Add(FoodViewModel);
             }
             return listFoodViewModel;
@@ -88,17 +71,7 @@ namespace Eating2.Business.Presenter
             foreach (var Food in listFood)
             {
                 var FoodViewModel = Food.MapTo<FoodDataModel, FoodViewModel>();
-                //var FoodViewModel = new FoodViewModel()
-                //{
-                //    ID = Food.ID,
-                //    Name = Food.Name,
-                //    Cost = Food.Cost,
-                //    Recipe = Food.Recipe,
-                //    StoreNameDisplayOnly = Food.Store.Name,
-                //    NumberOfRate = RateRepository.TotalRate(Food.ID),
-                //   // numberOfFoodPicture = Food.numberOfFoodPicture
-
-                //};
+             
                 listFoodViewModel.Add(FoodViewModel);
             }
             return listFoodViewModel;
@@ -125,7 +98,7 @@ namespace Eating2.Business.Presenter
             }
             else
             {
-                FoodDataModel = Food.MapTo<FoodViewModel, FoodDataModel>();
+                FoodDataModel = Food.MapTo<FoodViewModel, FoodDataModel>(FoodDataModel);
                 var store = StoreRepository.GetStoreByID(Food.StoreID);
                 FoodDataModel.DistrictDisplayOnly = store.District;
                 FoodDataModel.StoreNameDisplayOnly = store.Name;
@@ -157,16 +130,16 @@ namespace Eating2.Business.Presenter
             }
         }
 
-        public string GetFoodPictureUrlForUpload(string FoodName, int number, string StoreName, string UserName)
+        public string GetFoodPictureUrlForUpload(int foodID, int number, int storeID, string UserName)
         {
-            var folderPath = Path.Combine("~/uploads/photo", UserName, StoreName + "Store",
-                FoodName + "Food", "Food" + number.ToString() + ".jpg");
+            var folderPath = Path.Combine("~/uploads/photo", UserName, "Store" + storeID,
+                "Food" + foodID, "Food" + number.ToString() + ".jpg");
             return folderPath;
         }
 
-        public string GetFoodDirectionPicture(string FoodName, string StoreName, string UserName)
+        public string GetFoodDirectionPicture(int foodID, int storeID, string UserName)
         {
-            var directPath = Path.Combine("~/uploads/photo", UserName, StoreName + "Store", FoodName + "Food");
+            var directPath = Path.Combine("~/uploads/photo", UserName, "Store" + storeID, "Food" + foodID);
             return directPath;
         }
 

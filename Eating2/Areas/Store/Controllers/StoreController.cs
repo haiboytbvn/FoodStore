@@ -88,7 +88,7 @@ namespace Eating2.Areas.Store.Controllers
                 }
                 var Store = StorePresenterObject.GetStoreById(Id.Value);
 
-                var folderPath = StorePresenterObject.GetStorePictureUrlForUpload(Store.Name, User.Identity.Name);
+                var folderPath = StorePresenterObject.GetStorePictureUrlForUpload(Store.ID, User.Identity.Name);
                 Store.StorePictureURL = folderPath + "?time=" + DateTime.Now.Ticks.ToString();
                 Store.HasStorePicture = Server.IsRelativePathExisted(folderPath);
 
@@ -136,6 +136,7 @@ namespace Eating2.Areas.Store.Controllers
                 {
                     var updatedStore = new StoreViewModel
                     {
+                        ID = Store.ID,
                         Name = Store.Name,
                         Place = Store.Place,
                         PhoneNumber = Store.PhoneNumber,
@@ -189,7 +190,7 @@ namespace Eating2.Areas.Store.Controllers
             try
             {
                 var store = StorePresenterObject.GetStoreById(id);
-                var directPath = StorePresenterObject.GetStoreDirectionPicture(store.Name, User.Identity.Name);
+                var directPath = StorePresenterObject.GetStoreDirectionPicture(store.ID, User.Identity.Name);
                 var serverPath = Server.MapPath(directPath);
                 DirectoryInfo dir = new DirectoryInfo(serverPath);
                 if (dir.Exists)
@@ -243,7 +244,7 @@ namespace Eating2.Areas.Store.Controllers
             }
 
             // upload anh
-            var folderPath = StorePresenterObject.GetStorePictureUrlForUpload(store.Name, User.Identity.Name);
+            var folderPath = StorePresenterObject.GetStorePictureUrlForUpload(store.ID, User.Identity.Name);
             var serverPath = Server.MapPath(folderPath);
             var dirs = Path.GetDirectoryName(serverPath);
             if (!Directory.Exists(dirs))
@@ -265,7 +266,7 @@ namespace Eating2.Areas.Store.Controllers
             string remove = "no";
 
             //xac dinh ten anh can xoa
-            var folderPath = StorePresenterObject.GetStorePictureUrlForUpload(store.Name, User.Identity.Name);
+            var folderPath = StorePresenterObject.GetStorePictureUrlForUpload(store.ID, User.Identity.Name);
             var serverPath = Server.MapPath(folderPath);
             FileInfo deleteFile = new FileInfo(serverPath);
 
