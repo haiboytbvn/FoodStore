@@ -135,10 +135,6 @@ namespace Eating2.Controllers
             return PartialView(new RateViewModel() { Customer = Rate.Customer });
         }
 
-        [HttpGet]
-        public ActionResult ReloadPage()
-        {
-            return Redirect(Request.UrlReferrer.ToString());
-        }
+  
     }
 }
