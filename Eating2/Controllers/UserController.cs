@@ -74,7 +74,7 @@ namespace Eating2.Controllers
                 }
                 var food = FoodPresenterObject.GetFoodById(Id.Value);
                 var store = StorePresenterObject.GetStoreById(food.StoreID);
-               
+
                 //if (food.HasFoodPicture == false)
                 //    food.numberOfFoodPicture = 0;
                 food.listFoodPicturesURL = new List<Image>();
@@ -104,5 +104,41 @@ namespace Eating2.Controllers
 
         }
 
+        public ActionResult IndexRateForUser(int foodId)
+        {
+
+            var Rates = RatePresenterObject.ListAllRateForFood(foodId);
+            return PartialView("IndexRateForUser", Rates);
+        }
+
+        [HttpGet]
+        public ActionResult AddRate()
+        {
+
+            return PartialView("AddRate", new RateViewModel());
+        }
+
+        [OutputCache(Duration = 1, VaryByParam = "*")]
+        [HttpPost]
+        public ActionResult AddRate(int id, [Bind(Include = "Point, StringPoint, Comment, Customer")] RateViewModel Rate)
+        {
+            if (ModelState.IsValid)
+            {
+                ModelState.Clear();
+            }
+
+            Rate.FoodID = id;
+            Rate.TimeComment = DateTime.Now;
+            Rate.Point = RateViewModel.ToIntPoint(Rate.StringPoint);
+            RatePresenterObject.InsertRate(Rate);
+
+            return PartialView(new RateViewModel() { Customer = Rate.Customer });
+        }
+
+        [HttpGet]
+        public ActionResult ReloadPage()
+        {
+            return Redirect(Request.UrlReferrer.ToString());
+        }
     }
 }

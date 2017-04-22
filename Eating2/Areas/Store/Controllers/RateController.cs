@@ -70,7 +70,7 @@ namespace Eating2.Areas.Store.Controllers
         //}
         // POST: Rate/Rate/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
+      
         public ActionResult Create(int id, [Bind(Include = "Point, Comment, Customer")] RateViewModel Rate)
         {
 

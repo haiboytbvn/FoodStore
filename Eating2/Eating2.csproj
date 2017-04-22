@@ -248,6 +248,7 @@
     <Compile Include="Business\ViewModels\FilterOptionViewModel.cs" />
     <Compile Include="Business\ViewModels\RateViewModel.cs" />
     <Compile Include="Business\ViewModels\FoodViewModel.cs" />
+    <Compile Include="Business\ViewModels\SelectListItem .cs" />
     <Compile Include="Business\ViewModels\UserViewModel.cs" />
     <Compile Include="Controllers\FilterController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -388,6 +389,8 @@
     <Content Include="Views\Shared\Filter\_FilterOptionPartialView.cshtml" />
     <Content Include="Views\Shared\Filter\_FilterPartialView.cshtml" />
     <Content Include="Views\Home\SearchResult.cshtml" />
+    <Content Include="Views\User\AddRate.cshtml" />
+    <Content Include="Views\User\IndexRateForUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

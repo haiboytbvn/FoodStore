@@ -1,5 +1,6 @@
 ﻿@using Eating2.Business.ViewModels
 @model FoodViewModel
+
 @{
     ViewBag.Title = "Thông tin món ăn";
 }
@@ -39,8 +40,8 @@
             </dd>
         </dl>
 
-        
-        <div class="row center-block" >
+
+        <div class="row center-block">
             @foreach (var image in Model.listFoodPicturesURL)
             {
                 if (image.exist == true)
@@ -48,7 +49,7 @@
                     <div class="col-md-2">
 
                         <img class="image-bordered" src="@Url.Content(image.path)" alt="IMAGE @image.number" height="100" width="100" />
-                        
+
                     </div>
                 }
             }
@@ -62,12 +63,20 @@
             <b>Đánh giá của khách hàng về món : @Model.Name</b>
         </p>
     </div>
-    @*<div>
-        @Html.Action("Index", "Rate", new { foodId = Model.ID })
-    </div>*@
-
 </div>
+
+<div style="min-height:150px">
+    @Html.Action("AddRate", "User", new { foodId = Model.ID })
+</div>
+
+<div>
+    @Html.Action("IndexRateForUser", "User", new { foodId = Model.ID })
+</div>
+
+
+@Html.ActionLink("Refresh", "ReloadPage", "User", null, null)
 <br>
+
 <p>
     @*@Html.ActionLink("Sửa thông tin", "Edit", new { id = Model.ID, beforePage = "details" }) |*@
     @Html.ActionLink("Quay lại danh sách", "Search", "Home", null, null)

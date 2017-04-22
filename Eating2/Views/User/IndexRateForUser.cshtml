@@ -1,0 +1,29 @@
+﻿
+@using Eating2.Business.ViewModels;
+@model List<RateViewModel>
+
+@{
+    Model.Reverse();
+}
+@foreach (var item in Model)
+{
+    <hr />
+    <div style="background-color:#eeeeee; border-radius: 10px; margin-bottom: 0px; padding: 3px 5px 3px 5px;">
+        <p style="font-size:small">
+            Bạn <b>@item.Customer</b>:
+            @for (int i = 0; i < item.Point; i++)
+                {
+                <span style="font-size:large">♥</span>
+            }
+        </p>
+
+        <div style="margin: 5px 10px 5px 50px; padding:initial">
+            @item.Comment
+        </div>
+        <i style="font-size:smaller">Vào lúc: @item.TimeComment</i>
+    </div>
+}
+
+
+
+

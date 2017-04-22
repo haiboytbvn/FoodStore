@@ -1,13 +1,13 @@
 ﻿
 <ul class="nav navbar-nav">
-    <li>
-        @Html.ActionLink("Quản lý cửa hàng", "Index", "Store", new { area = "Store" }, new { @class = "navbar-" })
+
+    <li class="dropdown">
+        <a class="dropdown-toggle" href="#" data-toggle="dropdown">Cửa Hàng <span class="caret"></span></a>
+        <ul class="dropdown-menu" role="menu">
+            <li>
+                @Html.ActionLink("Quản lý cửa hàng", "Index", "Store", new { area = "Store" }, new { @class = "navbar-" })
+            </li>
+
+        </ul>
     </li>
-    @*<li class="dropdown">
-            <a class="dropdown-toggle" href="#" data-toggle="dropdown">Cửa Hàng <span class="caret"></span></a>
-            <ul class="dropdown-menu" role="menu">
-
-
-            </ul>
-        </li>*@
 </ul>
