@@ -61,7 +61,7 @@ namespace Eating2.DataAcess.Repositories
             }
             else
             {
-                averagePoint = 5.0;
+                averagePoint = 0.0;
             }
                 
             return averagePoint;

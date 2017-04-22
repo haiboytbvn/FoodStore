@@ -28,7 +28,7 @@
             <h4>@Html.SortableLink(Request, "DistrictDisplayOnly", "Khu vực")</h4>
         </th>
         <th>
-            <h4>@Html.SortableLink(Request, "AveragePoint", "Điểm")</h4>
+            <h4>@Html.SortableLink(Request, "AveragePoint", "Đánh giá")</h4>
         </th>
         <th>
 
@@ -51,7 +51,7 @@
                 @Html.DisplayFor(modelItem => item.DistrictDisplayOnly)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.AveragePoint) (@Html.DisplayFor(modelItem => item.NumberOfRate) lượt)
+                @String.Format("{0:0.00}", item.AveragePoint) ♥    (@Html.DisplayFor(modelItem => item.NumberOfRate) lượt)
             </td>
             <td>
                 @Html.ActionLink("Chi tiết", "DetailsForUser", "User", new { Id = item.ID }, null)
