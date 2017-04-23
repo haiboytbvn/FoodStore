@@ -1,13 +1,13 @@
 ﻿@model Eating2.Business.ViewModels.IndexViewModel
 @{
-    ViewBag.Title = "Manage Your Profile";
+    ViewBag.Title = "Thông tin tài khoản";
 }
 
-<h2>Manager Your Profile</h2>
+<h2>@ViewBag.Title</h2>
 
 <p class="text-success">@ViewBag.StatusMessage</p>
 <div>
-    <h4>Change your account informations</h4>
+    <h4>Thay đổi thông tin tài khoản của bạn</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>Email</dt>
@@ -15,33 +15,33 @@
            @Model.Email
         </dd>
 
-        <dt>Your Name</dt>
-        <dd>
+        @*<dt>Your Name</dt>*@
+        @*<dd>
             @Model.DisplayName
             @Html.DisplayFor(model => model.DisplayName)
             [
             @Html.ActionLink("Change Name", "EditDisplayName")
             ]
-        </dd>
+        </dd>*@
         
-        <dt>
+        @*<dt>
             @Html.DisplayNameFor(model => model.UserRoles)
-        </dt>
+        </dt>*@
 
-        <dd>
+        @*<dd>
             @Html.DisplayFor(model => model.UserRoles)
             [
             @Html.ActionLink("Change Role", "EditUserRole")
             ]
-        </dd>
+        </dd>*@
 
 
-        <dt>Password:</dt>
+        <dt>Mật khẩu</dt>
         <dd>
             [
             @if (Model.HasPassword)
             {
-                @Html.ActionLink("Change your password", "ChangePassword")
+                @Html.ActionLink("Đổi mật khẩu", "ChangePassword")
             }
             else
             {

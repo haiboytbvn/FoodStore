@@ -75,8 +75,7 @@ namespace Eating2.Controllers
                 var food = FoodPresenterObject.GetFoodById(Id.Value);
                 var store = StorePresenterObject.GetStoreById(food.StoreID);
 
-                //if (food.HasFoodPicture == false)
-                //    food.numberOfFoodPicture = 0;
+                //Lay hinh anh cho food
                 food.listFoodPicturesURL = new List<Image>();
                 for (int i = 0; i < 6; i++)
                 {
@@ -93,6 +92,7 @@ namespace Eating2.Controllers
                         food.listFoodPicturesURL.Add(image);
                         food.HasFoodPicture = Server.IsRelativePathExisted(folderPath);
                     }
+                    food.FoodPictureURL = image.path;
                 }
 
                 return View("DetailsForUser", food);

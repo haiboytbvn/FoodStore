@@ -20,12 +20,7 @@ namespace Eating2.Controllers
                 IsChecked = filterOptions.FilterFields.Length > 0 ? filterOptions.FilterFields.FirstOrDefault(f => f == "Name") != null : true
             });
 
-            filterFields.Add(new FilterOptionViewModel
-            {
-                Name = "StoreNameDisplayOnly",
-                DisplayName = "Cửa hàng",
-                IsChecked = filterOptions.FilterFields.Length > 0 ? filterOptions.FilterFields.FirstOrDefault(f => f == "StoreNameDisplayOnly") != null : true
-            });
+            
             //filterFields.Add(new KeyValuePair<string, string>("Team", "Team"));
             var viewModel = new FilterViewModel
             {

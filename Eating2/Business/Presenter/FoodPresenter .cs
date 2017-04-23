@@ -76,6 +76,7 @@ namespace Eating2.Business.Presenter
             }
             return listFoodViewModel;
         }
+
         public void InsertFood(FoodViewModel Food)
         {
             var FoodDataModel = Food.MapTo<FoodViewModel, FoodDataModel>();
@@ -135,6 +136,7 @@ namespace Eating2.Business.Presenter
             var folderPath = Path.Combine("~/uploads/photo", UserName, "Store" + storeID,
                 "Food" + foodID, "Food" + number.ToString() + ".jpg");
             return folderPath;
+            
         }
 
         public string GetFoodDirectionPicture(int foodID, int storeID, string UserName)

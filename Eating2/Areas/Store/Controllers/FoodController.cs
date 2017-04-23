@@ -93,7 +93,7 @@ namespace Eating2.Areas.Store.Controllers
                 //var store = StorePresenterObject.GetStoreById(STOREID);
                 Food.StoreID = STOREID;
                 //Food.DistrictDisplayOnly = store.District;
-              
+                Food.FoodPictureURL = "~/uploads/photo\\default.jpg";
                 FoodPresenterObject.InsertFood(Food);
                 return RedirectToAction("Details", "Store", new { Id = STOREID });
 
@@ -112,8 +112,8 @@ namespace Eating2.Areas.Store.Controllers
                 }
                 var food = FoodPresenterObject.GetFoodById(Id.Value);
                 var store = StorePresenterObject.GetStoreById(food.StoreID);
-                //if (food.HasFoodPicture == false)
-                //    food.numberOfFoodPicture = 0;
+
+                //lay dia chi hinh anh cho food
                 food.listFoodPicturesURL = new List<Image>();
                 for (int i = 0; i < 6; i++)
                 {
@@ -130,8 +130,8 @@ namespace Eating2.Areas.Store.Controllers
                         food.listFoodPicturesURL.Add(image);
                         food.HasFoodPicture = Server.IsRelativePathExisted(folderPath);
                     }
+                    food.FoodPictureURL = image.path;
                 }
-
 
                 ViewBag.upload = uploadState;
                 ViewBag.Message = uploadMessage;
@@ -300,7 +300,11 @@ namespace Eating2.Areas.Store.Controllers
                 Directory.CreateDirectory(dirs);
             }
             file.SaveAs(serverPath);
-            
+
+            //Lay anh vua upload lam anh hien thi chinh
+            food.FoodPictureURL = folderPath;
+            FoodPresenterObject.UpdateFood(food.ID, food);
+
             message = "Tải ảnh lên thành công!";
             upload = "yes";
             return RedirectToAction("Details", new { id = FoodId, uploadMessage = message, uploadState = upload });
@@ -328,14 +332,14 @@ namespace Eating2.Areas.Store.Controllers
 
             //xoa anh
             deleteFile.Delete();
-            
+
             message = "Đã xóa hình ảnh";
             remove = "yes";
             return RedirectToAction("Details", new { id = foodId, uploadMessage = message, removeState = remove });
         }
 
 
-       
+
         //public ActionResult DetailsForUser(int? Id, string uploadMessage, string uploadState)
         //{
         //    try

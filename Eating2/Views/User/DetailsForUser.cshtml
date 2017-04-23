@@ -53,15 +53,15 @@
             </dd>
         </dl>
 
-        <div class="row center-block">
+        <div class="row center-block" >
             @foreach (var image in Model.listFoodPicturesURL)
             {
                 if (image.exist == true)
                 {
-                    <div class="col-md-2">
+                    <div class="col-sm-6 col-xs-12 col-md-4">
 
-                        <img class="image-bordered" src="@Url.Content(image.path)" alt="IMAGE @image.number" height="100" width="100" />
-
+                        <img class="image-bordered" src="@Url.Content(image.path)" alt="IMAGE @image.number" height="290" width="290" />
+                        <br /><br /><br />
                     </div>
                 }
             }
@@ -160,7 +160,14 @@
 
 </div>
 
-<br /><hr />
+<hr />
+
+<p>
+    @*@Html.ActionLink("Sửa thông tin", "Edit", new { id = Model.ID, beforePage = "details" }) |*@
+    @Html.ActionLink("Quay lại danh sách", "Search", "Home", null, null)
+</p>
+
+<hr />
 
 @*Hien thi comment*@
 <div>
@@ -184,10 +191,6 @@
 </div>
 
 
-<br>
 
-<p>
-    @*@Html.ActionLink("Sửa thông tin", "Edit", new { id = Model.ID, beforePage = "details" }) |*@
-    @Html.ActionLink("Quay lại danh sách", "Search", "Home", null, null)
-</p>
+
 

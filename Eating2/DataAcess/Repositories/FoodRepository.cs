@@ -57,7 +57,7 @@ namespace Eating2.DataAcess.Repositories
             IQueryable<FoodDataModel> query = dataContext.Foods.Select(t => t).OrderBy(t => t.ID);
             if (filterOptions == null)
             {
-                return query.ToCustomPagedList<FoodDataModel>(0, 10);
+                return query.ToCustomPagedList<FoodDataModel>(0, 12);
             }
             if (!string.IsNullOrEmpty(filterOptions.Keyword))
             {
@@ -104,7 +104,7 @@ namespace Eating2.DataAcess.Repositories
                 var pagingOption = filterOptions.PagingOptions;
                 return query.ToCustomPagedList(pagingOption.CurrentPage, pagingOption.PageSize);
             }
-            return query.ToCustomPagedList(0, 10);
+            return query.ToCustomPagedList(0, 12);
         }
 
     }

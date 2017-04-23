@@ -77,24 +77,25 @@
             {
                 if (image.exist == true)
                 {
-                    <div class="col-md-2">
+                    <div class="col-sm-6 col-xs-12 col-md-4">
 
-                        <img class="image-bordered" src="@Url.Content(image.path)" alt="IMAGE @image.number" height="100" width="100" />
-                        <br />
-                        @Html.ActionLink("[Xóa hình ảnh]", "RemoveFoodImage", new { foodId = Model.ID, number = image.number })
-
+                        <img class="image-bordered" src="@Url.Content(image.path)" alt="IMAGE @image.number" height="290" width="290" />
+                        <br /><br />
+                        <button class="btn btn-danger"> @Html.ActionLink("Xóa hình ảnh", "RemoveFoodImage", new { foodId = Model.ID, number = image.number }, new { style = "color:white" })</button>
+                        <br /><br /><br />
                     </div>
                 }
             }
         </div>
+
     </div>
-    
+
     <p>
         @Html.ActionLink("Sửa thông tin", "Edit", new { id = Model.ID, beforePage = "details" }) |
         @Html.ActionLink("Quay lại danh sách", "Details", "Store", new { id = Model.StoreID }, null)
     </p>
     <hr />
-   
+
     <div style="background-color:#dddddd; border-radius: 5px; margin-bottom: 20px; padding: 5px 0 5px 0;">
         <p>
             <b>Đánh giá của khách hàng về món : @Model.Name</b>

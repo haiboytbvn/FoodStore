@@ -1,6 +1,6 @@
 ﻿@using Eating2.Business.ViewModels
 @model FilterOptionViewModel
-<div class="checkbox">
+<div class="checkbox hidden">
     <label>
         <input type="checkbox" name="filterField"  checked="@Model.IsChecked" id="ckb@Model.Name" value="@Model.Name">
         @Model.DisplayName
