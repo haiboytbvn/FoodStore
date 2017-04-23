@@ -29,8 +29,9 @@ namespace Eating2.Business
 
             this.CreateMap<FoodDataModel, FoodViewModel>()
                 .ForMember(dest => dest.AveragePoint, opt => opt.MapFrom(src => RateRepository.AveragePoint(src.ID)))
+                .ForMember(dest => dest.DetailsPlaceDisplayOnly, opt => opt.MapFrom(src => StoreRepository.GetStoreByID(src.StoreID).Place))
                 .ForMember(dest => dest.NumberOfRate, opt => opt.MapFrom(src => RateRepository.TotalRate(src.ID)));
-
+                
             this.CreateMap<FoodViewModel, FoodDataModel>();
 
             this.CreateMap<IPagedList<FoodDataModel>, IPagedList<FoodViewModel>>()

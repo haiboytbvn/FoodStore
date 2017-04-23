@@ -391,6 +391,8 @@
     <Content Include="Views\Home\SearchResult.cshtml" />
     <Content Include="Views\User\AddRate.cshtml" />
     <Content Include="Views\User\IndexRateForUser.cshtml" />
+    <Content Include="Views\Shared\_GoogleMapAPI.cshtml" />
+    <Content Include="Views\Shared\GoogleMapAPI.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

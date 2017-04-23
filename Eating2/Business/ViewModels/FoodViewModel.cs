@@ -21,6 +21,8 @@ namespace Eating2.Business.ViewModels
         //public string inStore { get; set; }
         public string StoreNameDisplayOnly { get; set; }
         public string DistrictDisplayOnly { get; set; }
+        [Display(Name = "Địa chỉ")]
+        public string DetailsPlaceDisplayOnly { get; set; }
         public int NumberOfRate { get; set; }
         
         public double AveragePoint { get; set; }

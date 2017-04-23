@@ -122,11 +122,9 @@ namespace Eating2.Controllers
         [HttpPost]
         public ActionResult AddRate(int id, [Bind(Include = "Point, StringPoint, Comment, Customer")] RateViewModel Rate)
         {
-            if (ModelState.IsValid)
-            {
-                ModelState.Clear();
-            }
-
+           
+            ModelState.Clear();
+          
             Rate.FoodID = id;
             Rate.TimeComment = DateTime.Now;
             Rate.Point = RateViewModel.ToIntPoint(Rate.StringPoint);
@@ -136,5 +134,10 @@ namespace Eating2.Controllers
         }
 
   
+        public ActionResult GetMap()
+        {
+            //return PartialView("_GoogleMapAPI");
+            return View("GoogleMapAPI");
+        }
     }
 }
