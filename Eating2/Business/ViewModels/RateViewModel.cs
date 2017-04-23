@@ -11,7 +11,7 @@ namespace Eating2.Business.ViewModels
     public class RateViewModel
     {
         public int ID { get; set; }
-        [Display(Name = "Đánh giá:")]
+        [Display(Name = "Đánh giá")]
         public string StringPoint { get; set; }
         public int Point { get; set; }
         [Display(Name = "Nhận xét")]

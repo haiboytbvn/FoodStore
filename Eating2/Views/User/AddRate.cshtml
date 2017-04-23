@@ -5,33 +5,33 @@
 @using (Html.BeginForm())
 {
 
-   
-
     <div class="form-group" style="display:flex">
-        @Html.LabelFor(model => model.StringPoint, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownListFor(model => model.StringPoint , Model.Points, htmlAttributes: new { @class = "form-control" })
-        </div>
-    </div>
-
-    <div class="form-group" style="display:flex">
-        @Html.LabelFor(model => model.Comment, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Comment, new { htmlAttributes = new { @class = "form-control" } })
-        </div>
-    </div>
-
-     <div class="form-group" style="display:flex">
-        @Html.LabelFor(model => model.Customer, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.Customer, htmlAttributes: new { @class = "control-label col-lg-1" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.Customer, new { htmlAttributes = new { @class = "form-control" } })
         </div>
     </div>
 
-    <div class="form-group" style="display:flex"  >
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Bình luận" class="btn btn-default" />
+
+        <div class="form-group" style="display:flex">
+            @Html.LabelFor(model => model.StringPoint, htmlAttributes: new { @class = "control-label col-lg-1" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.StringPoint, Model.Points, htmlAttributes: new { @class = "form-control" })
+            </div>
         </div>
-    </div>
+
+
+        <div class="form-group" style="display:flex">
+            @Html.LabelFor(model => model.Comment, htmlAttributes: new { @class = "control-label col-lg-1" })
+            <div class="col-md-10">
+                <textarea class="form-control" rows="3" id="Comment" name="Comment"></textarea>
+            </div>
+        </div>
+
+        <div class="form-group" style="display:flex">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Bình luận" class="btn btn-default" />
+            </div>
+        </div>
 }
 
