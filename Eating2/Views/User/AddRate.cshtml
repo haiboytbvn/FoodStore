@@ -24,7 +24,8 @@
         <div class="form-group" style="display:flex">
             @Html.LabelFor(model => model.Comment, htmlAttributes: new { @class = "control-label col-lg-1" })
             <div class="col-md-10">
-                <textarea class="form-control" rows="3" id="Comment" name="Comment"></textarea>
+                @*<textarea class="form-control" rows="3" id="Comment" name="Comment"></textarea>*@
+                @Html.TextAreaFor(model => model.Comment, 3, 10, htmlAttributes: new { @class = "form-control" } )
             </div>
         </div>
 

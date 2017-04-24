@@ -4,6 +4,10 @@
     ViewBag.Title = "Thông tin cửa hàng";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+
+
+
 <h3>Thông tin về cửa hàng</h3>
 
 <div>
@@ -102,13 +106,24 @@
         {
             <dl class="dl-horizontal">
                 <dd>
-                    <img class="image-bordered" src="@Url.Content(Model.StorePictureURL)" alt="IMAGE" height="300", width="300" />
+                    <img id="myImg" alt="@Model.Name" class="image-bordered" src="@Url.Content(Model.StorePictureURL)" width="100" height="100" @*onClick="javascript: window.open('@Url.Content(Model.StorePictureURL)')"*@ />
+                    
+                    @*Popup hinh anh*@
+                    <div id="myModal" class="modal">
+                        <!-- The Close Button -->
+                        <span style="font-size:60px; color:white;" class="close" onclick="document.getElementById('myModal').style.display='none'">&times;</span>
+                        <!-- Modal Content (The Image) -->
+                        <img class="modal-content" id="img01" style="height:482px">
+                        <!-- Modal Caption (Image Text) -->
+                        <div id="caption"></div>
+                    </div>
+
                     <br /><br />
-                    <button class="btn btn-danger">@Html.ActionLink("Xóa hình ảnh", "RemoveStoreImage", new { storeId = Model.ID }, new { style = "color:white"} )</button>  
+                    <button class="btn btn-danger">@Html.ActionLink("Xóa hình ảnh", "RemoveStoreImage", new { storeId = Model.ID }, new { style = "color:white" })</button>
                 </dd>
             </dl>
         }
-        
+
 
 
     </div>
@@ -136,3 +151,30 @@
 
 </div>
 <br>
+
+@*Script hien popup cho hinh anh*@
+
+<script>
+    // Get the modal
+    var modal = document.getElementById('myModal');
+
+    // Get the image and insert it inside the modal - use its "alt" text as a caption
+    var img = document.getElementById('myImg');
+    var modalImg = document.getElementById("img01");
+    var captionText = document.getElementById("caption");
+    img.onclick = function(){
+        modal.style.display = "block";
+        modalImg.src = this.src;
+        captionText.innerHTML = this.alt;
+    }
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+
+</script>

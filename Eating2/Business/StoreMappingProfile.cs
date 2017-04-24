@@ -28,8 +28,8 @@ namespace Eating2.Business
             RateRepository = new RateRepository();
 
             this.CreateMap<StoreDataModel, StoreViewModel>()
-            .ForMember(dest => dest.Owner, opt => opt.MapFrom(src => UserManager.FindById(src.Owner).Email));
-            //.ForMember(dest => dest.NumberOfRate, opt => opt.MapFrom(src => RateRepository.TotalRate(src.ID)));
+            .ForMember(dest => dest.Owner, opt => opt.MapFrom(src => UserManager.FindById(src.Owner).Email))
+            .ForMember(dest => dest.NumberOfFood, opt => opt.MapFrom(src => FoodRepository.ListAllForStore(src.ID).Count()));
 
             this.CreateMap<StoreViewModel, StoreDataModel>();
 

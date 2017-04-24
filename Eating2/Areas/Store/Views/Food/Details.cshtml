@@ -1,5 +1,6 @@
 ﻿@using Eating2.Business.ViewModels
 @model FoodViewModel
+@{var noPic = 0;}
 @{
     ViewBag.Title = "Thông tin món ăn";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -43,43 +44,57 @@
         <div class="form-group">
             @using (Html.BeginForm("UploadFoodImage", "Food", new { FoodId = Model.ID }, FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
-                @Html.AntiForgeryToken()
-                <dl class="dl-horizontal">
-                    <dt>
-                        <label for="file" , class="contro-label"> Tải hình ảnh </label>
-                    </dt>
-                    <dd>
-                        <div>
-                            <input type="file" name="file" id="file" class="btn btn-default" />
-                            <input type="submit" value="Upload Image" class="btn btn-default" />
-                            <p class="text-muted">Chỉ hỗ trợ ảnh có đuôi: jpg, jpeg, png, gif</p>
-                        </div>
-                    </dd>
-                </dl>
+            @Html.AntiForgeryToken()
+            <dl class="dl-horizontal">
+                <dt>
+                    <label for="file" , class="contro-label"> Tải hình ảnh </label>
+                </dt>
+                <dd>
+                    <div>
+                        <input type="file" name="file" id="file" class="btn btn-default" />
+                        <input type="submit" value="Upload Image" class="btn btn-default" />
+                        <p class="text-muted">Chỉ hỗ trợ ảnh có đuôi: jpg, jpeg, png, gif</p>
+                    </div>
+                </dd>
+            </dl>
             }
         </div>
-
-        @if (ViewBag.upload == "yes")
-        {
+        <div>
+            @if (ViewBag.upload == "yes")
+            {
             <div class="text-success">
                 @ViewBag.Message
             </div>
-        }
-        else
-        {
+            }
+            else
+            {
             <div class="text-danger">
                 @ViewBag.Message
             </div>
-        }
-
+            }
+        </div>
         <div class="row center-block">
             @foreach (var image in Model.listFoodPicturesURL)
             {
+                var number = image.number + 1;
+                noPic++;
                 if (image.exist == true)
                 {
-                    <div class="col-sm-6 col-xs-12 col-md-4">
+                    <div class="col-sm-3 col-xs-6 col-md-2">
 
-                        <img class="image-bordered" src="@Url.Content(image.path)" alt="IMAGE @image.number" height="290" width="290" />
+                        <img style="cursor:pointer" id="myImg+@number" class="image-bordered" src="@Url.Content(image.path)" alt="@Model.Name @number " height="100" width="100" />
+
+                        @*Popup hinh anh*@
+                        <div id="myModal+@number" class="modal">
+                            <!-- The Close Button -->
+                            <span style="font-size:60px; color:white;" class="close" id="btnCls+@number" onclick="document.getElementById('myModal+').style.display='none'">&times;</span>
+                            <!-- Modal Content (The Image) -->
+                            <img class="modal-content" id="img+@number" style="height:482px">
+                            <!-- Modal Caption (Image Text) -->
+                            <div id="caption"></div>
+                        </div>
+
+
                         <br /><br />
                         <button class="btn btn-danger"> @Html.ActionLink("Xóa hình ảnh", "RemoveFoodImage", new { foodId = Model.ID, number = image.number }, new { style = "color:white" })</button>
                         <br /><br /><br />
@@ -106,3 +121,34 @@
     </div>
 
 </div>
+
+
+@*Script hien popup cho hinh anh*@
+
+<script type="text/javascript">
+    for (var i = 1; i <= @noPic; i++) {
+
+        // Get the modal
+        var modal = document.getElementById('myModal+' + i);
+
+        // Get the image and insert it inside the modal - use its "alt" text as a caption
+
+        var img = document.getElementById('myImg+' + i);
+        var modalImg = document.getElementById("img+" + i);
+        var captionText = document.getElementById("caption"+i);
+        img.onclick = function () {
+            modal.style.display = "block";
+            modalImg.src = this.src;
+            captionText.innerHTML = this.alt;
+        }
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementById("btnCls+"+i);
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+    }
+
+</script>
