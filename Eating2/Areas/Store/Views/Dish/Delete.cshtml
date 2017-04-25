@@ -1,0 +1,38 @@
+﻿@using Eating2.Business.ViewModels
+@model DishViewModel
+@{
+    ViewBag.Title = "Xóa cửa hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3>Xóa cửa hàng</h3>
+<div>
+    <h4>@Model.Name  </h4>
+    <hr />
+        @*<dl class="dl-horizontal">
+            <dt>
+                Cửa hàng:
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+        </dl>*@
+    <h4 class="text-danger">Bạn thực sự muốn xóa cửa hàng này!</h4>
+    <h5 class="text-danger">Sau khi xóa sẽ không khôi phục lại được</h5>
+       <hr />
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Xóa" class="btn btn-default" /> <br />
+            
+        </div>
+    }
+</div>
+<br />
+<div>
+    @Html.ActionLink("Quay lại danh sách", "Details", "Dish", new { id = Model.ID }, null)
+</div>
+

@@ -23,7 +23,8 @@ namespace Eating2.DataAcess.Models
         
         public string DisplayName { get; set; }
         public virtual ICollection<StoreDataModel> Stores { get; set; }
+        public virtual ICollection<DishDataModel> Dishes { get; set; }
 
-        
+
     }
 }

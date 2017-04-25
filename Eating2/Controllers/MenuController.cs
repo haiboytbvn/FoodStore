@@ -19,7 +19,7 @@ namespace Eating2.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                return PartialView("~/Views/Shared/_StorePartial.cshtml");
+                return PartialView("~/Views/Shared/_StoreDishPartial.cshtml");
             }
             else
             {

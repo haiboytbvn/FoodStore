@@ -24,6 +24,7 @@ namespace Eating2
             {
                 cfg.AddProfile(new FoodMappingProfile("FoodMapping"));
                 cfg.AddProfile(new StoreMappingProfile("StoreMapping"));
+                cfg.AddProfile(new DishMappingProfile("DishMapping"));
 
             });
         }

@@ -24,8 +24,10 @@ namespace Eating2.DataAcess
 
         public DbSet<StoreDataModel> Stores { get; set; }
         public DbSet<FoodDataModel> Foods { get; set; }
-        public DbSet<CategoryDataModel> Categories { get; set; }
+        public DbSet<DishDataModel> Dishes { get; set; }
         public DbSet<RateDataModel> Rates { get; set; }
+        
+
 
         //Tu dinh nghia khoa ngoai cua cac bang
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -47,9 +49,20 @@ namespace Eating2.DataAcess
                  .HasForeignKey(t => t.StoreID)
                  .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<CategoryDataModel>()
-                 .HasKey(t => t.ID);
+            modelBuilder.Entity<FoodDataModel>()
+                .HasKey(t => t.ID)
+                .HasRequired(t => t.Dish)
+                .WithMany(t => t.Foods)
+                .HasForeignKey(t => t.DishID)
+                .WillCascadeOnDelete(false);
 
+            modelBuilder.Entity<DishDataModel>()
+                 .HasKey(t => t.ID)
+                 .HasRequired(t => t.ApplicationUser)
+                 .WithMany(t => t.Dishes)
+                 .HasForeignKey(t => t.Owner)
+                 .WillCascadeOnDelete(false);
+                 
 
            modelBuilder.Entity<RateDataModel>()
                  .HasKey(t => t.ID)

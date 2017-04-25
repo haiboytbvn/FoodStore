@@ -15,6 +15,7 @@ namespace Eating2.Business.Presenter
         FoodViewModel GetFoodById(int FoodID);
         List<FoodViewModel> ListAllFood();
         List<FoodViewModel> ListAllFoodForStore(int Id);
+        List<FoodViewModel> ListAllFoodForDish(int Id);
         void InsertFood(FoodViewModel Food);
         void DeleteFood(int FoodID);
         void UpdateFood(int FoodID, FoodViewModel Food);

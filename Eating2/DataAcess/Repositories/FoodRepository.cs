@@ -37,6 +37,10 @@ namespace Eating2.DataAcess.Repositories
             return dataContext.Foods.Where(t => t.StoreID == id).Select(t => t).ToList();
         }
 
+        public IEnumerable<FoodDataModel> ListAllForDish(int id)
+        {
+            return dataContext.Foods.Where(t => t.DishID == id).Select(t => t).ToList();
+        }
         public void Save()
         {
             dataContext.SaveChanges();
@@ -45,6 +49,10 @@ namespace Eating2.DataAcess.Repositories
         public int TotalFood(int StoreId)
         {
             return dataContext.Foods.Where(f => f.StoreID == StoreId).Count();
+        }
+        public int TotalStoreHasFood(int DishId)
+        {
+            return dataContext.Foods.Where(f => f.StoreID == DishId).Count();
         }
 
         public void UpdateFood(FoodDataModel Food)

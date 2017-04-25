@@ -1,0 +1,46 @@
+﻿@using Eating2.Business.ViewModels;
+@model List<DishViewModel>
+@{
+    ViewBag.Title = "Trang chủ món ăn";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3>Danh sách món ăn hàng hiện có: </h3>
+<p>
+    @Html.ActionLink("Thêm món ăn mới", "Create", null, new { @class = "btn btn-default" })
+</p>
+
+<table class="table table-bordered">
+    <tr>
+        <th>
+            <h4>Tên món ăn</h4>
+        </th>
+        <th>
+            <h4>Số cửa hàng hiện có</h4>
+        </th>
+        <th>
+            <h4>Tác vụ</h4>
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberOfStoreHas)
+            </td>
+          
+            <td>
+                @Html.ActionLink("Sửa", "Edit", new { id = item.ID }) |
+                @Html.ActionLink("Chi tiết", "Details", new { id = item.ID }) |
+                @Html.ActionLink("Xóa", "Delete", new { id = item.ID })
+            </td>
+        </tr>
+    }
+
+</table>
+
+

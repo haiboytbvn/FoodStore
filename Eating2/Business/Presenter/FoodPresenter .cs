@@ -77,6 +77,19 @@ namespace Eating2.Business.Presenter
             return listFoodViewModel;
         }
 
+        public List<FoodViewModel> ListAllFoodForDish(int id)
+        {
+            List<FoodViewModel> listFoodViewModel = new List<FoodViewModel>();
+            var listFood = FoodRepository.ListAllForDish(id);
+            foreach (var Food in listFood)
+            {
+                var FoodViewModel = Food.MapTo<FoodDataModel, FoodViewModel>();
+
+                listFoodViewModel.Add(FoodViewModel);
+            }
+            return listFoodViewModel;
+        }
+
         public void InsertFood(FoodViewModel Food)
         {
             var FoodDataModel = Food.MapTo<FoodViewModel, FoodDataModel>();

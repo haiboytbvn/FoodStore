@@ -81,7 +81,6 @@ D:\DEV\C#\Eating2\Eating2\obj\Debug\Eating2.dll
 D:\DEV\C#\Eating2\Eating2\obj\Debug\Eating2.pdb
 D:\DEV\C#\Eating2\Eating2\obj\Debug\Eating2.csproj.GenerateResource.Cache
 D:\DEV\C#\Eating2\Eating2\obj\Debug\Eating2.DataAcess.Migrations.InitialCreate.resources
-D:\DEV\C#\Eating2\Eating2\obj\Debug\Eating2.csprojResolveAssemblyReference.cache
 D:\DEV\C#\Eating2\Eating2\bin\roslyn\csc.exe.config
 D:\DEV\C#\Eating2\Eating2\bin\roslyn\csc.rsp
 D:\DEV\C#\Eating2\Eating2\bin\roslyn\csi.exe

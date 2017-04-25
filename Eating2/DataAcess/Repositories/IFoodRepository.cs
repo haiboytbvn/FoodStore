@@ -18,7 +18,9 @@ namespace Eating2.DataAcess.Repositories
         void UpdateFood(FoodDataModel Food);
         void Save();
         IEnumerable<FoodDataModel> ListAllForStore(int id);
+        IEnumerable<FoodDataModel> ListAllForDish(int id);
         int TotalFood(int StoreId);
+        int TotalStoreHasFood(int DishId);
         IPagedList<FoodDataModel> GetFoodsForSearch(FilterOptions filterOptions);
     }
 }
