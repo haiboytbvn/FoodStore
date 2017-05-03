@@ -30,7 +30,10 @@ namespace Eating2.Business.ViewModels
         public string FoodPictureURL { get; set; }
         public bool HasFoodPicture { get; set; }
         public List<Image> listFoodPicturesURL { get; set; }
-        //public int numberOfFoodPicture { get; set; }
+        [Display(Name = "Thời gian phục vụ")]
+        public string TimeService  { get; set; }
+        [Display(Name = "Điện thoại")]
+        public string StorePhoneNumber { get; set; }
         
 
     }

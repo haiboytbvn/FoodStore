@@ -157,6 +157,7 @@ namespace Eating2.Areas.Store.Controllers
                     throw new NotFoundException("Id was not valid.");
                 }
                 var updatedFood = FoodPresenterObject.GetFoodById(id.Value);
+
                 return View("Edit", updatedFood);
             }
             catch (NotFoundException e)

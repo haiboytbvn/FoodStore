@@ -15,6 +15,12 @@
     <hr />
     <p class="text-center">
         @Html.DisplayFor(model => model.Description)
+        @if (Model.HasStorePicture == true)
+        {
+            <hr />
+            <img alt="@Model.Name" class="image-bordered" src="@Url.Content(Model.StorePictureURL)" height="440" style="width:100%;" />
+        }
+
     </p>
     <hr />
     <div style="background-color:#dddddd; border-radius: 5px; margin-bottom: 20px; padding: 5px 0 5px 0;">
@@ -70,7 +76,10 @@
         </dl>
 
         <div class="form-group">
-            @using (Html.BeginForm("UploadStoreImage", "Store", new { StoreId = Model.ID }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+            @using (Html.BeginForm("UploadStoreImage", "Store", new
+            {
+                StoreId = Model.ID
+            }, FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
                 @Html.AntiForgeryToken()
                 <dl class="dl-horizontal">
@@ -107,7 +116,7 @@
             <dl class="dl-horizontal">
                 <dd>
                     <img id="myImg" alt="@Model.Name" class="image-bordered" src="@Url.Content(Model.StorePictureURL)" width="100" height="100" @*onClick="javascript: window.open('@Url.Content(Model.StorePictureURL)')"*@ />
-                    
+
                     @*Popup hinh anh*@
                     <div id="myModal" class="modal">
                         <!-- The Close Button -->
@@ -162,7 +171,7 @@
     var img = document.getElementById('myImg');
     var modalImg = document.getElementById("img01");
     var captionText = document.getElementById("caption");
-    img.onclick = function(){
+    img.onclick = function () {
         modal.style.display = "block";
         modalImg.src = this.src;
         captionText.innerHTML = this.alt;
@@ -172,7 +181,7 @@
     var span = document.getElementsByClassName("close")[0];
 
     // When the user clicks on <span> (x), close the modal
-    span.onclick = function() {
+    span.onclick = function () {
         modal.style.display = "none";
     }
 
