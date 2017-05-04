@@ -49,7 +49,7 @@
                 @Html.DisplayNameFor(model => model.DetailsPlaceDisplayOnly)
             </dt>
             <dd>
-                <p id="address">@Html.DisplayFor(model => model.DetailsPlaceDisplayOnly) </p>
+                <p id="address">@Html.DisplayFor(model => model.DetailsPlaceDisplayOnly)</p>
             </dd>
         </dl>
 
@@ -127,74 +127,22 @@
 
     <!-- Enclose the Javascript in a "section" so that it is rendered in the correct order after scripts have been loaded etc -->
 
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCeOut48Ao-4GwpQQxq2CBgCS8XPuwkdo0&callback=initMap">
+    </script>
+   
+    <script>
 
-    <script type="text/javascript">
-
-        var destPlace;
-        var orgPlace;
-        function initMap() {
-            var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 16,
-                center: {lat: 21.03823, lng: 105.782747}
-            });
-
-            var myMarker = new google.maps.Marker({
-                position: new google.maps.LatLng(21.038234, 105.782747),
-                map: map,
-                title: "Bạn đang ở đây!"
-            });
-            orgPlace = new google.maps.LatLng(21.038234, 105.782747);
-
-
-            //set blue icon for my place
-            myMarker.setIcon('http://maps.google.com/mapfiles/ms/icons/blue-dot.png')
-
-            // put in some information about each json object - in this case, the opening hours.
-            var infowindow = new google.maps.InfoWindow({
-                content: "<div class='infoDiv'><h4>Bạn đang ở đây!</div></div>"
-            });
-
-            // finally hook up an "OnClick" listener to the map so it pops up out info-window when the marker-pin is clicked!
-            google.maps.event.addListener(myMarker, 'click', function () {
-                infowindow.open(map, myMarker);
-            });
-
-
-            var geocoder = new google.maps.Geocoder();
-            geocodeAddress(geocoder, map);
-
-            var directionsService = new google.maps.DirectionsService;
-            var directionsDisplay = new google.maps.DirectionsRenderer({
-                map: map
-            });
-
-            calculateAndDisplayRoute(directionsService, directionsDisplay, orgPlace, destPlace);
-
-        }
-
-        function geocodeAddress(geocoder, resultsMap) {
+        function geocodeAddress(geocoder, resultsMap, orgPlace, directionsService, directionsDisplay) {
             //var address = document.getElementById('address').value
-            var address = "@Model.DetailsPlaceDisplayOnly"
+            var address = "@Model.DetailsPlaceDisplayOnly";
             geocoder.geocode({'address': address}, function(results, status) {
                 if (status === 'OK') {
-                    //resultsMap.setCenter(results[0].geometry.location);
-                    var marker = new google.maps.Marker({
-                        map: resultsMap,
-                        position: results[0].geometry.location
-                    });
-                    destPlace = results[0].geometry.location;
-                    var destwindow = new google.maps.InfoWindow({
-                        content: "<div class='infoDest'><h4>" + "@Model.DetailsPlaceDisplayOnly" + "</div></div>"
-                    });
-
-                    // finally hook up an "OnClick" listener to the map so it pops up out info-window when the marker-pin is clicked!
-                    google.maps.event.addListener(marker, 'click', function () {
-                        destwindow.open(map, marker);
-                    });
-                } else {
-                    alert('Geocode was not successful for the following reason: ' + status);
+                    var destPlace = results[0].geometry.location;
+                    calculateAndDisplayRoute(directionsService, directionsDisplay, orgPlace, destPlace);
                 }
             });
+
         }
 
         function calculateAndDisplayRoute(directionsService, directionsDisplay, orgPlace, destPlace) {
@@ -209,10 +157,36 @@
                     window.alert('Directions request failed due to ' + status);
                 }
             });
+
         }
-    </script>
-    <script async defer
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCeOut48Ao-4GwpQQxq2CBgCS8XPuwkdo0&callback=initMap">
+
+        function initMap() {
+            var orgPlace;
+            navigator.geolocation.getCurrentPosition(function(position) {
+                var lat = position.coords.latitude;
+                var lng = position.coords.longitude;
+                orgPlace = new google.maps.LatLng(lat, lng);
+
+                var map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 16,
+
+                });
+
+                //var myMarker = new google.maps.Marker({
+                //    position: new google.maps.LatLng(21.038234, 105.782747),
+                //    map: map,
+                //    title: "Bạn đang ở đây!"
+                //});
+
+                var directionsService = new google.maps.DirectionsService;
+                var directionsDisplay = new google.maps.DirectionsRenderer({
+                    map: map
+                });
+
+                var geocoder = new google.maps.Geocoder();
+                geocodeAddress(geocoder, map, orgPlace, directionsService, directionsDisplay);
+            });
+        }
     </script>
 
 </div>
