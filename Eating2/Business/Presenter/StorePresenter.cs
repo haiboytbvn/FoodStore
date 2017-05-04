@@ -93,17 +93,20 @@ namespace Eating2.Business.Presenter
                 StoreDataModel = Store.MapTo<StoreViewModel, StoreDataModel>(StoreDataModel);
                 StoreRepository.UpdateStore(StoreDataModel);
                 StoreRepository.Save();
+                List<FoodViewModel> listFoods = FoodPresenterObject.ListAllFoodForStore(StoreID);
+                foreach (var food in listFoods)
+                {
+                    food.StoreNameDisplayOnly = StoreDataModel.Name;
+                    food.DistrictDisplayOnly = StoreDataModel.District;
+                    food.DetailsPlaceDisplayOnly = StoreDataModel.Place;
+                    food.StorePhoneNumber = StoreDataModel.PhoneNumber;
+                    FoodPresenterObject.UpdateFood(food.ID, food);
+                }
             }
         }
 
         public void DeleteStore(int StoreID)
         {
-            List<FoodViewModel> listFoods = FoodPresenterObject.ListAllFoodForStore(StoreID);
-            foreach (var food in listFoods)
-            {
-                FoodPresenterObject.DeleteFood(food.ID);
-            }
-
             var StoreDataModel =StoreRepository.GetStoreByID(StoreID);
             if (StoreDataModel == null)
             {
@@ -111,6 +114,11 @@ namespace Eating2.Business.Presenter
             }
             else
             {
+                List<FoodViewModel> listFoods = FoodPresenterObject.ListAllFoodForStore(StoreID);
+                foreach (var food in listFoods)
+                {
+                    FoodPresenterObject.DeleteFood(food.ID);
+                }
                 StoreRepository.DeleteStore(StoreID);
                 StoreRepository.Save();
             }

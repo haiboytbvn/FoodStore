@@ -92,7 +92,12 @@ namespace Eating2.Business.Presenter
         public void UpdateFood(int FoodID, FoodViewModel Food)
         {
             var FoodDataModel = FoodRepository.GetFoodByID(FoodID);
-
+            var currentPicture = Food.FoodPictureURL;
+            if(currentPicture == null)
+            {
+                currentPicture = FoodDataModel.FoodPictureURL;
+            }
+                
             if (FoodDataModel == null)
             {
                 throw new NotFoundException("Food was not found.");
@@ -103,7 +108,7 @@ namespace Eating2.Business.Presenter
                 var store = StoreRepository.GetStoreByID(Food.StoreID);
                 FoodDataModel.DistrictDisplayOnly = store.District;
                 FoodDataModel.StoreNameDisplayOnly = store.Name;
-
+                FoodDataModel.FoodPictureURL = currentPicture;
 
                 FoodRepository.UpdateFood(FoodDataModel);
                 FoodRepository.Save();

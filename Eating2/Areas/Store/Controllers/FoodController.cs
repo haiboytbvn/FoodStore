@@ -129,10 +129,11 @@ namespace Eating2.Areas.Store.Controllers
                     {
                         food.listFoodPicturesURL.Add(image);
                         food.HasFoodPicture = Server.IsRelativePathExisted(folderPath);
+                        food.FoodPictureURL = image.path;
                     }
-                    food.FoodPictureURL = image.path;
+                    
                 }
-
+                FoodPresenterObject.UpdateFood(food.ID, food);
                 ViewBag.upload = uploadState;
                 ViewBag.Message = uploadMessage;
 
@@ -170,7 +171,7 @@ namespace Eating2.Areas.Store.Controllers
         // Post Method
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, [Bind(Include = "ID, Name, Cost, StoreID ")] FoodViewModel Food, string details)
+        public ActionResult Edit(int id, [Bind(Include = "ID, Name, Cost, StoreID, Recipe ")] FoodViewModel Food, string details)
         {
             try
             {
@@ -183,6 +184,7 @@ namespace Eating2.Areas.Store.Controllers
                         Name = Food.Name,
                         Cost = Food.Cost,
                         StoreID = storeID,
+                        Recipe = Food.Recipe,
                     };
                     FoodPresenterObject.UpdateFood(id, updatedFood);
                     if (details == null)

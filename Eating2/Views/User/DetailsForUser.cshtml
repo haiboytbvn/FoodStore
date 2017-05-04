@@ -154,7 +154,7 @@
                 if (status == google.maps.DirectionsStatus.OK) {
                     directionsDisplay.setDirections(response);
                 } else {
-                    window.alert('Directions request failed due to ' + status);
+                    window.alert('Tìm đường đi thất bại ' + status);
                 }
             });
 
@@ -195,7 +195,7 @@
 
 <p>
     @*@Html.ActionLink("Sửa thông tin", "Edit", new { id = Model.ID, beforePage = "details" }) |*@
-    @Html.ActionLink("Quay lại danh sách", "Search", "Home", null, null)
+    @Html.ActionLink("Quay lại trang tìm kiếm", "Search", "Home", null, null)
 </p>
 
 <hr />
