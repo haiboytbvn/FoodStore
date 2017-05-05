@@ -11,6 +11,7 @@ using Eating2.Business.Presenter;
 using Eating2.AppConfig;
 using System.IO;
 using PagedList;
+using Eating2.App_Start;
 
 namespace Eating2.Business.Presenter
 {
@@ -26,6 +27,7 @@ namespace Eating2.Business.Presenter
 
         public FoodPresenter(HttpContextBase context)
         {
+            MapperConfig.Start();
             HttpContext = context;
             FoodRepository = new FoodRepository();
             UserManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();

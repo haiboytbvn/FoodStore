@@ -11,6 +11,7 @@ using Eating2.Business.Presenter;
 using System.IO;
 using Microsoft.AspNet.Identity;
 using Eating2.AppConfig;
+using Eating2.App_Start;
 
 namespace Eating2.Business.Presenter
 {
@@ -26,6 +27,7 @@ namespace Eating2.Business.Presenter
         
         public StorePresenter(HttpContextBase context)
         {
+            MapperConfig.Start();
             HttpContext = context;
             StoreRepository = new StoreRepository();
             UserManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
@@ -96,10 +98,11 @@ namespace Eating2.Business.Presenter
                 List<FoodViewModel> listFoods = FoodPresenterObject.ListAllFoodForStore(StoreID);
                 foreach (var food in listFoods)
                 {
-                    food.StoreNameDisplayOnly = StoreDataModel.Name;
-                    food.DistrictDisplayOnly = StoreDataModel.District;
-                    food.DetailsPlaceDisplayOnly = StoreDataModel.Place;
-                    food.StorePhoneNumber = StoreDataModel.PhoneNumber;
+                    //food.StoreNameDisplayOnly = StoreDataModel.Name;
+                    //food.DistrictDisplayOnly = StoreDataModel.District;
+                    //food.DetailsPlaceDisplayOnly = StoreDataModel.Place;
+                    //food.StorePhoneNumber = StoreDataModel.PhoneNumber;
+
                     FoodPresenterObject.UpdateFood(food.ID, food);
                 }
             }

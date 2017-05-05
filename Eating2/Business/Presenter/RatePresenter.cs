@@ -8,6 +8,7 @@ using System.Linq;
 using System.Web;
 using Eating2.DataAcess.Models;
 using Eating2.Business.Presenter;
+using Eating2.App_Start;
 
 namespace Eating2.Business.Presenter
 {
@@ -22,6 +23,7 @@ namespace Eating2.Business.Presenter
 
         public RatePresenter(HttpContextBase context)
         {
+            MapperConfig.Start();
             HttpContext = context;
             RateRepository = new RateRepository();
             UserManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
