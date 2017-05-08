@@ -19,6 +19,10 @@ namespace Eating2.Business.Presenter
         protected ApplicationUserManager UserManager;
         protected UserPresenter userPresenter;
         protected IStoreRepository StoreRepository;
+        //protected ApplicationUserManager UserManager;
+        //protected UserPresenter userPresenter;
+        //protected IStoreRepository StoreRepository;
+        protected IFoodPresenter FoodPresenterObject;
 
 
         public RatePresenter(HttpContextBase context)
@@ -29,6 +33,10 @@ namespace Eating2.Business.Presenter
             UserManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
             userPresenter = new UserPresenter(context);
             StoreRepository = new StoreRepository();
+            //UserManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            //userPresenter = new UserPresenter(context);
+            //StoreRepository = new StoreRepository();
+            FoodPresenterObject = new FoodPresenter(context);
         }
 
 
@@ -52,6 +60,25 @@ namespace Eating2.Business.Presenter
             return RateViewModel;
 
         }
+
+        //public List<RateViewModel> ListAllRate()
+        //{
+        //    List<RateViewModel> listRateViewModel = new List<RateViewModel>();
+        //    var listRate = RateRepository.ListAll();
+        //    foreach (var Rate in listRate)
+        //    {
+        //        var RateViewModel = new RateViewModel()
+        //        {
+        //            ID = Rate.ID,
+        //            Name = Rate.Name,
+        //            Cost = Rate.Cost,
+        //            Processing = Rate.Processing,
+        //            inStore = Rate.Store.Name
+        //        };
+        //        listRateViewModel.Add(RateViewModel);
+        //    }
+        //    return listRateViewModel;
+        //}
 
         public List<RateViewModel> ListAllRateForFood(int id)
         {
@@ -88,7 +115,8 @@ namespace Eating2.Business.Presenter
             RateRepository.InsertRate(RateDataModel);
             RateRepository.Save();
 
-           
+            var food = FoodPresenterObject.GetFoodById(Rate.FoodID);
+            FoodPresenterObject.UpdateFood(food.ID, food);
         }
 
         //public void UpdateRate(int RateID, RateViewModel Rate)
