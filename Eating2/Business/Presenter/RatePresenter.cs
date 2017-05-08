@@ -9,6 +9,7 @@ using System.Web;
 using Eating2.DataAcess.Models;
 using Eating2.Business.Presenter;
 using Eating2.App_Start;
+using Eating2.AppConfig;
 
 namespace Eating2.Business.Presenter
 {
@@ -16,19 +17,14 @@ namespace Eating2.Business.Presenter
     {
         protected HttpContextBase HttpContext;
         protected IRateRepository RateRepository;
-        protected ApplicationUserManager UserManager;
-        protected UserPresenter userPresenter;
-        protected IStoreRepository StoreRepository;
-
+        protected IFoodRepository FoodRepository;
 
         public RatePresenter(HttpContextBase context)
         {
             MapperConfig.Start();
             HttpContext = context;
             RateRepository = new RateRepository();
-            UserManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            userPresenter = new UserPresenter(context);
-            StoreRepository = new StoreRepository();
+            FoodRepository = new FoodRepository();
         }
 
 
@@ -40,15 +36,8 @@ namespace Eating2.Business.Presenter
             {
                 throw new NotFoundException("Rate was not found.");
             }
-            var RateViewModel = new RateViewModel()
-            {
-                ID = Rate.ID,
-                Comment = Rate.Comment,
-                Point = Rate.Point,
-                TimeComment = Rate.TimeComment,
-                FoodID = Rate.FoodID,
-                Customer = Rate.Customer
-            };
+            var RateViewModel = Rate.MapTo<RateDataModel, RateViewModel>();
+
             return RateViewModel;
 
         }
@@ -61,58 +50,29 @@ namespace Eating2.Business.Presenter
             var listRate = RateRepository.ListAllForFood(id);
             foreach (var Rate in listRate)
             {
-                var RateViewModel = new RateViewModel()
-                {
-                    ID = Rate.ID,
-                    Comment = Rate.Comment,
-                    Point = Rate.Point,
-                    TimeComment = Rate.TimeComment,
-                    FoodID = Rate.FoodID,
-                    Customer = Rate.Customer
-
-                };
+                var RateViewModel = Rate.MapTo<RateDataModel, RateViewModel>();
                 listRateViewModel.Add(RateViewModel);
             }
             return listRateViewModel;
         }
         public void InsertRate(RateViewModel Rate)
         {
-            var RateDataModel = new RateDataModel()
-            {
-                ID = Rate.ID,
-                Comment = Rate.Comment,
-                Point = Rate.Point,
-                TimeComment = Rate.TimeComment,
-                FoodID = Rate.FoodID,
-                Customer = Rate.Customer
-            };
+            var RateDataModel = Rate.MapTo<RateViewModel, RateDataModel>();
 
             RateRepository.InsertRate(RateDataModel);
             RateRepository.Save();
+
+            var food = FoodRepository.GetFoodByID(Rate.FoodID);
+            food.AveragePoint = RateRepository.AveragePoint(food.ID);
+            FoodRepository.UpdateFood(food);
+            FoodRepository.Save();
         }
 
-        //public void UpdateRate(int RateID, RateViewModel Rate)
-        //{
-        //    var RateDataModel = RateRepository.GetRateByID(RateID);
-        //    if (RateDataModel == null)
-        //    {
-        //        throw new NotFoundException("Rate was not found.");
-        //    }
-        //    else
-        //    {
-        //        RateDataModel.ID = Rate.ID;
-        //        RateDataModel.Name = Rate.Name;
-        //        RateDataModel.Cost = Rate.Cost;
-        //        RateDataModel.Processing = Rate.Processing;
-
-        //        RateRepository.UpdateRate(RateDataModel);
-        //        RateRepository.Save();
-        //    }
-        //}
-
+        
         public void DeleteRate(int RateID)
         {
             var RateDataModel = RateRepository.GetRateByID(RateID);
+            
             if (RateDataModel == null)
             {
                 throw new NotFoundException("Rate was deleted");
@@ -121,6 +81,12 @@ namespace Eating2.Business.Presenter
             {
                 RateRepository.DeleteRate(RateID);
                 RateRepository.Save();
+
+                var food = FoodRepository.GetFoodByID(RateDataModel.FoodID);
+                food.AveragePoint = RateRepository.AveragePoint(food.ID);
+                FoodRepository.UpdateFood(food);
+                FoodRepository.Save();
+
             }
         }
 

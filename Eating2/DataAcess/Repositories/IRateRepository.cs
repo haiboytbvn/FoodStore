@@ -17,5 +17,6 @@ namespace Eating2.DataAcess.Repositories
         void Save();
         IEnumerable<RateDataModel> ListAllForFood(int id);
         int TotalRate(int FoodId);
+        double AveragePoint(int FoodId);
     }
 }

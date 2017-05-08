@@ -15,6 +15,7 @@ namespace Eating2.App_Start
             {
                 cfg.AddProfile(new FoodMappingProfile("FoodMapping"));
                 cfg.AddProfile(new StoreMappingProfile("StoreMapping"));
+                cfg.AddProfile(new RateMappingProfile("RateMapping"));
 
             });
         }

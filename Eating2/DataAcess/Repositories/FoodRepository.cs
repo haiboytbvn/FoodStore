@@ -94,6 +94,9 @@ namespace Eating2.DataAcess.Repositories
                     case "districtdisplayonly":
                         query = sortOptions.Direction == SortDirections.Asc ? query.OrderBy(t => t.DistrictDisplayOnly) : query.OrderByDescending(t => t.DistrictDisplayOnly);
                         break;
+                    case "averagepoint":
+                        query = sortOptions.Direction == SortDirections.Asc ? query.OrderBy(t => t.AveragePoint) : query.OrderByDescending(t => t.AveragePoint);
+                        break;
 
                 }
                 
