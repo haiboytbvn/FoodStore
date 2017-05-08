@@ -53,25 +53,6 @@ namespace Eating2.Business.Presenter
 
         }
 
-        //public List<RateViewModel> ListAllRate()
-        //{
-        //    List<RateViewModel> listRateViewModel = new List<RateViewModel>();
-        //    var listRate = RateRepository.ListAll();
-        //    foreach (var Rate in listRate)
-        //    {
-        //        var RateViewModel = new RateViewModel()
-        //        {
-        //            ID = Rate.ID,
-        //            Name = Rate.Name,
-        //            Cost = Rate.Cost,
-        //            Processing = Rate.Processing,
-        //            inStore = Rate.Store.Name
-        //        };
-        //        listRateViewModel.Add(RateViewModel);
-        //    }
-        //    return listRateViewModel;
-        //}
-
         public List<RateViewModel> ListAllRateForFood(int id)
         {
             List<RateViewModel> listRateViewModel = new List<RateViewModel>();
@@ -106,6 +87,8 @@ namespace Eating2.Business.Presenter
 
             RateRepository.InsertRate(RateDataModel);
             RateRepository.Save();
+
+           
         }
 
         //public void UpdateRate(int RateID, RateViewModel Rate)
