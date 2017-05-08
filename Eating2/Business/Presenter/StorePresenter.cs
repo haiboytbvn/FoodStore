@@ -19,10 +19,10 @@ namespace Eating2.Business.Presenter
     {
         protected HttpContextBase HttpContext;
         protected IStoreRepository StoreRepository;
-        protected ApplicationUserManager UserManager;
-        protected UserPresenter userPresenter;
-        protected FoodPresenter FoodPresenterObject;
-        protected FoodRepository FoodRepository;
+        //protected ApplicationUserManager UserManager;
+        //protected UserPresenter userPresenter;
+        protected IFoodPresenter FoodPresenterObject;
+        //protected FoodRepository FoodRepository;
         
         
         public StorePresenter(HttpContextBase context)
@@ -30,10 +30,10 @@ namespace Eating2.Business.Presenter
             MapperConfig.Start();
             HttpContext = context;
             StoreRepository = new StoreRepository();
-            UserManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            userPresenter = new UserPresenter(context);
+            //UserManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            //userPresenter = new UserPresenter(context);
             FoodPresenterObject = new FoodPresenter(context);
-            FoodRepository = new FoodRepository();
+            //FoodRepository = new FoodRepository();
         }
 
 

@@ -19,22 +19,22 @@ namespace Eating2.Business.Presenter
     {
         protected HttpContextBase HttpContext;
         protected IFoodRepository FoodRepository;
-        protected ApplicationUserManager UserManager;
-        protected UserPresenter userPresenter;
+        //protected ApplicationUserManager UserManager;
+        //protected UserPresenter userPresenter;
         protected IStoreRepository StoreRepository;
-        protected RatePresenter RatePresenterObject;
-        protected RateRepository RateRepository;
+        protected IRatePresenter RatePresenterObject;
+        //protected RateRepository RateRepository;
 
         public FoodPresenter(HttpContextBase context)
         {
             MapperConfig.Start();
             HttpContext = context;
             FoodRepository = new FoodRepository();
-            UserManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            userPresenter = new UserPresenter(context);
+            //UserManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            //userPresenter = new UserPresenter(context);
             StoreRepository = new StoreRepository();
             RatePresenterObject = new RatePresenter(context);
-            RateRepository = new RateRepository();
+            //RateRepository = new RateRepository();
         }
 
 
