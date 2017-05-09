@@ -21,6 +21,16 @@ namespace Eating2.Business.Presenter
         string GetFoodDirectionPicture(int foodID, int storeID, string UserName);
         string GetFoodPictureUrlForUpload(int foodID, int number, int storeID, string UserName);
         IPagedList<FoodViewModel> GetFoodsForSearch(FilterOptions filterOptions);
+        IPagedList<FoodViewModel> ListAllFoodByRate(FilterOptions filterOptions);
+        IPagedList<FoodViewModel> ListAllFoodByArea(string district, FilterOptions filterOptions);
+        IPagedList<FoodViewModel> ListAllFoodByTime(FilterOptions filterOptions);
+        List<FoodViewModel> ListFoodByRate();
+        List<FoodViewModel> ListFoodByRateIndex();
+        List<FoodViewModel> ListFoodByArea(string district);
+        List<FoodViewModel> ListFoodByAreaIndex(string district);
+        List<FoodViewModel> ListFoodByTime();
+        List<FoodViewModel> ListFoodByTimeIndex();
+        List<FoodViewModel> ListFoodByCostRecomment(double cost);
 
     }
 }

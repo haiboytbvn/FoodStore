@@ -99,7 +99,7 @@ namespace Eating2.DataAcess.Repositories
                         break;
 
                 }
-                
+
             }
 
             if (filterOptions.PagingOptions != null)
@@ -110,5 +110,231 @@ namespace Eating2.DataAcess.Repositories
             return query.ToCustomPagedList(0, 12);
         }
 
+        public IEnumerable<FoodDataModel> ListByRateIndex()
+        {
+            var query = dataContext.Foods.Where(t => t.numberOfComment > 3).OrderByDescending(t => t.AveragePoint).Take(6);
+            return query;
+        }
+
+        public IEnumerable<FoodDataModel> ListByRate()
+        {
+            var query = dataContext.Foods.Where(t => (t.numberOfComment > 3 && t.AveragePoint >= 3)).OrderByDescending(t => t.AveragePoint);
+            return query;
+        }
+
+        public List<FoodDataModel> ListByAreaIndex(string district)
+        {
+            List<FoodDataModel> chooseQuery = new List<FoodDataModel>();
+            var allquery = dataContext.Foods.Where(t => t.DistrictDisplayOnly == district).ToList();
+            Random random = new Random(DateTime.Now.Millisecond);
+            for (int i = 0; i < 6; i++)
+            {
+                var query = allquery.ElementAt(random.Next(0, allquery.Count()));
+                chooseQuery.Add(query);
+            }
+            return chooseQuery;
+        }
+        public List<FoodDataModel> ListByArea(string district)
+        {
+            var allquery = dataContext.Foods.Where(t => t.DistrictDisplayOnly == district).ToList();
+            return allquery;
+        }
+
+        public IEnumerable<FoodDataModel> ListByTime()
+        {
+            return dataContext.Foods.Select(t => t).OrderByDescending(t => t.Created);
+        }
+        public IEnumerable<FoodDataModel> ListByTimeIndex()
+        {
+            return dataContext.Foods.Select(t => t).OrderByDescending(t => t.Created).Take(6);
+        }
+
+        public IPagedList<FoodDataModel> ListAllFoodByRate(FilterOptions filterOptions)
+        {
+            IQueryable<FoodDataModel> query = dataContext.Foods.Where(t => (t.numberOfComment > 3 && t.AveragePoint >= 3)).OrderByDescending(t => t.AveragePoint);
+            if (filterOptions == null)
+            {
+                return query.ToCustomPagedList<FoodDataModel>(0, 12);
+            }
+            if (!string.IsNullOrEmpty(filterOptions.Keyword))
+            {
+                foreach (var field in filterOptions.FilterFields)
+                {
+                    switch (field.ToLowerInvariant())
+                    {
+                        case "storenamedisplayonly":
+                            query = query.Where(t => t.Name.Contains(filterOptions.Keyword));
+                            break;
+                        case "name":
+                            query = query.Where(t => t.Name.Contains(filterOptions.Keyword));
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+
+            if (filterOptions.SortOptions != null)
+            {
+                var sortOptions = filterOptions.SortOptions;
+                switch (sortOptions.Field.ToLowerInvariant())
+                {
+                    case "name":
+                        query = sortOptions.Direction == SortDirections.Asc ? query.OrderBy(t => t.Name) : query.OrderByDescending(t => t.Name);
+                        break;
+                    case "cost":
+                        query = sortOptions.Direction == SortDirections.Asc ? query.OrderBy(t => t.Cost) : query.OrderByDescending(t => t.Cost);
+                        break;
+                    case "storenamedisplayonly":
+                        query = sortOptions.Direction == SortDirections.Asc ? query.OrderBy(t => t.StoreNameDisplayOnly) : query.OrderByDescending(t => t.StoreNameDisplayOnly);
+                        break;
+                    case "districtdisplayonly":
+                        query = sortOptions.Direction == SortDirections.Asc ? query.OrderBy(t => t.DistrictDisplayOnly) : query.OrderByDescending(t => t.DistrictDisplayOnly);
+                        break;
+                    case "averagepoint":
+                        query = sortOptions.Direction == SortDirections.Asc ? query.OrderBy(t => t.AveragePoint) : query.OrderByDescending(t => t.AveragePoint);
+                        break;
+
+                }
+
+            }
+
+            if (filterOptions.PagingOptions != null)
+            {
+                var pagingOption = filterOptions.PagingOptions;
+                return query.ToCustomPagedList(pagingOption.CurrentPage, pagingOption.PageSize);
+            }
+            return query.ToCustomPagedList(0, 12);
+        }
+
+        public IPagedList<FoodDataModel> ListAllFoodByArea(string district, FilterOptions filterOptions)
+        {
+            IQueryable<FoodDataModel> query = dataContext.Foods.Where(t => t.DistrictDisplayOnly == district).Select(t => t).OrderBy(t => t.Name);
+            if (filterOptions == null)
+            {
+                return query.ToCustomPagedList<FoodDataModel>(0, 12);
+            }
+            if (!string.IsNullOrEmpty(filterOptions.Keyword))
+            {
+                foreach (var field in filterOptions.FilterFields)
+                {
+                    switch (field.ToLowerInvariant())
+                    {
+                        case "storenamedisplayonly":
+                            query = query.Where(t => t.Name.Contains(filterOptions.Keyword));
+                            break;
+                        case "name":
+                            query = query.Where(t => t.Name.Contains(filterOptions.Keyword));
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+
+            if (filterOptions.SortOptions != null)
+            {
+                var sortOptions = filterOptions.SortOptions;
+                switch (sortOptions.Field.ToLowerInvariant())
+                {
+                    case "name":
+                        query = sortOptions.Direction == SortDirections.Asc ? query.OrderBy(t => t.Name) : query.OrderByDescending(t => t.Name);
+                        break;
+                    case "cost":
+                        query = sortOptions.Direction == SortDirections.Asc ? query.OrderBy(t => t.Cost) : query.OrderByDescending(t => t.Cost);
+                        break;
+                    case "storenamedisplayonly":
+                        query = sortOptions.Direction == SortDirections.Asc ? query.OrderBy(t => t.StoreNameDisplayOnly) : query.OrderByDescending(t => t.StoreNameDisplayOnly);
+                        break;
+                    case "districtdisplayonly":
+                        query = sortOptions.Direction == SortDirections.Asc ? query.OrderBy(t => t.DistrictDisplayOnly) : query.OrderByDescending(t => t.DistrictDisplayOnly);
+                        break;
+                    case "averagepoint":
+                        query = sortOptions.Direction == SortDirections.Asc ? query.OrderBy(t => t.AveragePoint) : query.OrderByDescending(t => t.AveragePoint);
+                        break;
+
+                }
+
+            }
+
+            if (filterOptions.PagingOptions != null)
+            {
+                var pagingOption = filterOptions.PagingOptions;
+                return query.ToCustomPagedList(pagingOption.CurrentPage, pagingOption.PageSize);
+            }
+            return query.ToCustomPagedList(0, 12);
+        }
+
+        public IPagedList<FoodDataModel> ListAllFoodByTime(FilterOptions filterOptions)
+        {
+            TimeSpan fourweek = new TimeSpan(28, 0, 0, 0, 0);
+            IQueryable<FoodDataModel> query = dataContext.Foods.Select(t => t).OrderByDescending(t => t.Created);
+            if (filterOptions == null)
+            {
+                return query.ToCustomPagedList<FoodDataModel>(0, 12);
+            }
+            if (!string.IsNullOrEmpty(filterOptions.Keyword))
+            {
+                foreach (var field in filterOptions.FilterFields)
+                {
+                    switch (field.ToLowerInvariant())
+                    {
+                        case "storenamedisplayonly":
+                            query = query.Where(t => t.Name.Contains(filterOptions.Keyword));
+                            break;
+                        case "name":
+                            query = query.Where(t => t.Name.Contains(filterOptions.Keyword));
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+
+            if (filterOptions.SortOptions != null)
+            {
+                var sortOptions = filterOptions.SortOptions;
+                switch (sortOptions.Field.ToLowerInvariant())
+                {
+                    case "name":
+                        query = sortOptions.Direction == SortDirections.Asc ? query.OrderBy(t => t.Name) : query.OrderByDescending(t => t.Name);
+                        break;
+                    case "cost":
+                        query = sortOptions.Direction == SortDirections.Asc ? query.OrderBy(t => t.Cost) : query.OrderByDescending(t => t.Cost);
+                        break;
+                    case "storenamedisplayonly":
+                        query = sortOptions.Direction == SortDirections.Asc ? query.OrderBy(t => t.StoreNameDisplayOnly) : query.OrderByDescending(t => t.StoreNameDisplayOnly);
+                        break;
+                    case "districtdisplayonly":
+                        query = sortOptions.Direction == SortDirections.Asc ? query.OrderBy(t => t.DistrictDisplayOnly) : query.OrderByDescending(t => t.DistrictDisplayOnly);
+                        break;
+                    case "averagepoint":
+                        query = sortOptions.Direction == SortDirections.Asc ? query.OrderBy(t => t.AveragePoint) : query.OrderByDescending(t => t.AveragePoint);
+                        break;
+
+                }
+
+            }
+
+            if (filterOptions.PagingOptions != null)
+            {
+                var pagingOption = filterOptions.PagingOptions;
+                return query.ToCustomPagedList(pagingOption.CurrentPage, pagingOption.PageSize);
+            }
+            return query.ToCustomPagedList(0, 12);
+        }
+
+        public List<FoodDataModel> ListByCostRecomment(double cost)
+        {
+            List<FoodDataModel> chooseQuery = new List<FoodDataModel>();
+            var allquery = dataContext.Foods.Where(t => t.Cost <= (cost + 10000) && t.Cost >= (cost - 10000)).OrderByDescending(t => t.Name).ToList();
+            Random random = new Random(DateTime.Now.Millisecond);
+            for (int i = 0; i < 6; i++)
+            {
+                var query = allquery.ElementAt(random.Next(0, allquery.Count()));
+                chooseQuery.Add(query);
+            }
+            return chooseQuery;
+        }
     }
 }

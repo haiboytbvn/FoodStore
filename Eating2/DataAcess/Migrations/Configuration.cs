@@ -5,6 +5,7 @@ namespace Eating2.DataAcess.Migrations
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
+    using Eating2.DataAcess.Repositories;
 
     internal sealed class Configuration : DbMigrationsConfiguration<Eating2.DataAcess.ApplicationDbContext>
     {
@@ -16,19 +17,18 @@ namespace Eating2.DataAcess.Migrations
 
         protected override void Seed(Eating2.DataAcess.ApplicationDbContext context)
         {
-            //  This method will be called after migrating to the latest version.
+           
+            //var RateRepository = new RateRepository();
+            //var FoodRepository = new FoodRepository();
+            //var foods = context.Foods.Select(t => t);
+            //foreach(var item in foods)
+            //{
+            //    item.numberOfComment = RateRepository.TotalRate(item.ID);
+            //    item.Created = DateTime.Now;
+               
+            //}
 
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data. E.g.
-            //
-            //    context.People.AddOrUpdate(
-            //      p => p.FullName,
-            //      new Person { FullName = "Andrew Peters" },
-            //      new Person { FullName = "Brice Lambson" },
-            //      new Person { FullName = "Rowan Miller" }
-            //    );
-            //
-            //.Stores.AddOrUpdate();
+            //context.SaveChanges();
            
         }
     }

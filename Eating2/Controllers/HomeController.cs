@@ -103,5 +103,47 @@ namespace Eating2.Controllers
 
             return View();
         }
+
+        public ActionResult RateRecommentIndex()
+        {
+            var listFoods = FoodPresenterObject.ListFoodByRateIndex();
+            return PartialView("_RateRecommentIndexView", listFoods);
+        }
+
+        
+
+        public ActionResult NearAreaRecommentIndex(string district)
+        {
+            district = "Cầu Giấy";
+            var listFoods = FoodPresenterObject.ListFoodByAreaIndex(district);
+            return PartialView("_NearAreaRecommentIndexView", listFoods);
+        }
+
+
+        public ActionResult TimeCreateRecommentIndex()
+        {
+            var listFoods = FoodPresenterObject.ListFoodByTimeIndex();
+            return PartialView("_TimeCreateRecommentIndexView", listFoods);
+        }
+
+        public ActionResult RateRecomment(int? search, [ModelBinder(typeof(FilterOptionsBinding))] FilterOptions filterOptions)
+        {
+            var listFoods = FoodPresenterObject.ListAllFoodByRate(filterOptions);
+            return View("RateRecomment", listFoods);
+        }
+
+        public ActionResult NearAreaRecomment(int? search, [ModelBinder(typeof(FilterOptionsBinding))] FilterOptions filterOptions)
+        {
+            var district = "Cầu Giấy";
+            var listFoods = FoodPresenterObject.ListAllFoodByArea(district, filterOptions);
+            return View("NearAreaRecomment", listFoods);
+        }
+
+
+        public ActionResult TimeCreateRecomment(int? search, [ModelBinder(typeof(FilterOptionsBinding))] FilterOptions filterOptions)
+        {
+            var listFoods = FoodPresenterObject.ListAllFoodByTime(filterOptions);
+            return View("TimeCreateRecomment", listFoods);
+        }
     }
 }

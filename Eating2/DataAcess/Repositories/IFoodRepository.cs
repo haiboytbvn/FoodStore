@@ -20,5 +20,16 @@ namespace Eating2.DataAcess.Repositories
         IEnumerable<FoodDataModel> ListAllForStore(int id);
         int TotalFood(int StoreId);
         IPagedList<FoodDataModel> GetFoodsForSearch(FilterOptions filterOptions);
+        IPagedList<FoodDataModel> ListAllFoodByRate(FilterOptions filterOptions);
+        IPagedList<FoodDataModel> ListAllFoodByArea(string district, FilterOptions filterOptions);
+        IPagedList<FoodDataModel> ListAllFoodByTime(FilterOptions filterOptions);
+        IEnumerable<FoodDataModel> ListByRate();
+        IEnumerable<FoodDataModel> ListByRateIndex();
+        List<FoodDataModel> ListByArea(string district);
+        List<FoodDataModel> ListByAreaIndex(string district);
+        IEnumerable<FoodDataModel> ListByTime();
+        IEnumerable<FoodDataModel> ListByTimeIndex();
+        List<FoodDataModel> ListByCostRecomment(double cost);
+
     }
 }

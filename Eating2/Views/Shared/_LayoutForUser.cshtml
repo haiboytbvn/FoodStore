@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ăn Gì Ở Đâu</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Ăn Gì Ở Đâu ?", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                @Html.Partial("_MainMenuPartial")
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr/>
+    </div>
+
+    <div class="footer">
+        <div class="container">
+            <div class="row col-md-9">
+                <h3 class="footertext">Nhà phát triển</h3>
+                <br>
+                <div class="col-md-4">
+                    <center>
+                        <img src="http://oi60.tinypic.com/w8lycl.jpg" class="img-circle" alt="the-brains">
+                        <br>
+                        <h4 class="footertext">Lập trình</h4>
+                        <p class="footertext">Nhóm phát triển hệ thống Ăn Gì Ở Đâu ?<br>
+                    </center>
+                </div>
+                <div class="col-md-4">
+                    <center>
+                        <img src="http://oi60.tinypic.com/2z7enpc.jpg" class="img-circle" alt="...">
+                        <br>
+                        <h4 class="footertext">Đồ Họa</h4>
+                        <p class="footertext">Nhóm phát triển hệ thống Ăn Gì Ở Đâu ?<br>
+                    </center>
+                </div>
+                <div class="col-md-4">
+                    <center>
+                        <img src="http://oi61.tinypic.com/307n6ux.jpg" class="img-circle" alt="...">
+                        <br>
+                        <h4 class="footertext">Thiết kế</h4>
+                        <p class="footertext">Nhóm phát triển hệ thống Ăn Gì Ở Đâu ?<br>
+                    </center>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <h3>Liên hệ chúng tôi</h3>
+                <div>
+                    <h4 class="footertext"><b>Địa chỉ:</b></h4>
+                    <p class="footertext">Phòng 1104 - ĐN5, KTX Mỹ Đình, Nguyễn Cơ Thạch, Từ Liêm</p>
+                </div>
+                <div>
+                    <h4 class="footertext"><b>Email:</b></h4>
+                    <p class="footertext">haibui.uet@gmail.com</p>
+                </div>
+                <div>
+                    <h4 class="footertext"><b>Số điện thoại:</b></h4>
+                    <p class="footertext">0165.275.9633</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

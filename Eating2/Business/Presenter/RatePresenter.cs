@@ -64,6 +64,7 @@ namespace Eating2.Business.Presenter
 
             var food = FoodRepository.GetFoodByID(Rate.FoodID);
             food.AveragePoint = RateRepository.AveragePoint(food.ID);
+            food.numberOfComment++;
             FoodRepository.UpdateFood(food);
             FoodRepository.Save();
         }
@@ -84,6 +85,7 @@ namespace Eating2.Business.Presenter
 
                 var food = FoodRepository.GetFoodByID(RateDataModel.FoodID);
                 food.AveragePoint = RateRepository.AveragePoint(food.ID);
+                food.numberOfComment--;
                 FoodRepository.UpdateFood(food);
                 FoodRepository.Save();
 

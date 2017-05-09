@@ -92,7 +92,8 @@ namespace Eating2.Areas.Store.Controllers
             {
                 //var store = StorePresenterObject.GetStoreById(STOREID);
                 Food.StoreID = STOREID;
-                //Food.DistrictDisplayOnly = store.District;
+                Food.Created = DateTime.Now;
+                Food.numberOfComment = 0;
                 Food.FoodPictureURL = "~/uploads/photo\\default.jpg";
                 FoodPresenterObject.InsertFood(Food);
                 return RedirectToAction("Details", "Store", new { Id = STOREID });
@@ -171,7 +172,7 @@ namespace Eating2.Areas.Store.Controllers
         // Post Method
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, [Bind(Include = "ID, Name, Cost, StoreID, Recipe ")] FoodViewModel Food, string details)
+        public ActionResult Edit(int id, [Bind(Include = "ID, Name, Cost, StoreID, Recipe, Created ")] FoodViewModel Food, string details)
         {
             try
             {
@@ -185,6 +186,7 @@ namespace Eating2.Areas.Store.Controllers
                         Cost = Food.Cost,
                         StoreID = storeID,
                         Recipe = Food.Recipe,
+                        Created = Food.Created
                     };
                     FoodPresenterObject.UpdateFood(id, updatedFood);
                     if (details == null)

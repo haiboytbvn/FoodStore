@@ -8,9 +8,10 @@
         <div class="form-group">
             @Html.TextBox("filterKeyword", Model.FilterOptions.Keyword, new { @class = "form-control" })
         </div>
-        <input type="submit" value="Tìm kiếm" class="btn btn-default">
+        <input type="submit" value="Search" class="btn btn-default">
+        
         <div class="form-group">
-            <strong>@*Theo*@</strong>
+            <strong></strong>
             @foreach (var item in Model.FilterFields)
                 {
                 @Html.Partial("~/Views/Shared/Filter/_FilterOptionPartialView.cshtml", item)

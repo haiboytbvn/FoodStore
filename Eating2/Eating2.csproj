@@ -395,6 +395,15 @@
     <Content Include="Views\User\IndexRateForUser.cshtml" />
     <Content Include="Views\Shared\_GoogleMapAPI.cshtml" />
     <Content Include="Views\Shared\GoogleMapAPI.cshtml" />
+    <Content Include="Views\Shared\_RateRecommentIndexView.cshtml" />
+    <Content Include="Views\Shared\_NearAreaRecommentIndexView.cshtml" />
+    <Content Include="Views\Shared\_TimeCreateRecommentIndexView.cshtml" />
+    <Content Include="Views\Home\NearAreaRecomment.cshtml" />
+    <Content Include="Views\Home\RateRecomment.cshtml" />
+    <Content Include="Views\Home\TimeCreateRecomment.cshtml" />
+    <Content Include="Views\User\_SameStoreRecomment.cshtml" />
+    <Content Include="Views\User\_SameCostRecomment.cshtml" />
+    <Content Include="Views\Shared\_LayoutForUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

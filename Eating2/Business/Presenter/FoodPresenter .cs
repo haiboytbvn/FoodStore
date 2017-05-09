@@ -111,6 +111,7 @@ namespace Eating2.Business.Presenter
                 FoodDataModel.DistrictDisplayOnly = store.District;
                 FoodDataModel.StoreNameDisplayOnly = store.Name;
                 FoodDataModel.FoodPictureURL = currentPicture;
+                
 
                 FoodRepository.UpdateFood(FoodDataModel);
                 FoodRepository.Save();
@@ -157,6 +158,117 @@ namespace Eating2.Business.Presenter
             var list = FoodRepository.GetFoodsForSearch(filterOptions);
             var mappedList = list.MapTo<IPagedList<FoodDataModel>, IPagedList<FoodViewModel>>();
             return mappedList;
+        }
+
+        public List<FoodViewModel> ListFoodByRate()
+        {
+            List<FoodViewModel> listFoodViewModel = new List<FoodViewModel>();
+            var listFood = FoodRepository.ListByRate();
+            foreach (var Food in listFood)
+            {
+                var FoodViewModel = Food.MapTo<FoodDataModel, FoodViewModel>();
+
+                listFoodViewModel.Add(FoodViewModel);
+            }
+            return listFoodViewModel;
+        }
+        public List<FoodViewModel> ListFoodByArea(string district)
+        {
+            List<FoodViewModel> listFoodViewModel = new List<FoodViewModel>();
+            var listFood = FoodRepository.ListByArea(district);
+            foreach (var Food in listFood)
+            {
+                var FoodViewModel = Food.MapTo<FoodDataModel, FoodViewModel>();
+
+                listFoodViewModel.Add(FoodViewModel);
+            }
+            return listFoodViewModel;
+        }
+
+        public List<FoodViewModel> ListFoodByRateIndex()
+        {
+            List<FoodViewModel> listFoodViewModel = new List<FoodViewModel>();
+            var listFood = FoodRepository.ListByRateIndex();
+            foreach (var Food in listFood)
+            {
+                var FoodViewModel = Food.MapTo<FoodDataModel, FoodViewModel>();
+
+                listFoodViewModel.Add(FoodViewModel);
+            }
+            return listFoodViewModel;
+        }
+
+        public List<FoodViewModel> ListFoodByAreaIndex(string district)
+        {
+            List<FoodViewModel> listFoodViewModel = new List<FoodViewModel>();
+            var listFood = FoodRepository.ListByAreaIndex(district);
+            foreach (var Food in listFood)
+            {
+                var FoodViewModel = Food.MapTo<FoodDataModel, FoodViewModel>();
+
+                listFoodViewModel.Add(FoodViewModel);
+            }
+            return listFoodViewModel;
+        }
+
+        public List<FoodViewModel> ListFoodByTime()
+        {
+            List<FoodViewModel> listFoodViewModel = new List<FoodViewModel>();
+            var listFood = FoodRepository.ListByTime();
+            foreach (var Food in listFood)
+            {
+                var FoodViewModel = Food.MapTo<FoodDataModel, FoodViewModel>();
+
+                listFoodViewModel.Add(FoodViewModel);
+            }
+            return listFoodViewModel;
+        }
+
+        public List<FoodViewModel> ListFoodByTimeIndex()
+        {
+            List<FoodViewModel> listFoodViewModel = new List<FoodViewModel>();
+            var listFood = FoodRepository.ListByTimeIndex();
+            foreach (var Food in listFood)
+            {
+                var FoodViewModel = Food.MapTo<FoodDataModel, FoodViewModel>();
+
+                listFoodViewModel.Add(FoodViewModel);
+            }
+            return listFoodViewModel;
+        }
+
+        public IPagedList<FoodViewModel> ListAllFoodByRate(FilterOptions filterOptions)
+        {
+            var list = FoodRepository.ListAllFoodByRate(filterOptions);
+            var mappedList = list.MapTo<IPagedList<FoodDataModel>, IPagedList<FoodViewModel>>();
+            return mappedList;
+        }
+
+        public IPagedList<FoodViewModel> ListAllFoodByArea(string district, FilterOptions filterOptions)
+        {
+            var list = FoodRepository.ListAllFoodByArea(district, filterOptions);
+            var mappedList = list.MapTo<IPagedList<FoodDataModel>, IPagedList<FoodViewModel>>();
+            return mappedList;
+        }
+
+        public IPagedList<FoodViewModel> ListAllFoodByTime(FilterOptions filterOptions)
+        {
+            var list = FoodRepository.ListAllFoodByTime(filterOptions);
+            var mappedList = list.MapTo<IPagedList<FoodDataModel>, IPagedList<FoodViewModel>>();
+            return mappedList;
+        }
+
+        public List<FoodViewModel> ListFoodByCostRecomment(double cost)
+        {
+            List<FoodViewModel> listFoodViewModel = new List<FoodViewModel>();
+            var listFood = FoodRepository.ListByCostRecomment(cost);
+            foreach (var Food in listFood)
+            {
+                var FoodViewModel = Food.MapTo<FoodDataModel, FoodViewModel>();
+
+                listFoodViewModel.Add(FoodViewModel);
+            }
+            return listFoodViewModel;
         }
     }
 

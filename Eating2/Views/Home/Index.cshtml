@@ -1,16 +1,78 @@
 ﻿
 @{
     ViewBag.Title = "Home Page";
+    Layout = "../Shared/_LayoutForUser.cshtml";
 }
 
-<div class="jumbotron">
-    <h1>Bạn muốn ăn gì?</h1>
-    <p class="lead">Cùng tìm kiếm những địa điểm ăn uống xung quanh mình!</p>
 
-    @Html.Action("FilterForFood", "Filter", new { area = "" })
-    <br />
+<!-- Carousel
+================================================== -->
+<div id="myCarousel" class="carousel slide">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarousel" data-slide-to="1"></li>
+        <li data-target="#myCarousel" data-slide-to="2"></li>
+    </ol>
+    <div class="carousel-inner">
+        <div class="item active">
+            <img class="image-blur" src="../uploads/photo/cover1.jpg">
+            <div class="container">
+                <div class="carousel-caption">
+                </div>
+            </div>
+        </div>
+        <div class="item">
+            <img class="image-blur" src="../uploads/photo/cover2.jpg">
+            <div class="container">
+                <div class="carousel-caption">
+                </div>
+            </div>
+        </div>
+        <div class="item">
+            <img class="image-blur" src="../uploads/photo/cover3.jpg">
+            <div class="container">
+                <div class="carousel-caption">
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <div id="searchForm" style="position:absolute; top:40%" class="col-xs-12">
+        <div class="col-md-4 col-md-offset-4" style="position:center" >
+            @*<h2 style="color:white">Hôm nay ăn gì ?</h2>*@
+            @*<p class="lead">Cùng tìm kiếm những địa điểm ăn uống xung quanh mình!</p>*@
+            @Html.Action("FilterForFood", "Filter", new { area = "" })
+        </div>
+    </div>
+
+
+    <!-- Controls -->
+    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+        <i class="glyphicon glyphicon-chevron-left"></i>
+    </a>
+    <a class="right carousel-control" href="#myCarousel" data-slide="next">
+        <i class="glyphicon glyphicon-chevron-right"></i>
+    </a>
 </div>
+<!-- /.carousel -->
+
+
+<br />
 <div class="text-danger"><h4>@ViewBag.Message</h4></div>
 <div class="text-danger"><h4>@ViewBag.NoResult</h4></div>
+<hr />
 
+<div id="rate-recomment" >
+    @Html.Action("RateRecommentIndex", "Home", new { area = "" })
+</div>
+
+
+<div id="near-area-recomment">
+    @Html.Action("NearAreaRecommentIndex", "Home", new { area = "" })
+</div>
+
+
+<div id="near-area-recomment">
+    @Html.Action("TimeCreateRecommentIndex", "Home", new { area = "" })
+</div>

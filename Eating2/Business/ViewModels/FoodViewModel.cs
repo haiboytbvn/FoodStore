@@ -26,7 +26,8 @@ namespace Eating2.Business.ViewModels
         public int NumberOfRate { get; set; }
         
         public double AveragePoint { get; set; }
-
+        public int numberOfComment { get; set; }
+        public DateTime Created { get; set; }
         public string FoodPictureURL { get; set; }
         public bool HasFoodPicture { get; set; }
         public List<Image> listFoodPicturesURL { get; set; }

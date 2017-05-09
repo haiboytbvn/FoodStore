@@ -17,6 +17,8 @@ namespace Eating2.DataAcess.Models
         public string DistrictDisplayOnly { get; set; }
         public string StoreNameDisplayOnly { get; set; }
         public double AveragePoint { get; set; }
+        public int numberOfComment { get; set; }
+        public DateTime Created { get; set; }
         public string FoodPictureURL { get; set; }
         [ForeignKey("StoreID")]
         public virtual StoreDataModel Store { get; set; }

@@ -134,10 +134,16 @@ namespace Eating2.Controllers
         }
 
   
-        public ActionResult GetMap()
+        public ActionResult SameStoreRecomment(int id)
         {
-            //return PartialView("_GoogleMapAPI");
-            return View("GoogleMapAPI");
+            var foodsInStore = FoodPresenterObject.ListAllFoodForStore(id);
+            return PartialView("_SameStoreRecomment", foodsInStore);
+        }
+
+        public ActionResult SameCostRecomment(double cost)
+        {
+            var foodsInStore = FoodPresenterObject.ListFoodByCostRecomment(cost);
+            return PartialView("_SameCostRecomment", foodsInStore);
         }
     }
 }

@@ -123,4 +123,3 @@ D:\DEV\C#\Eating2\Eating2\bin\PagedList.Mvc.dll
 D:\DEV\C#\Eating2\Eating2\bin\AutoMapper.xml
 D:\DEV\C#\Eating2\Eating2\bin\PagedList.xml
 D:\DEV\C#\Eating2\Eating2\bin\PagedList.Mvc.xml
-D:\DEV\C#\Eating2\Eating2\obj\Debug\Eating2.csprojResolveAssemblyReference.cache
