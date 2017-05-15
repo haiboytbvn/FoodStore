@@ -6,7 +6,7 @@
 
     <div class="search-box search-bar navbar-form navbar-left">
         <div class="form-group">
-            @Html.TextBox("filterKeyword", Model.FilterOptions.Keyword, new { @class = "form-control" })
+            @Html.TextBox("filterKeyword", Model.FilterOptions.Keyword, new { @class = "form-control", @placeholder = "Tên món ăn"})
         </div>
         <input type="submit" value="Search" class="btn btn-default">
         
